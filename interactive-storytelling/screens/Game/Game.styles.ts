@@ -60,6 +60,36 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSizeMedium,
     fontWeight: typography.fontWeightBold,
   },
+  bookContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    paddingTop: spacing.large,
+  },
+  hud: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingHorizontal: spacing.medium,
+    marginBottom: spacing.large,
+  },
+  hudText: {
+    fontSize: typography.fontSizeSmall,
+    color: colors.text,
+  },
+  adventureImage: {
+    width: '90%',
+    height: 200,
+    marginBottom: spacing.large,
+    borderRadius: 10,
+    backgroundColor: colors.inputBackground, // Fond en cas de délai de chargement
+  },
+  adventureText: {
+    fontSize: typography.fontSizeMedium,
+    color: colors.text,
+    textAlign: 'center',
+    paddingHorizontal: spacing.medium,
+  },
 });
 
 export default styles;

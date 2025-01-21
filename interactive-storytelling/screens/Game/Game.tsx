@@ -1,22 +1,60 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, Pressable } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TextInput, ActivityIndicator, Image, Pressable } from 'react-native';
 import styles from './Game.styles';
+import { generateResponse } from '../../src/api/openai';
+import colors from '../../styles/colors';
 
 const Game: React.FC = () => {
-    const [name, setName] = useState<string>(''); // Stocke le nom du joueur
-    const [step, setStep] = useState<number>(1); // Étape du jeu
-    const [adventure, setAdventure] = useState<string>(''); // Type d’aventure choisi
+    const [name, setName] = useState<string>('');
+    const [step, setStep] = useState<number>(1);
+    const [adventure, setAdventure] = useState<string>('');
+    const [time, setTime] = useState<string>('');
+    const [date, setDate] = useState<string>('');
+    const [loading, setLoading] = useState<boolean>(false);
+    const [imageUri, setImageUri] = useState<string>('');
+    const [storyText, setStoryText] = useState<string>('');
 
-    const handleNameSubmit = () => {
-        if (name.trim() !== '') {
-            setStep(2); // Passe à l’étape de choix d’aventure
+    useEffect(() => {
+        const updateTimeAndDate = () => {
+            const now = new Date();
+            setTime(`${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`);
+            setDate(now.toLocaleDateString('fr-FR', {
+                weekday: 'long',
+                day: 'numeric',
+                month: 'long',
+                year: 'numeric',
+            }));
+        };
+
+        updateTimeAndDate();
+        const interval = setInterval(updateTimeAndDate, 60000);
+        return () => clearInterval(interval);
+    }, []);
+
+    const handleAdventureChoice = async (type: string) => {
+        setAdventure(type);
+        setLoading(true);
+        try {
+            // // Génération de l'image via l'IA
+            // const imagePrompt = `Create a travel-themed image for an airport with a vibrant sky, capturing the excitement of adventure.`;
+            // const imageResponse = await generateResponse(imagePrompt, 'image');
+            // setImageUri(imageResponse);
+
+            // Génération du texte via l'IA
+            const textPrompt = `Write an immersive introduction for a travel adventure starting at an airport. Include options for the player to choose a flight today or wait until tomorrow.`;
+            const textResponse = await generateResponse(textPrompt, 'text');
+            setStoryText(textResponse);
+
+            setStep(3); // Passe à l'écran de l’aventure
+        } catch (error) {
+            const errorMessage = (error as Error).message || 'Une erreur inconnue est survenue.';
+            console.error('Erreur lors de la génération IA :', errorMessage);
+            setStoryText('Erreur lors de la génération de l’aventure.');
+        } finally {
+            setLoading(false);
         }
     };
 
-    const handleAdventureChoice = (type: string) => {
-        setAdventure(type);
-        setStep(3); // Passe à l’écran de l’aventure
-    };
 
     return (
         <View style={styles.container}>
@@ -29,7 +67,7 @@ const Game: React.FC = () => {
                         value={name}
                         onChangeText={setName}
                     />
-                    <Pressable style={styles.button} onPress={handleNameSubmit}>
+                    <Pressable style={styles.button} onPress={() => setStep(2)}>
                         <Text style={styles.buttonText}>Commencer</Text>
                     </Pressable>
                 </View>
@@ -41,21 +79,22 @@ const Game: React.FC = () => {
                     <Pressable style={styles.choiceButton} onPress={() => handleAdventureChoice('Voyage')}>
                         <Text style={styles.choiceButtonText}>Voyage</Text>
                     </Pressable>
-                    <Pressable style={styles.choiceButton} onPress={() => handleAdventureChoice('Science-fiction')}>
-                        <Text style={styles.choiceButtonText}>Science-fiction</Text>
-                    </Pressable>
-                    <Pressable style={styles.choiceButton} onPress={() => handleAdventureChoice('Fantasy')}>
-                        <Text style={styles.choiceButtonText}>Fantasy</Text>
-                    </Pressable>
                 </View>
             )}
 
             {step === 3 && (
-                <View style={styles.stepContainer}>
-                    <Text style={styles.title}>
-                        Prépare-toi pour une aventure {adventure.toLowerCase()}, {name}...
-                    </Text>
-                    {/* Transition vers l'interface type "livre" */}
+                <View style={styles.bookContainer}>
+                    <View style={styles.hud}>
+                        <Text style={styles.hudText}>{time}</Text>
+                        <Text style={styles.hudText}>85%</Text>
+                        <Text style={styles.hudText}>{date}</Text>
+                    </View>
+                    {loading ? (
+                        <ActivityIndicator size="large" color={colors.primary} />
+                    ) : (
+                        <Image source={{ uri: imageUri }} style={styles.adventureImage} />
+                    )}
+                    <Text style={styles.adventureText}>{storyText}</Text>
                 </View>
             )}
         </View>
