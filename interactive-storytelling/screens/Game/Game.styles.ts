@@ -13,6 +13,7 @@ const styles = StyleSheet.create({
   },
   stepContainer: {
     alignItems: 'center',
+    justifyContent: 'center',
     width: '100%',
   },
   title: {
@@ -22,34 +23,31 @@ const styles = StyleSheet.create({
     marginBottom: spacing.large,
     textAlign: 'center',
   },
-  input: {
-    width: '80%',
-    padding: spacing.medium,
-    borderWidth: 1,
-    borderColor: colors.inputBorder,
+  choiceButton: {
+    backgroundColor: colors.secondary,
+    paddingVertical: spacing.medium,
+    paddingHorizontal: spacing.large,
     borderRadius: 8,
-    marginBottom: spacing.large,
-    backgroundColor: colors.inputBackground,
-    color: colors.text,
-    fontSize: typography.fontSizeMedium,
+    marginBottom: spacing.medium,
+    width: '80%',
+    alignItems: 'center',
   },
-  button: {
+  choiceButtonText: {
+    color: colors.buttonText,
+    fontSize: typography.fontSizeMedium,
+    fontWeight: typography.fontWeightBold,
+  },
+  inputButton: {
     backgroundColor: colors.primary,
     paddingVertical: spacing.medium,
     paddingHorizontal: spacing.large,
     borderRadius: 8,
-    alignItems: 'center',
+    marginTop: spacing.medium,
   },
   buttonText: {
     color: colors.buttonText,
     fontSize: typography.fontSizeMedium,
     fontWeight: typography.fontWeightBold,
-  },
-  loadingText: {
-    fontSize: typography.fontSizeMedium,
-    fontWeight: typography.fontWeightRegular,
-    color: colors.text,
-    textAlign: 'center',
   },
 });
 
