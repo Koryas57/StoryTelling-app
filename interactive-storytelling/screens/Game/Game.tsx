@@ -1,24 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, TextInput, Pressable, ActivityIndicator } from 'react-native';
-import Step1 from './Step1';
-import Step2 from './Step2';
+import { View, Text, ScrollView, TextInput, Pressable, ActivityIndicator, Alert, Image } from 'react-native';
 import styles from './Game.styles';
 import colors from '../../styles/colors';
-import { OPENAI_API_KEY } from '@env';
-import { generateResponse } from '../../src/api/openai'; // Import de votre fonction d'appel API
+import { generateResponse } from '../../src/api/openai';
 
 const Game: React.FC = () => {
-    const [step, setStep] = useState<number>(1); // Étape actuelle
-    const [name, setName] = useState<string>(''); // Nom de l'utilisateur
-    const [theme, setTheme] = useState<string>(''); // Thème choisi
-    const [imageUri, setImageUri] = useState<string>(''); // Image générée
-    const [loading, setLoading] = useState<boolean>(false); // État de chargement
-    const [time, setTime] = useState<string>(''); // Heure
-    const [date, setDate] = useState<string>(''); // Date
+    const [loading, setLoading] = useState<boolean>(false);
+    const [storyText, setStoryText] = useState<string>('');
+    const [imageUri, setImageUri] = useState<string>('');
+    const [step, setStep] = useState<number>(1);
+    const [name, setName] = useState<string>('');
+    const [theme, setTheme] = useState<string>('');
+    const [time, setTime] = useState<string>('');
+    const [date, setDate] = useState<string>('');
+    const [positiveStreak, setPositiveStreak] = useState<number>(0);
+    const [negativeStreak, setNegativeStreak] = useState<number>(0);
+    const [choices, setChoices] = useState<{ text: string; type: 'positive' | 'negative' | 'neutral' }[]>([]);
 
-    // Mise à jour de l'heure et de la date
     useEffect(() => {
-        const updateTimeAndDate = () => {
+        const updateDateTime = () => {
             const now = new Date();
             setTime(`${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`);
             setDate(
@@ -26,92 +26,156 @@ const Game: React.FC = () => {
                     weekday: 'long',
                     day: 'numeric',
                     month: 'long',
-                    year: 'numeric',
                 })
             );
         };
 
-        updateTimeAndDate();
-        const interval = setInterval(updateTimeAndDate, 60000);
+        updateDateTime();
+        const interval = setInterval(updateDateTime, 60000);
         return () => clearInterval(interval);
     }, []);
 
-    // Gestion du chargement et de la génération de l'image
-    const handleThemeSelection = async (selectedTheme: string) => {
+    const generateAdventure = async () => {
         setLoading(true);
-        setTheme(selectedTheme);
-
         try {
-            // Demande à OpenAI de générer une image pour le thème sélectionné
-            const imagePrompt = `Créer une image immersive sur le thème : ${selectedTheme}, avec des détails réalistes et une ambiance captivante.`;
+            const textPrompt = `Décris une scène immersive pour une aventure basée sur le thème "${theme}", en français. Limite le texte à 5 lignes.`;
+            const textResponse = await generateResponse(textPrompt, 'text');
+
+            const imagePrompt = `Créer une image correspondant à un thème "${theme}", en français.`;
             const imageResponse = await generateResponse(imagePrompt, 'image');
-            setImageUri(imageResponse); // Définit l'URL de l'image générée
-            setStep(3); // Passe à l'étape suivante une fois l'image générée
-        } catch (error) {
-            console.error('Erreur lors de la génération de l’image', error);
+
+            setStoryText(textResponse);
+            setImageUri(imageResponse);
+
+            const choicesPrompt = `Propose quatre choix pour l’aventure actuelle :
+            - Un choix mène à une amélioration positive, marqué [positive].
+            - Un choix mène à une situation négative, marqué [negative].
+            - Deux choix prolongent l’histoire, marqués [neutral].
+            Limite chaque choix à une ligne.`;
+            const choicesResponse = await generateResponse(choicesPrompt, 'text');
+
+            const parseType = (line: string): 'positive' | 'negative' | 'neutral' => {
+                if (line.includes('[positive]')) return 'positive';
+                if (line.includes('[negative]')) return 'negative';
+                if (line.includes('[neutral]')) return 'neutral';
+                throw new Error(`Type inconnu trouvé dans la ligne : ${line}`);
+            };
+
+            const newChoices = choicesResponse.split('\n').filter(Boolean).map((line) => {
+                const type = parseType(line);
+                return { text: line.replace(`[${type}]`, '').trim(), type };
+            });
+
+            setChoices(newChoices);
+            setStep(3);
+        } catch (error: any) {
+            Alert.alert('Erreur', 'Impossible de générer les données.');
         } finally {
             setLoading(false);
         }
     };
 
+    const handleChoiceSelection = (choiceType: 'positive' | 'negative' | 'neutral') => {
+        if (choiceType === 'positive') {
+            setPositiveStreak((prev) => prev + 1);
+            setNegativeStreak(0);
+        } else if (choiceType === 'negative') {
+            setNegativeStreak((prev) => prev + 1);
+            setPositiveStreak(0);
+        } else {
+            setPositiveStreak(0);
+            setNegativeStreak(0);
+        }
+
+        if (positiveStreak + 1 === 3 || negativeStreak + 1 === 3) {
+            const outcomeType = positiveStreak + 1 === 3 ? 'positif' : 'tragique';
+            Alert.alert('Dénouement atteint', `Votre aventure s'est terminée avec un dénouement ${outcomeType}.`);
+            setStep(1);
+        } else {
+            generateAdventure();
+        }
+    };
+
     const renderStep = () => {
-        switch (step) {
-            case 1:
-                return (
-                    <View style={styles.stepContainer}>
-                        <Text style={styles.title}>Quel est ton nom, aventurier ?</Text>
-                        <TextInput
-                            style={styles.input}
-                            placeholder="Entre ton nom"
-                            value={name}
-                            onChangeText={setName}
-                        />
+        if (step === 1) {
+            return (
+                <View style={styles.stepContainer}>
+                    <Text style={styles.title}>Bienvenue dans l’aventure interactive !</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Quel est ton nom ?"
+                        value={name}
+                        onChangeText={setName}
+                    />
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => name.trim() && setStep(2)}
+                        disabled={!name.trim()}
+                    >
+                        <Text style={styles.buttonText}>Continuer</Text>
+                    </Pressable>
+                </View>
+            );
+        }
+
+        if (step === 2) {
+            return (
+                <View style={styles.stepContainer}>
+                    <Text style={styles.title}>Choisis un thème pour ton aventure :</Text>
+                    {['Voyage', 'Forêt enchantée', 'Espace', 'Mystère'].map((themeOption, index) => (
                         <Pressable
-                            style={styles.button}
-                            onPress={() => setStep(2)}
-                            disabled={!name.trim()}
+                            key={index}
+                            style={styles.choiceButton}
+                            onPress={() => {
+                                setTheme(themeOption);
+                                generateAdventure();
+                            }}
                         >
-                            <Text style={styles.buttonText}>Continuer</Text>
+                            <Text style={styles.choiceButtonText}>{themeOption}</Text>
                         </Pressable>
+                    ))}
+                </View>
+            );
+        }
+
+        if (step === 3) {
+            return (
+                <>
+                    <View style={styles.hud}>
+                        <Text style={styles.hudText}>{time}</Text>
+                        <Text style={styles.hudText}>85%</Text>
+                        <Text style={styles.hudText}>{date}</Text>
                     </View>
-                );
-            case 2:
-                return (
-                    <View style={styles.stepContainer}>
-                        <Text style={styles.title}>Choisis un thème pour ton aventure :</Text>
-                        {['Voyage', 'Forêt enchantée', 'Espace'].map((themeOption, index) => (
+                    {imageUri ? (
+                        <Image source={{ uri: imageUri }} style={styles.adventureImage} />
+                    ) : (
+                        <Text style={styles.errorText}>Aucune image disponible.</Text>
+                    )}
+                    <Text style={styles.adventureText}>{storyText}</Text>
+                    <View style={styles.choicesContainer}>
+                        {choices.map((choice, index) => (
                             <Pressable
                                 key={index}
                                 style={styles.choiceButton}
-                                onPress={() => handleThemeSelection(themeOption)}
+                                onPress={() => handleChoiceSelection(choice.type)}
                             >
-                                <Text style={styles.choiceButtonText}>{themeOption}</Text>
+                                <Text style={styles.choiceButtonText}>{choice.text}</Text>
                             </Pressable>
                         ))}
                     </View>
-                );
-            case 3:
-                if (loading) {
-                    return <ActivityIndicator size="large" color={colors.primary} />;
-                }
-                return (
-                    <Step1
-                        onNext={() => setStep(4)}
-                        imageUri={imageUri}
-                        hud={{ time, date }}
-                    />
-                );
-            case 4:
-                return <Step2 onNext={() => console.log('Étape suivante')} />;
-            default:
-                return null;
+                </>
+            );
         }
     };
 
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-                {renderStep()}
+                {loading ? (
+                    <ActivityIndicator size="large" color={colors.primary} />
+                ) : (
+                    renderStep()
+                )}
             </ScrollView>
         </View>
     );

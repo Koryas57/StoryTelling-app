@@ -6,6 +6,9 @@ export const generateResponse = async (
   type: 'text' | 'image' = 'text'
 ): Promise<string> => {
   try {
+    console.log(`[OpenAI] Type de requête : ${type}`);
+    console.log(`[OpenAI] Prompt envoyé : ${prompt}`);
+
     const url =
       type === 'text'
         ? 'https://api.openai.com/v1/chat/completions'
@@ -29,7 +32,10 @@ export const generateResponse = async (
             size: '512x512', // Taille d'image valide
           };
 
+    console.log(`[OpenAI] Requête envoyée à ${url} avec données :`, data);
+
     const response = await axios.post(url, data, { headers });
+    console.log(`[OpenAI] Réponse reçue :`, response.data);
 
     if (type === 'text') {
       return response.data.choices[0]?.message?.content || 'Aucune réponse reçue.';
@@ -37,7 +43,10 @@ export const generateResponse = async (
       return response.data.data[0]?.url || '';
     }
   } catch (error: any) {
-    console.error('Erreur lors de l’appel à l’API OpenAI :', error.message || error);
+    console.error('[OpenAI] Erreur lors de l’appel à l’API :', error.message || error);
+    if (error.response?.data?.error) {
+      console.error('[OpenAI] Détails de l’erreur :', error.response.data.error);
+    }
     throw new Error(
       error.response?.data?.error?.message || 'Erreur inconnue lors de l’appel à OpenAI.'
     );

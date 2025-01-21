@@ -6,15 +6,18 @@ import typography from '../../styles/typography';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
     backgroundColor: colors.background,
+  },
+  scrollContainer: {
+    flexGrow: 1, // S'assurer que le ScrollView prend toute la hauteur
+    justifyContent: 'center', // Centrage vertical
+    alignItems: 'center', // Centrage horizontal
     padding: spacing.medium,
   },
   stepContainer: {
+    width: '100%',
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
   },
   title: {
     fontSize: typography.fontSizeLarge,
@@ -50,21 +53,14 @@ const styles = StyleSheet.create({
     backgroundColor: colors.secondary,
     borderRadius: 8,
     marginBottom: spacing.medium,
-    width: '100%',
+    width: '80%',
     alignItems: 'center',
   },
   choiceButtonText: {
-    textAlign:'center',
     color: colors.buttonText,
     padding: spacing.medium,
     fontSize: typography.fontSizeMedium,
-    fontWeight: typography.fontWeightBold,
-  },  
-  bookContainer: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingTop: spacing.large,
+    textAlign: 'center',
   },
   hud: {
     flexDirection: 'row-reverse',
@@ -78,20 +74,11 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSizeSmall,
     color: colors.text,
   },
-  scrollContainer: {
-    alignItems: 'center',
-    paddingBottom: spacing.large,
-  },
-  choicesContainer: {
-    alignItems: 'center',
-    marginTop: spacing.medium,
-    width: '100%',
-  },
   adventureImage: {
     width: '100%',
     height: 200,
     borderRadius: 10,
-    objectFit: 'cover',
+    resizeMode: 'cover', // Correction pour l'affichage de l'image
   },
   adventureText: {
     marginTop: spacing.extraLarge,
@@ -101,24 +88,17 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     paddingHorizontal: spacing.small,
   },
-  apiKeyStatus: {
-    marginBottom: 16,
-    fontSize: 14,
-    color: colors.text,
-    textAlign: 'center',
-  },
   errorText: {
     fontSize: typography.fontSizeSmall,
     color: colors.error,
     textAlign: 'center',
     marginTop: spacing.medium,
   },
-  imageContainer: {
-    width: '100%',
+  choicesContainer: {
     alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: spacing.large,
-  }, 
+    marginTop: spacing.medium,
+    width: '100%',
+  },
 });
 
 export default styles;
