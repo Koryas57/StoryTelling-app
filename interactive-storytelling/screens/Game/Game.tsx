@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, TextInput, Pressable } from 'react-native';
 import styles from './Game.styles';
 
 const Game: React.FC = () => {
@@ -7,9 +7,8 @@ const Game: React.FC = () => {
     const [step, setStep] = useState<number>(1); // Étape du jeu
     const [adventure, setAdventure] = useState<string>(''); // Type d’aventure choisi
 
-    const handleNameSubmit = (enteredName: string) => {
-        if (enteredName.trim() !== '') {
-            setName(enteredName);
+    const handleNameSubmit = () => {
+        if (name.trim() !== '') {
             setStep(2); // Passe à l’étape de choix d’aventure
         }
     };
@@ -24,8 +23,14 @@ const Game: React.FC = () => {
             {step === 1 && (
                 <View style={styles.stepContainer}>
                     <Text style={styles.title}>Quel est ton nom, aventurier ?</Text>
-                    <Pressable style={styles.inputButton} onPress={() => handleNameSubmit('Taylor')}>
-                        <Text style={styles.buttonText}>Entrer le nom : Taylor</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Entre ton nom"
+                        value={name}
+                        onChangeText={setName}
+                    />
+                    <Pressable style={styles.button} onPress={handleNameSubmit}>
+                        <Text style={styles.buttonText}>Commencer</Text>
                     </Pressable>
                 </View>
             )}
@@ -50,7 +55,7 @@ const Game: React.FC = () => {
                     <Text style={styles.title}>
                         Prépare-toi pour une aventure {adventure.toLowerCase()}, {name}...
                     </Text>
-                    {/* Ici, transition vers l'interface type "livre" */}
+                    {/* Transition vers l'interface type "livre" */}
                 </View>
             )}
         </View>

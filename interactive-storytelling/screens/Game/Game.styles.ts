@@ -23,6 +23,29 @@ const styles = StyleSheet.create({
     marginBottom: spacing.large,
     textAlign: 'center',
   },
+  input: {
+    width: '80%',
+    padding: spacing.medium,
+    borderWidth: 1,
+    borderColor: colors.inputBorder,
+    borderRadius: 8,
+    marginBottom: spacing.large,
+    backgroundColor: colors.inputBackground,
+    color: colors.text,
+    fontSize: typography.fontSizeMedium,
+  },
+  button: {
+    backgroundColor: colors.primary,
+    paddingVertical: spacing.medium,
+    paddingHorizontal: spacing.large,
+    borderRadius: 8,
+    alignItems: 'center',
+  },
+  buttonText: {
+    color: colors.buttonText,
+    fontSize: typography.fontSizeMedium,
+    fontWeight: typography.fontWeightBold,
+  },
   choiceButton: {
     backgroundColor: colors.secondary,
     paddingVertical: spacing.medium,
@@ -33,18 +56,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   choiceButtonText: {
-    color: colors.buttonText,
-    fontSize: typography.fontSizeMedium,
-    fontWeight: typography.fontWeightBold,
-  },
-  inputButton: {
-    backgroundColor: colors.primary,
-    paddingVertical: spacing.medium,
-    paddingHorizontal: spacing.large,
-    borderRadius: 8,
-    marginTop: spacing.medium,
-  },
-  buttonText: {
     color: colors.buttonText,
     fontSize: typography.fontSizeMedium,
     fontWeight: typography.fontWeightBold,
