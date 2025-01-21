@@ -1,29 +1,34 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, ActivityIndicator, Image, Pressable } from 'react-native';
+import { View, Text, ScrollView, TextInput, Pressable, ActivityIndicator } from 'react-native';
+import Step1 from './Step1';
+import Step2 from './Step2';
 import styles from './Game.styles';
-import { generateResponse } from '../../src/api/openai';
 import colors from '../../styles/colors';
+import { OPENAI_API_KEY } from '@env';
+import { generateResponse } from '../../src/api/openai'; // Import de votre fonction d'appel API
 
 const Game: React.FC = () => {
-    const [name, setName] = useState<string>('');
-    const [step, setStep] = useState<number>(1);
-    const [adventure, setAdventure] = useState<string>('');
-    const [time, setTime] = useState<string>('');
-    const [date, setDate] = useState<string>('');
-    const [loading, setLoading] = useState<boolean>(false);
-    const [imageUri, setImageUri] = useState<string>('');
-    const [storyText, setStoryText] = useState<string>('');
+    const [step, setStep] = useState<number>(1); // Étape actuelle
+    const [name, setName] = useState<string>(''); // Nom de l'utilisateur
+    const [theme, setTheme] = useState<string>(''); // Thème choisi
+    const [imageUri, setImageUri] = useState<string>(''); // Image générée
+    const [loading, setLoading] = useState<boolean>(false); // État de chargement
+    const [time, setTime] = useState<string>(''); // Heure
+    const [date, setDate] = useState<string>(''); // Date
 
+    // Mise à jour de l'heure et de la date
     useEffect(() => {
         const updateTimeAndDate = () => {
             const now = new Date();
             setTime(`${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`);
-            setDate(now.toLocaleDateString('fr-FR', {
-                weekday: 'long',
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-            }));
+            setDate(
+                now.toLocaleDateString('fr-FR', {
+                    weekday: 'long',
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric',
+                })
+            );
         };
 
         updateTimeAndDate();
@@ -31,72 +36,83 @@ const Game: React.FC = () => {
         return () => clearInterval(interval);
     }, []);
 
-    const handleAdventureChoice = async (type: string) => {
-        setAdventure(type);
+    // Gestion du chargement et de la génération de l'image
+    const handleThemeSelection = async (selectedTheme: string) => {
         setLoading(true);
+        setTheme(selectedTheme);
+
         try {
-            // // Génération de l'image via l'IA
-            // const imagePrompt = `Create a travel-themed image for an airport with a vibrant sky, capturing the excitement of adventure.`;
-            // const imageResponse = await generateResponse(imagePrompt, 'image');
-            // setImageUri(imageResponse);
-
-            // Génération du texte via l'IA
-            const textPrompt = `Write an immersive introduction for a travel adventure starting at an airport. Include options for the player to choose a flight today or wait until tomorrow.`;
-            const textResponse = await generateResponse(textPrompt, 'text');
-            setStoryText(textResponse);
-
-            setStep(3); // Passe à l'écran de l’aventure
+            // Demande à OpenAI de générer une image pour le thème sélectionné
+            const imagePrompt = `Créer une image immersive sur le thème : ${selectedTheme}, avec des détails réalistes et une ambiance captivante.`;
+            const imageResponse = await generateResponse(imagePrompt, 'image');
+            setImageUri(imageResponse); // Définit l'URL de l'image générée
+            setStep(3); // Passe à l'étape suivante une fois l'image générée
         } catch (error) {
-            const errorMessage = (error as Error).message || 'Une erreur inconnue est survenue.';
-            console.error('Erreur lors de la génération IA :', errorMessage);
-            setStoryText('Erreur lors de la génération de l’aventure.');
+            console.error('Erreur lors de la génération de l’image', error);
         } finally {
             setLoading(false);
         }
     };
 
+    const renderStep = () => {
+        switch (step) {
+            case 1:
+                return (
+                    <View style={styles.stepContainer}>
+                        <Text style={styles.title}>Quel est ton nom, aventurier ?</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Entre ton nom"
+                            value={name}
+                            onChangeText={setName}
+                        />
+                        <Pressable
+                            style={styles.button}
+                            onPress={() => setStep(2)}
+                            disabled={!name.trim()}
+                        >
+                            <Text style={styles.buttonText}>Continuer</Text>
+                        </Pressable>
+                    </View>
+                );
+            case 2:
+                return (
+                    <View style={styles.stepContainer}>
+                        <Text style={styles.title}>Choisis un thème pour ton aventure :</Text>
+                        {['Voyage', 'Forêt enchantée', 'Espace'].map((themeOption, index) => (
+                            <Pressable
+                                key={index}
+                                style={styles.choiceButton}
+                                onPress={() => handleThemeSelection(themeOption)}
+                            >
+                                <Text style={styles.choiceButtonText}>{themeOption}</Text>
+                            </Pressable>
+                        ))}
+                    </View>
+                );
+            case 3:
+                if (loading) {
+                    return <ActivityIndicator size="large" color={colors.primary} />;
+                }
+                return (
+                    <Step1
+                        onNext={() => setStep(4)}
+                        imageUri={imageUri}
+                        hud={{ time, date }}
+                    />
+                );
+            case 4:
+                return <Step2 onNext={() => console.log('Étape suivante')} />;
+            default:
+                return null;
+        }
+    };
 
     return (
         <View style={styles.container}>
-            {step === 1 && (
-                <View style={styles.stepContainer}>
-                    <Text style={styles.title}>Quel est ton nom, aventurier ?</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Entre ton nom"
-                        value={name}
-                        onChangeText={setName}
-                    />
-                    <Pressable style={styles.button} onPress={() => setStep(2)}>
-                        <Text style={styles.buttonText}>Commencer</Text>
-                    </Pressable>
-                </View>
-            )}
-
-            {step === 2 && (
-                <View style={styles.stepContainer}>
-                    <Text style={styles.title}>Bonjour {name} ! Choisis ton aventure :</Text>
-                    <Pressable style={styles.choiceButton} onPress={() => handleAdventureChoice('Voyage')}>
-                        <Text style={styles.choiceButtonText}>Voyage</Text>
-                    </Pressable>
-                </View>
-            )}
-
-            {step === 3 && (
-                <View style={styles.bookContainer}>
-                    <View style={styles.hud}>
-                        <Text style={styles.hudText}>{time}</Text>
-                        <Text style={styles.hudText}>85%</Text>
-                        <Text style={styles.hudText}>{date}</Text>
-                    </View>
-                    {loading ? (
-                        <ActivityIndicator size="large" color={colors.primary} />
-                    ) : (
-                        <Image source={{ uri: imageUri }} style={styles.adventureImage} />
-                    )}
-                    <Text style={styles.adventureText}>{storyText}</Text>
-                </View>
-            )}
+            <ScrollView contentContainerStyle={styles.scrollContainer}>
+                {renderStep()}
+            </ScrollView>
         </View>
     );
 };

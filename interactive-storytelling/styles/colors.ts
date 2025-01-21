@@ -7,6 +7,7 @@ const colors = {
   inputBorder: '#cccccc', // Bordure des inputs (gris clair)
   inputBackground: '#f9f9f9', // Fond des inputs (blanc cassé)
   buttonText: '#ffffff', // Texte des boutons (blanc)
+  error: '#FF4D4D',
 };
 
 export default colors;

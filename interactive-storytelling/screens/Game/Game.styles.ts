@@ -48,18 +48,18 @@ const styles = StyleSheet.create({
   },
   choiceButton: {
     backgroundColor: colors.secondary,
-    paddingVertical: spacing.medium,
-    paddingHorizontal: spacing.large,
     borderRadius: 8,
     marginBottom: spacing.medium,
-    width: '80%',
+    width: '100%',
     alignItems: 'center',
   },
   choiceButtonText: {
+    textAlign:'center',
     color: colors.buttonText,
+    padding: spacing.medium,
     fontSize: typography.fontSizeMedium,
     fontWeight: typography.fontWeightBold,
-  },
+  },  
   bookContainer: {
     flex: 1,
     alignItems: 'center',
@@ -67,29 +67,58 @@ const styles = StyleSheet.create({
     paddingTop: spacing.large,
   },
   hud: {
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     justifyContent: 'space-between',
     width: '100%',
-    paddingHorizontal: spacing.medium,
+    paddingHorizontal: spacing.small,
     marginBottom: spacing.large,
   },
   hudText: {
+    marginTop: spacing.extraLarge,
     fontSize: typography.fontSizeSmall,
     color: colors.text,
   },
+  scrollContainer: {
+    alignItems: 'center',
+    paddingBottom: spacing.large,
+  },
+  choicesContainer: {
+    alignItems: 'center',
+    marginTop: spacing.medium,
+    width: '100%',
+  },
   adventureImage: {
-    width: '90%',
+    width: '100%',
     height: 200,
-    marginBottom: spacing.large,
     borderRadius: 10,
-    backgroundColor: colors.inputBackground, // Fond en cas de délai de chargement
+    objectFit: 'cover',
   },
   adventureText: {
+    marginTop: spacing.extraLarge,
+    marginBottom: spacing.large,
     fontSize: typography.fontSizeMedium,
     color: colors.text,
     textAlign: 'center',
-    paddingHorizontal: spacing.medium,
+    paddingHorizontal: spacing.small,
   },
+  apiKeyStatus: {
+    marginBottom: 16,
+    fontSize: 14,
+    color: colors.text,
+    textAlign: 'center',
+  },
+  errorText: {
+    fontSize: typography.fontSizeSmall,
+    color: colors.error,
+    textAlign: 'center',
+    marginTop: spacing.medium,
+  },
+  imageContainer: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: spacing.large,
+  }, 
 });
 
 export default styles;
