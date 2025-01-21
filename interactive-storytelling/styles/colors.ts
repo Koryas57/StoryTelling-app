@@ -1,11 +1,12 @@
 const colors = {
-    primary: '#4CAF50',
-    secondary: '#FFC107',
-    background: '#F0F0F0',
-    text: '#333',
-    white: '#FFFFFF',
-    black: '#000000',
-  };
-  
-  export default colors;
-  
+  primary: '#007BFF', // Couleur principale (bleu)
+  secondary: '#6c757d', // Couleur secondaire (gris)
+  background: '#ffffff', // Couleur de fond (blanc)
+  text: '#000000', // Couleur du texte (noir)
+  white: '#ffffff', // Blanc
+  inputBorder: '#cccccc', // Bordure des inputs (gris clair)
+  inputBackground: '#f9f9f9', // Fond des inputs (blanc cassé)
+  buttonText: '#ffffff', // Texte des boutons (blanc)
+};
+
+export default colors;

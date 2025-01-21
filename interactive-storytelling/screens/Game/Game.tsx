@@ -1,46 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { generateResponse } from '../../src/api/openai';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Pressable } from 'react-native';
+import styles from './Game.styles';
 
 const Game: React.FC = () => {
-    const [response, setResponse] = useState<string | null>(null); // State pour stocker la réponse de l'API
-    const [loading, setLoading] = useState<boolean>(true); // State pour afficher un message de chargement
+    const [name, setName] = useState<string>(''); // Stocke le nom du joueur
+    const [loading, setLoading] = useState<boolean>(false); // Gère le chargement
+    const [step, setStep] = useState<number>(1); // Étape du jeu
 
-    useEffect(() => {
-        const fetchAIResponse = async () => {
-            try {
-                console.log('Appel à l’API en cours...');
-                const apiResponse = await generateResponse('Test');
-                console.log('Réponse API OpenAI :', apiResponse);
-                setResponse(apiResponse); // Met à jour le state avec la réponse
-            } catch (error) {
-                console.error('Erreur API OpenAI :', error.message || error);
-                setResponse('Erreur lors de la communication avec l’API OpenAI.');
-            } finally {
-                setLoading(false); // Fin du chargement
-            }
-        };
-
-        fetchAIResponse();
-    }, []);
+    const handleNameSubmit = () => {
+        if (name.trim() !== '') {
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+                setStep(2); // Passe à l'étape suivante après le chargement
+            }, 2000); // Simulation d'un temps de chargement de 2 secondes
+        }
+    };
 
     return (
         <View style={styles.container}>
-            {loading ? (
-                <Text>Test API en cours... Vérifie la console.</Text> // Message de chargement
-            ) : (
-                <Text>{response}</Text> // Affiche la réponse de l'API ou un message d'erreur
+            {step === 1 && (
+                <View style={styles.stepContainer}>
+                    {loading ? (
+                        <Text style={styles.loadingText}>Chargement de ton aventure, {name || 'joueur'}...</Text>
+                    ) : (
+                        <>
+                            <Text style={styles.title}>Quel est ton nom, aventurier ?</Text>
+                            <TextInput
+                                style={styles.input}
+                                placeholder="Entre ton nom"
+                                value={name}
+                                onChangeText={setName}
+                            />
+                            <Pressable style={styles.button} onPress={handleNameSubmit}>
+                                <Text style={styles.buttonText}>Commencer</Text>
+                            </Pressable>
+                        </>
+                    )}
+                </View>
+            )}
+
+            {step === 2 && (
+                <View style={styles.stepContainer}>
+                    <Text style={styles.title}>Bienvenue dans l'aventure, {name} !</Text>
+                    {/* Transition vers l'étape suivante */}
+                </View>
             )}
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-});
 
 export default Game;
