@@ -22,9 +22,9 @@ export const generateResponse = async (
     const data =
       type === 'text'
         ? {
-            model: 'gpt-3.5-turbo',
+            model: 'gpt-4-turbo',
             messages: [{ role: 'user', content: prompt }],
-            max_tokens: 1000,
+            max_tokens: 1200,
           }
         : {
             prompt,

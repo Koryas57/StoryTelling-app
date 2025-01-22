@@ -41,6 +41,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.primary,
     paddingVertical: spacing.medium,
     paddingHorizontal: spacing.large,
+    marginBottom: spacing.extraLarge,
     borderRadius: 8,
     alignItems: 'center',
   },

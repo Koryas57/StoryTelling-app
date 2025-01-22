@@ -10,7 +10,7 @@ const Game: React.FC = () => {
     const [imageUri, setImageUri] = useState<string>('');
     const [step, setStep] = useState<number>(1);
     const [name, setName] = useState<string>('');
-    const [theme, setTheme] = useState<string>('');
+    const [startingPoint, setStartingPoint] = useState<string>('');
     const [time, setTime] = useState<string>('');
     const [date, setDate] = useState<string>('');
     const [positiveStreak, setPositiveStreak] = useState<number>(0);
@@ -31,28 +31,54 @@ const Game: React.FC = () => {
         };
 
         updateDateTime();
-        const interval = setInterval(updateDateTime, 60000);
+        const interval = setInterval(updateDateTime, 59000);
         return () => clearInterval(interval);
     }, []);
 
-    const generateAdventure = async () => {
+    const generateStoryText = async (previousText: string, userName: string, choice: string): Promise<string> => {
+        const prompt = `
+            Tu es dans une aventure interactive en tant que ${userName}, qui commence par "${startingPoint}". 
+            Texte précédent : "${previousText}" 
+            Dernier choix du joueur : "${choice}".
+            
+            Écris une suite immersive et addictive où ${userName} est le héros, mais parle de lui à la troisième personne. 
+            Utilise un style captivant avec des détails modernes et précis. Base l'histoire sur des faits réels ou des lieux spécifiques 
+            (fais des recherches comme si tu utilisais Google Maps pour ajouter des détails authentiques). 
+            Le héros possède un smartphone, mais chaque action consomme une partie de sa batterie. Si la batterie est basse, cela doit augmenter la tension. 
+            
+            Ajoute des éléments sensoriels (visuels, auditifs, olfactifs) pour rendre chaque scène vivante. 
+            L'histoire doit être logique mais surprendre l'utilisateur par ses rebondissements. 
+            Limite le texte à 5 lignes et fais en sorte que chaque ligne contienne un détail qui pousse à continuer l'aventure.
+        `;
+        return await generateResponse(prompt, 'text');
+    };
+
+    const generateChoices = async (currentText: string, userName: string): Promise<string> => {
+        const prompt = `
+            Basé sur ce texte de l'histoire : "${currentText}", propose 4 choix cohérents pour la suite :
+            - 1 choix qui améliore la situation de manière heureuse et logique (marqué [positive]).
+            - 1 choix qui complique la situation et ajoute du danger ou une forte tension dramatique (marqué [negative]).
+            - 2 choix qui prolongent l’histoire et approfondissent un aspect (marqués [neutral]).
+    
+            Chaque choix doit être une action ou une décision que le héros ${userName} pourrait prendre.
+            Limite chaque choix à une ligne et un maximum de 8 mots. Adresse-toi directement à l'utilisateur avec "Tu".
+            Le choix doit refléter la situation actuelle et les conséquences potentielles sans révéler l'issue. 
+            Pas de ponctuations (ni crochets, ni points, ni virgules).
+        `;
+        return await generateResponse(prompt, 'text');
+    };
+
+
+    const generateAdventure = async (choice: string = '') => {
         setLoading(true);
         try {
-            const textPrompt = `Décris une scène immersive pour une aventure basée sur le thème "${theme}", en français. Limite le texte à 5 lignes.`;
-            const textResponse = await generateResponse(textPrompt, 'text');
+            const previousText = storyText;
+            const newStoryText = await generateStoryText(previousText, name, choice);
 
-            const imagePrompt = `Créer une image correspondant à un thème "${theme}", en français.`;
+            const imagePrompt = `Créer une image magnifique et ultra-réaliste illustrant le point de départ suivant : "${startingPoint}" dans le contexte de l'histoire "${newStoryText}".`;
             const imageResponse = await generateResponse(imagePrompt, 'image');
 
-            setStoryText(textResponse);
-            setImageUri(imageResponse);
-
-            const choicesPrompt = `Propose quatre choix pour l’aventure actuelle :
-            - Un choix mène à une amélioration positive, marqué [positive].
-            - Un choix mène à une situation négative, marqué [negative].
-            - Deux choix prolongent l’histoire, marqués [neutral].
-            Limite chaque choix à une ligne.`;
-            const choicesResponse = await generateResponse(choicesPrompt, 'text');
+            const newChoicesResponse = await generateChoices(newStoryText, name);
 
             const parseType = (line: string): 'positive' | 'negative' | 'neutral' => {
                 if (line.includes('[positive]')) return 'positive';
@@ -61,25 +87,27 @@ const Game: React.FC = () => {
                 throw new Error(`Type inconnu trouvé dans la ligne : ${line}`);
             };
 
-            const newChoices = choicesResponse.split('\n').filter(Boolean).map((line) => {
+            const newChoices = newChoicesResponse.split('\n').filter(Boolean).map((line) => {
                 const type = parseType(line);
                 return { text: line.replace(`[${type}]`, '').trim(), type };
             });
 
+            setStoryText(newStoryText);
+            setImageUri(imageResponse);
             setChoices(newChoices);
             setStep(3);
         } catch (error: any) {
-            Alert.alert('Erreur', 'Impossible de générer les données.');
+            Alert.alert('Erreur', 'Impossible de générer l’histoire.');
         } finally {
             setLoading(false);
         }
     };
 
-    const handleChoiceSelection = (choiceType: 'positive' | 'negative' | 'neutral') => {
-        if (choiceType === 'positive') {
+    const handleChoiceSelection = (choice: { text: string; type: 'positive' | 'negative' | 'neutral' }) => {
+        if (choice.type === 'positive') {
             setPositiveStreak((prev) => prev + 1);
             setNegativeStreak(0);
-        } else if (choiceType === 'negative') {
+        } else if (choice.type === 'negative') {
             setNegativeStreak((prev) => prev + 1);
             setPositiveStreak(0);
         } else {
@@ -92,7 +120,7 @@ const Game: React.FC = () => {
             Alert.alert('Dénouement atteint', `Votre aventure s'est terminée avec un dénouement ${outcomeType}.`);
             setStep(1);
         } else {
-            generateAdventure();
+            generateAdventure(choice.text);
         }
     };
 
@@ -100,7 +128,7 @@ const Game: React.FC = () => {
         if (step === 1) {
             return (
                 <View style={styles.stepContainer}>
-                    <Text style={styles.title}>Bienvenue dans l’aventure interactive !</Text>
+                    <Text style={styles.title}>Bienvenue dans ton aventure !</Text>
                     <TextInput
                         style={styles.input}
                         placeholder="Quel est ton nom ?"
@@ -121,17 +149,35 @@ const Game: React.FC = () => {
         if (step === 2) {
             return (
                 <View style={styles.stepContainer}>
-                    <Text style={styles.title}>Choisis un thème pour ton aventure :</Text>
-                    {['Voyage', 'Forêt enchantée', 'Espace', 'Mystère'].map((themeOption, index) => (
+                    <Text style={styles.title}>Choisis un point de départ :</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Entre un point de départ"
+                        value={startingPoint}
+                        onChangeText={setStartingPoint}
+                    />
+                    <Pressable
+                        style={styles.button}
+                        onPress={() => {
+                            if (startingPoint.trim()) {
+                                generateAdventure();
+                            }
+                        }}
+                        disabled={!startingPoint.trim()}
+                    >
+                        <Text style={styles.buttonText}>Valider le point de départ personnalisé</Text>
+                    </Pressable>
+                    <Text style={styles.title}>Ou bien choisis de : </Text>
+                    {['Partir d’un aéroport', 'Partir d’un port', 'Partir en train'].map((point, index) => (
                         <Pressable
                             key={index}
                             style={styles.choiceButton}
                             onPress={() => {
-                                setTheme(themeOption);
+                                setStartingPoint(point);
                                 generateAdventure();
                             }}
                         >
-                            <Text style={styles.choiceButtonText}>{themeOption}</Text>
+                            <Text style={styles.choiceButtonText}>{point}</Text>
                         </Pressable>
                     ))}
                 </View>
@@ -157,7 +203,7 @@ const Game: React.FC = () => {
                             <Pressable
                                 key={index}
                                 style={styles.choiceButton}
-                                onPress={() => handleChoiceSelection(choice.type)}
+                                onPress={() => handleChoiceSelection(choice)}
                             >
                                 <Text style={styles.choiceButtonText}>{choice.text}</Text>
                             </Pressable>
