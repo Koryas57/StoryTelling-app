@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
 },
 consequenceText: {
     width: '100%',
-    fontSize: typography.fonstSizeSuperMedium,
+    fontSize: typography.fontSizeSuperMedium,
     fontWeight: typography.fontWeightRegular,
     color: colors.whiteText,
     marginBottom: spacing.large,

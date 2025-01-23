@@ -344,28 +344,29 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
 
     const handlePhaseEnd = () => {
         const dominantTrait = Object.entries(characterTraits).sort((a, b) => b[1] - a[1])[0][0];
-        let nextScreen: keyof RootStackParamList | undefined;
 
-        switch (dominantTrait) {
-            case 'ambitieux':
-                nextScreen = 'TeenageAmbitious';
-                break;
-            case 'prudent':
-                nextScreen = 'TeenagePrudent';
-                break;
-            case 'timide':
-                nextScreen = 'TeenageTimid';
-                break;
-            case 'aventureux':
-                nextScreen = 'TeenageAdventurous';
-                break;
-            default:
-                Alert.alert('Erreur', 'Impossible de déterminer le trait dominant.');
-                return;
-        }
+        // Récupérer les compétences liées aux choix de chaque jour
+        const acquiredSkills = Object.entries(storyData).reduce((skills: string[], [day, dayData]) => {
+            const chosenType = Object.keys(characterTraits).find(
+                (trait) => characterTraits[trait as keyof typeof characterTraits] > 0
+            );
+            if (dayData.consequences && chosenType && dayData.consequences[chosenType]) {
+                const skillTitle = dayData.consequences[chosenType].skillTitle;
+                skills.push(skillTitle);
+            }
+            return skills;
+        }, []);
 
-        navigation.replace(nextScreen, { name, gender });
+        // Naviguer vers TransitionScreen avec les compétences acquises
+        navigation.replace('TransitionScreen', {
+            name,
+            gender,
+            dominantTrait,
+            skills: acquiredSkills, // Envoie les compétences acquises
+        });
     };
+
+
 
     return (
         <View style={styles.container}>

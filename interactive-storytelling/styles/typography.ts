@@ -3,7 +3,7 @@ import { TextStyle } from 'react-native';
 const typography: {
   fontSizeSmall: number;
   fontSizeMedium: number;
-  fonstSizeSuperMedium: number,
+  fontSizeSuperMedium: number,
   fontSizeLarge: number;
   fontWeightLight: TextStyle['fontWeight'];
   fontWeightRegular: TextStyle['fontWeight'];
@@ -11,7 +11,7 @@ const typography: {
 } = {
   fontSizeSmall: 14,
   fontSizeMedium: 18,
-  fonstSizeSuperMedium: 20,
+  fontSizeSuperMedium: 20,
   fontSizeLarge: 24,
   fontWeightLight: '300',
   fontWeightRegular: '400',

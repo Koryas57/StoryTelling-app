@@ -4,12 +4,19 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './screens/Home/Home';
 import Game from './screens/Game/Game';
 import Childhood from './screens/Story/Childhood/Childhood';
+import TransitionScreen from './screens/Story/TransitionScreen/TransitionScreen';
 
 // Définition des routes pour le typage
 export type RootStackParamList = {
   Home: undefined;
   Game: undefined;
   Childhood: { name: string; gender: string };
+  TransitionScreen: {
+    name: string;
+    gender: string;
+    dominantTrait: string;
+    skills: string[]
+  };
   TeenageAmbitious: { name: string; gender: string };
   TeenagePrudent: { name: string; gender: string };
   TeenageTimid: { name: string; gender: string };
@@ -36,6 +43,12 @@ const App: React.FC = () => {
         <Stack.Screen
           name="Childhood"
           component={Childhood}
+          options={{ headerShown: false }}
+        />
+        {/* Autres écrans */}
+        <Stack.Screen
+          name="TransitionScreen"
+          component={TransitionScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>
