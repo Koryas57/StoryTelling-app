@@ -3,7 +3,6 @@ import { View, Text, Pressable } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import styles from './Home.styles';
-import { OPENAI_API_KEY } from '@env';
 
 type HomeProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 

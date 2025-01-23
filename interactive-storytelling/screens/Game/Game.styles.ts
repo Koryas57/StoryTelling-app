@@ -63,6 +63,28 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSizeMedium,
     textAlign: 'center',
   },
+  choiceContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginVertical: spacing.medium,
+    width: '100%',
+  },
+  choiceSelected: {
+    borderWidth: 2,
+    borderColor: colors.primary,
+  },
+  selectedChoice: {
+    backgroundColor: colors.primary, // Changement de couleur pour indiquer la sélection
+    borderColor: colors.secondary,
+    borderWidth: 2,
+  },
+  startButton: {
+    marginTop: 24,
+    backgroundColor: colors.primary,
+    paddingVertical: 16,
+    alignItems: 'center',
+    borderRadius: 8,
+  },
   hud: {
     flexDirection: 'row-reverse',
     justifyContent: 'space-between',
