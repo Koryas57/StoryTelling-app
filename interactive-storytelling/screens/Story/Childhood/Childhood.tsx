@@ -1,8 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, Pressable, Alert, Image } from 'react-native';
+import { View, Text, ScrollView, Pressable, Alert, Image, ImageSourcePropType } from 'react-native';
 import styles from './Childhood.styles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
+import Childhood1 from '../../../assets/Childhood1.webp'
+import Childhood2 from '../../../assets/Childhood2.webp'
+import Childhood3 from '../../../assets/Childhood3.webp'
+import Childhood4 from '../../../assets/Childhood4.webp'
+import Childhood5 from '../../../assets/Childhood5.webp'
+import Childhood6 from '../../../assets/Childhood6.webp'
+import Childhood7 from '../../../assets/Childhood7.webp'
 
 type ChildhoodProps = NativeStackScreenProps<RootStackParamList, 'Childhood'>;
 
@@ -11,9 +18,11 @@ type Choice = {
     type: 'ambitieux' | 'prudent' | 'timide' | 'aventureux';
 };
 
+
 type StoryDay = {
-    text: string;
-    image: string;
+    title: string;
+    text: (name: string, gender: string) => string;
+    image: ImageSourcePropType; // Utilisez le type correct pour les images
     choices: Choice[];
 };
 
@@ -27,7 +36,7 @@ const storyData: Record<
         text: (name, gender) =>
             `Dans la lumière douce du matin, ${name} ouvre les yeux. Les rayons du soleil traversent les rideaux colorés de la chambre, créant des formes amusantes sur le mur. Un doux bruit de vaisselle vient de la cuisine, et ${gender === 'masculin' ? 'il' : 'elle'
             } sent l’odeur des tartines grillées. Ce matin, tout semble plus grand, plus intéressant. Peut-être est-ce une journée spéciale.`,
-        image: 'https://via.placeholder.com/300',
+        image: Childhood1,
         choices: [
             { text: 'Sauter du lit et aller explorer dehors', type: 'aventureux' },
             { text: 'Appeler maman ou papa pour demander quoi faire', type: 'prudent' },
@@ -40,7 +49,7 @@ const storyData: Record<
         text: (name, gender) =>
             `Dans le jardin, une fleur différente attire l’attention de ${name}. Elle brille presque sous le soleil. Mais à côté, un vieil arrosoir semble avoir été abandonné, rempli d’eau verte. Chaque détail du jardin semble cacher un secret. ${name} hésite, mais ${gender === 'masculin' ? 'son' : 'sa'
             } envie d’en savoir plus grandit.`,
-        image: 'https://via.placeholder.com/300',
+        image: Childhood2,
         choices: [
             { text: 'Tenter de toucher la fleur brillante', type: 'aventureux' },
             { text: 'Aller chercher un adulte pour tout lui montrer', type: 'prudent' },
@@ -53,7 +62,7 @@ const storyData: Record<
         text: (name, gender) =>
             `Au parc, ${name} aperçoit un enfant assis seul sur un banc, tenant un cerf-volant cassé. ${gender === 'masculin' ? 'Il' : 'Elle'
             } regarde tristement le ciel. Quelque chose pousse ${name} à s’approcher, mais une pointe d’hésitation reste. Une opportunité pour une nouvelle amitié ou peut-être plus ?`,
-        image: 'https://via.placeholder.com/300',
+        image: Childhood3,
         choices: [
             { text: 'Propose de réparer le cerf-volant', type: 'ambitieux' },
             { text: 'Observe en silence à distance', type: 'timide' },
@@ -66,7 +75,7 @@ const storyData: Record<
         text: (name, gender) =>
             `À table, les adultes parlent fort. ${name} entend des mots compliqués et se sent un peu perdu(e). Ce n’est pas habituel. L’assiette de ${name} reste intacte, car ${gender === 'masculin' ? 'il' : 'elle'
             } n’est pas sûr(e) de ce qu’${gender === 'masculin' ? 'il' : 'elle'} doit faire. Une étrange tension remplit la pièce, mais il y a peut-être un moyen d’aider.`,
-        image: 'https://via.placeholder.com/300',
+        image: Childhood4,
         choices: [
             { text: 'Proposer de raconter une histoire pour changer l’ambiance', type: 'ambitieux' },
             { text: 'Rester silencieux et regarder son assiette', type: 'timide' },
@@ -79,7 +88,7 @@ const storyData: Record<
         text: (name, gender) =>
             `Un orage violent éclate, secouant la maison avec fracas. ${name} se réveille en sursaut, le cœur battant à toute vitesse. Les éclairs illuminent la pièce, et un bruit étrange vient de la porte du jardin. ${gender === 'masculin' ? 'Un mélange de peur et de courage surgit en lui.' : 'Un mélange de peur et de courage surgit en elle.'
             }`,
-        image: 'https://via.placeholder.com/300',
+        image: Childhood5,
         choices: [
             { text: 'Explore le jardin malgré l’orage', type: 'aventureux' },
             { text: 'Reste caché(e) sous tes couvertures', type: 'timide' },
@@ -90,10 +99,8 @@ const storyData: Record<
     6: {
         title: 'La rentrée des découvertes',
         text: (name, gender) =>
-            `C’est le grand jour : la rentrée scolaire. ${name} tient ${gender === 'masculin' ? 'son' : 'sa'
-            } sac avec nervosité en observant les enfants qui rient et jouent déjà dans la cour. Quel sera ${gender === 'masculin' ? 'son' : 'sa'
-            } première action dans ce nouvel univers ?`,
-        image: 'https://via.placeholder.com/300',
+            `C’est le grand jour : la rentrée scolaire. ${name} tient son sac avec nervosité en observant les enfants qui rient et jouent déjà dans la cour. Quel sera sa première action dans ce nouvel univers ?`,
+        image: Childhood6,
         choices: [
             { text: 'Va saluer un groupe d’enfants', type: 'aventureux' },
             { text: 'Observe les autres de loin', type: 'timide' },
@@ -106,7 +113,7 @@ const storyData: Record<
         text: (name, gender) =>
             `C’est le jour du tournoi de ballon. ${name} est au centre de l’attention, avec une opportunité de briller. ${gender === 'masculin' ? 'Il' : 'Elle'
             } ressent la pression et l’excitation du moment. Le choix de l’action marquera les esprits.`,
-        image: 'https://via.placeholder.com/300',
+        image: Childhood7,
         choices: [
             { text: 'Tente un coup risqué', type: 'aventureux' },
             { text: 'Passe la balle à un coéquipier', type: 'timide' },
@@ -124,7 +131,6 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
     const [currentDay, setCurrentDay] = useState<number>(1);
     const [currentText, setCurrentText] = useState<string>('');
     const [choices, setChoices] = useState<Choice[]>([]);
-    const [imageUri, setImageUri] = useState<string>('');
     const [characterTraits, setCharacterTraits] = useState<{
         ambitieux: number;
         prudent: number;
@@ -141,7 +147,6 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
         if (currentDay <= 7) {
             const dayData = storyData[currentDay];
             setCurrentText(dayData.text(name, gender));
-            setImageUri(dayData.image);
             setChoices(dayData.choices);
         } else {
             handlePhaseEnd();
@@ -191,10 +196,10 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
                     <Text style={styles.hudText}>Jour {currentDay} / 7</Text>
                     <Text style={styles.hudText}>Enfance de {name}</Text>
                 </View>
-                {imageUri ? (
-                    <Image source={{ uri: imageUri }} style={styles.adventureImage} />
+                {storyData[currentDay]?.image ? (
+                    <Image source={storyData[currentDay].image} style={styles.adventureImage} />
                 ) : (
-                    <Text style={styles.errorText}>Aucune image disponible.</Text>
+                    <Text style={styles.errorText}>Aucune image disponible pour ce jour.</Text>
                 )}
                 <Text style={styles.adventureText}>{currentText}</Text>
                 <View style={styles.choicesContainer}>
