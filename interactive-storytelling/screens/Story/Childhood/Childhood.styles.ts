@@ -6,7 +6,7 @@ import typography from '../../../styles/typography';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.blackBackground,
     padding: spacing.medium,
   },
   scrollContainer: {
@@ -21,8 +21,10 @@ const styles = StyleSheet.create({
     marginBottom: spacing.medium,
   },
   hudText: {
-    fontSize: typography.fontSizeSmall,
-    color: colors.text,
+    marginTop: spacing.extraLarge,
+    paddingVertical: spacing.medium,
+    fontSize: typography.fontSizeMedium,
+    color: colors.whiteText,
   },
   adventureImage: {
     width: '100%',
@@ -32,7 +34,7 @@ const styles = StyleSheet.create({
   },
   adventureText: {
     fontSize: typography.fontSizeMedium,
-    color: colors.text,
+    color: colors.whiteText,
     textAlign: 'center',
     marginBottom: spacing.large,
     paddingHorizontal: spacing.medium,

@@ -6,7 +6,7 @@ import typography from '../../styles/typography';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: colors.blackBackground,
   },
   scrollContainer: {
     flexGrow: 1, // S'assurer que le ScrollView prend toute la hauteur
@@ -22,8 +22,8 @@ const styles = StyleSheet.create({
   title: {
     fontSize: typography.fontSizeLarge,
     fontWeight: typography.fontWeightBold,
-    color: colors.text,
-    marginBottom: spacing.large,
+    color: colors.whiteText,
+    marginBottom: spacing.extraLarge,
     textAlign: 'center',
   },
   input: {
@@ -64,8 +64,9 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   choiceContainer: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     justifyContent: 'space-around',
+    alignItems: 'center',
     marginVertical: spacing.medium,
     width: '100%',
   },
@@ -81,7 +82,7 @@ const styles = StyleSheet.create({
   startButton: {
     marginTop: 24,
     backgroundColor: colors.primary,
-    paddingVertical: 16,
+    padding: 16,
     alignItems: 'center',
     borderRadius: 8,
   },
@@ -116,11 +117,6 @@ const styles = StyleSheet.create({
     color: colors.error,
     textAlign: 'center',
     marginTop: spacing.medium,
-  },
-  choicesContainer: {
-    alignItems: 'center',
-    marginTop: spacing.medium,
-    width: '100%',
   },
 });
 

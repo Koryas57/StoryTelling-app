@@ -22,7 +22,7 @@ const Game: React.FC<GameProps> = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <Text style={styles.title}>Bienvenue dans l’aventure interactive !</Text>
+                <Text style={styles.title}>Bienvenue dans ton aventure interactive !</Text>
 
                 {/* Input pour le nom */}
                 <TextInput
@@ -37,20 +37,20 @@ const Game: React.FC<GameProps> = ({ navigation }) => {
                     <Pressable
                         style={[
                             styles.choiceButton,
-                            gender === 'masculin' && styles.selectedChoice,
-                        ]}
-                        onPress={() => setGender('masculin')}
-                    >
-                        <Text style={styles.choiceButtonText}>Masculin</Text>
-                    </Pressable>
-                    <Pressable
-                        style={[
-                            styles.choiceButton,
                             gender === 'féminin' && styles.selectedChoice,
                         ]}
                         onPress={() => setGender('féminin')}
                     >
                         <Text style={styles.choiceButtonText}>Féminin</Text>
+                    </Pressable>
+                    <Pressable
+                        style={[
+                            styles.choiceButton,
+                            gender === 'masculin' && styles.selectedChoice,
+                        ]}
+                        onPress={() => setGender('masculin')}
+                    >
+                        <Text style={styles.choiceButtonText}>Masculin</Text>
                     </Pressable>
                 </View>
 
