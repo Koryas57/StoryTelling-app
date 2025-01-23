@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   consequenceTitle: {
+    width: '80%',
     fontSize: typography.fontSizeLarge,
     fontWeight: typography.fontWeightBold,
     color: colors.whiteText,
@@ -64,11 +65,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
 },
 consequenceText: {
-    fontSize: typography.fontSizeMedium,
+    width: '100%',
+    fontSize: typography.fonstSizeSuperMedium,
     fontWeight: typography.fontWeightRegular,
     color: colors.whiteText,
     marginBottom: spacing.large,
     textAlign: 'center',
+},
+skillTitle: {
+  fontSize: typography.fontSizeLarge,
+  fontWeight: typography.fontWeightBold,
+  color: colors.success,
+  textAlign: 'center',
+  marginBottom: spacing.extraLarge,
 },
 nextButton: {
     backgroundColor: colors.primary,
