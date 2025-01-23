@@ -56,6 +56,31 @@ const styles = StyleSheet.create({
     fontWeight: typography.fontWeightBold,
     textAlign: 'center',
   },
+  consequenceTitle: {
+    fontSize: typography.fontSizeLarge,
+    fontWeight: typography.fontWeightBold,
+    color: colors.whiteText,
+    marginBottom: spacing.small,
+    textAlign: 'center',
+},
+consequenceText: {
+    fontSize: typography.fontSizeMedium,
+    fontWeight: typography.fontWeightRegular,
+    color: colors.whiteText,
+    marginBottom: spacing.large,
+    textAlign: 'center',
+},
+nextButton: {
+    backgroundColor: colors.primary,
+    padding: spacing.medium,
+    borderRadius: spacing.small,
+},
+nextButtonText: {
+    fontSize: typography.fontSizeMedium,
+    fontWeight: typography.fontWeightBold,
+    color: colors.white,
+    textAlign: 'center',
+},
   errorText: {
     fontSize: typography.fontSizeSmall,
     color: colors.error,

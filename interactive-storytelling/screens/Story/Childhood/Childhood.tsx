@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, Pressable, Alert, Image, ImageSourcePropType } from 'react-native';
+import { View, Text, ScrollView, Pressable, Image, ImageSourcePropType, Alert } from 'react-native';
 import styles from './Childhood.styles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
@@ -18,14 +18,13 @@ type Choice = {
     type: 'ambitieux' | 'prudent' | 'timide' | 'aventureux';
 };
 
-
 type StoryDay = {
     title: string;
     text: (name: string, gender: string) => string;
-    image: ImageSourcePropType; // Utilisez le type correct pour les images
+    image: ImageSourcePropType;
     choices: Choice[];
+    consequences?: Record<string, string>;
 };
-
 
 const storyData: Record<
     number,
@@ -43,6 +42,12 @@ const storyData: Record<
             { text: 'Rester dans la chambre et observer les ombres', type: 'timide' },
             { text: 'Courir à la cuisine pour aider', type: 'ambitieux' },
         ],
+        consequences: {
+            aventureux: 'Vous explorez le jardin et découvrez un monde de mystères.',
+            prudent: 'Vous appelez vos parents et ils vous aident à bien commencer la journée.',
+            timide: 'Vous restez observateur, fasciné par les formes des ombres.',
+            ambitieux: 'Vous aidez à la cuisine et recevez des félicitations.',
+        },
     },
     2: {
         title: 'Une curiosité étrange',
@@ -123,14 +128,14 @@ const storyData: Record<
     },
 };
 
-
-
 const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
     const { name, gender } = route.params;
 
     const [currentDay, setCurrentDay] = useState<number>(1);
     const [currentText, setCurrentText] = useState<string>('');
     const [choices, setChoices] = useState<Choice[]>([]);
+    const [consequence, setConsequence] = useState<string>('');
+    const [showConsequence, setShowConsequence] = useState<boolean>(false);
     const [characterTraits, setCharacterTraits] = useState<{
         ambitieux: number;
         prudent: number;
@@ -153,18 +158,25 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
         }
     }, [currentDay]);
 
-    const handleChoiceSelection = (type: 'ambitieux' | 'prudent' | 'timide' | 'aventureux') => {
-        setCharacterTraits((prevTraits) => ({
-            ...prevTraits,
-            [type]: prevTraits[type] + 1,
+    const handleChoiceSelection = (type: keyof typeof characterTraits) => {
+        setCharacterTraits((prev) => ({
+            ...prev,
+            [type]: prev[type] + 1,
         }));
-        setCurrentDay((prevDay) => prevDay + 1);
+        const selectedConsequence = storyData[currentDay]?.consequences?.[type] || '';
+        setConsequence(selectedConsequence);
+        setShowConsequence(true);
+    };
+
+    const handleNextDay = () => {
+        setShowConsequence(false);
+        setConsequence('');
+        setCurrentDay((prev) => prev + 1);
     };
 
     const handlePhaseEnd = () => {
-        let nextScreen: keyof RootStackParamList | undefined;
-
         const dominantTrait = Object.entries(characterTraits).sort((a, b) => b[1] - a[1])[0][0];
+        let nextScreen: keyof RootStackParamList | undefined;
 
         switch (dominantTrait) {
             case 'ambitieux':
@@ -184,9 +196,7 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
                 return;
         }
 
-        if (nextScreen) {
-            navigation.replace(nextScreen, { name, gender });
-        }
+        navigation.replace(nextScreen, { name, gender });
     };
 
     return (
@@ -196,23 +206,33 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
                     <Text style={styles.hudText}>Jour {currentDay} / 7</Text>
                     <Text style={styles.hudText}>Enfance de {name}</Text>
                 </View>
-                {storyData[currentDay]?.image ? (
+                {storyData[currentDay]?.image && (
                     <Image source={storyData[currentDay].image} style={styles.adventureImage} />
-                ) : (
-                    <Text style={styles.errorText}>Aucune image disponible pour ce jour.</Text>
                 )}
-                <Text style={styles.adventureText}>{currentText}</Text>
-                <View style={styles.choicesContainer}>
-                    {choices.map((choice, index) => (
-                        <Pressable
-                            key={index}
-                            style={styles.choiceButton}
-                            onPress={() => handleChoiceSelection(choice.type)}
-                        >
-                            <Text style={styles.choiceButtonText}>{choice.text}</Text>
+                {!showConsequence ? (
+                    <>
+                        <Text style={styles.adventureText}>{currentText}</Text>
+                        <View style={styles.choicesContainer}>
+                            {choices.map((choice, index) => (
+                                <Pressable
+                                    key={index}
+                                    style={styles.choiceButton}
+                                    onPress={() => handleChoiceSelection(choice.type)}
+                                >
+                                    <Text style={styles.choiceButtonText}>{choice.text}</Text>
+                                </Pressable>
+                            ))}
+                        </View>
+                    </>
+                ) : (
+                    <>
+                        <Text style={styles.consequenceTitle}>Conséquence :</Text>
+                        <Text style={styles.consequenceText}>{consequence}</Text>
+                        <Pressable style={styles.nextButton} onPress={handleNextDay}>
+                            <Text style={styles.nextButtonText}>Continuer</Text>
                         </Pressable>
-                    ))}
-                </View>
+                    </>
+                )}
             </ScrollView>
         </View>
     );

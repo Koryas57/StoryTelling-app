@@ -8,6 +8,7 @@ const colors = {
   white: '#ffffff', // Blanc
   inputBorder: '#cccccc', // Bordure des inputs (gris clair)
   inputBackground: '#f9f9f9', // Fond des inputs (blanc cassé)
+  buttonBackground: '#6433def',
   buttonText: '#ffffff', // Texte des boutons (blanc)
   error: '#FF4D4D',
 };
