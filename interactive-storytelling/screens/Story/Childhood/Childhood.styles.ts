@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, ScrollView } from 'react-native';
 import colors from '../../../styles/colors';
 import spacing from '../../../styles/spacing';
 import typography from '../../../styles/typography';
@@ -6,18 +6,18 @@ import typography from '../../../styles/typography';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.blackBackground,
-    padding: spacing.medium,
+    backgroundColor: colors.background,
   },
   scrollContainer: {
     alignItems: 'center',
     paddingBottom: spacing.large,
+    backgroundColor: colors.text
   },
   hud: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     width: '100%',
-    paddingHorizontal: spacing.medium,
+    paddingHorizontal: spacing.large,
     marginBottom: spacing.medium,
   },
   hudText: {
@@ -26,63 +26,90 @@ const styles = StyleSheet.create({
     fontSize: typography.fontSizeMedium,
     color: colors.whiteText,
   },
+  hudTitle: {
+    fontFamily: 'Merriweather-BoldItalic',
+    marginBottom: spacing.large,
+    paddingHorizontal: spacing.medium,
+    paddingVertical: spacing.small,
+    fontSize: typography.fontSizeLarge,
+    color: colors.whiteText,
+    backgroundColor: colors.secondary,
+    borderRadius: spacing.large,
+    textShadowRadius: 10,
+    textShadowColor: colors.whiteText,
+  },
   adventureImage: {
-    width: '100%',
-    height: 200,
+    width: '96%',
+    height: 300,
     borderRadius: 10,
     marginBottom: spacing.large,
+    boxShadow: '0 0 10px 0.25px white',
   },
   adventureText: {
-    fontSize: typography.fontSizeMedium,
+    width: '100%',
+    overflow: 'scroll',
+    fontFamily: 'Merriweather-LightItalic',
+    fontSize: typography.fontSizeSuperMedium,
     color: colors.whiteText,
     textAlign: 'center',
-    marginBottom: spacing.large,
+    marginVertical: spacing.small,
     paddingHorizontal: spacing.medium,
   },
   choicesContainer: {
     width: '100%',
-    marginTop: spacing.large,
+    marginTop: spacing.extraLarge,
+    paddingHorizontal: spacing.medium
   },
   choiceButton: {
     backgroundColor: colors.secondary,
     borderRadius: 8,
     padding: spacing.medium,
-    marginBottom: spacing.medium,
+    marginBottom: spacing.large,
     alignItems: 'center',
   },
   choiceButtonText: {
-    fontSize: typography.fontSizeMedium,
+    fontFamily: 'Merriweather-Bold',
+    fontSize: typography.fontSizeSuperMedium,
     color: colors.buttonText,
-    fontWeight: typography.fontWeightBold,
     textAlign: 'center',
   },
   consequenceTitle: {
-    width: '80%',
+    width: '100%',
     fontSize: typography.fontSizeLarge,
-    fontWeight: typography.fontWeightBold,
+    fontFamily: 'Merriweather-Bold',
     color: colors.whiteText,
-    marginBottom: spacing.small,
+    marginVertical: spacing.medium,
     textAlign: 'center',
 },
 consequenceText: {
     width: '100%',
     fontSize: typography.fontSizeSuperMedium,
-    fontWeight: typography.fontWeightRegular,
+    fontFamily: 'Merriweather-BoldItalic',
     color: colors.whiteText,
     marginBottom: spacing.large,
+    padding: spacing.medium,
     textAlign: 'center',
 },
 skillTitle: {
+  width: '96%',
   fontSize: typography.fontSizeLarge,
-  fontWeight: typography.fontWeightBold,
+  fontFamily: 'Merriweather-Bold',
   color: colors.success,
   textAlign: 'center',
+  textShadowRadius: 5,
+  textShadowColor: colors.text,
   marginBottom: spacing.extraLarge,
+  backgroundColor: colors.secondary,
+  borderRadius: spacing.small,
+  boxShadow: '0 0 10px 0.25px white',
+  padding: spacing.small,
+  transform: 'rotate',
 },
 nextButton: {
     backgroundColor: colors.primary,
     padding: spacing.medium,
     borderRadius: spacing.small,
+    boxShadow: '0 0 5px 0.25px white',
 },
 nextButtonText: {
     fontSize: typography.fontSizeMedium,
@@ -96,6 +123,31 @@ nextButtonText: {
     textAlign: 'center',
     marginTop: spacing.medium,
   },
+  transitionContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+},
+transitionText: {
+    fontSize: 100,
+    fontFamily: 'Merriweather-Bold',
+    color: '#fff',
+    textShadowColor: 'rgba(0, 0, 0, 0.8)',
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
+},
+transitionButton: {
+    marginTop: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    padding: 12,
+    borderRadius: 8,
+    boxShadow: '0 0 10px 0.25px white',
+},
+transitionButtonText: {
+    color: '#fff',
+    fontSize: spacing.large,
+    textAlign: 'center',
+},
 });
 
 export default styles;

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, ScrollView, Pressable, Image, ImageSourcePropType, Alert } from 'react-native';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text, ScrollView, Pressable, Image, ImageSourcePropType, Alert, Modal, ImageBackground } from 'react-native';
 import styles from './Childhood.styles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
@@ -293,14 +293,16 @@ const storyData: Record<
 };
 
 const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
-    const { name, gender } = route.params;
+    const { name, gender, title } = route.params;
 
+    const scrollViewRef = useRef<ScrollView>(null);
     const [currentDay, setCurrentDay] = useState<number>(1);
     const [currentText, setCurrentText] = useState<string>('');
     const [choices, setChoices] = useState<Choice[]>([]);
     const [userChoices, setUserChoices] = useState<Record<number, keyof typeof characterTraits>>({});
     const [consequence, setConsequence] = useState<string>('');
     const [showConsequence, setShowConsequence] = useState<boolean>(false);
+    const [showTransition, setShowTransition] = useState<boolean>(false); // Nouvel état pour l'écran de transition
     const [skillTitle, setSkillTitle] = useState<string>('');
     const [characterTraits, setCharacterTraits] = useState<{
         ambitieux: number;
@@ -324,16 +326,22 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
         }
     }, [currentDay]);
 
+    useEffect(() => {
+        if (showConsequence || scrollViewRef.current) {
+            scrollViewRef.current?.scrollTo({ y: 0, animated: false }); // Ramène en haut avec animation
+        }
+    }, [currentDay, showConsequence]); // Trigger sur le jour actuel ou la modal
+
+
     const handleChoiceSelection = (type: keyof typeof characterTraits) => {
         setCharacterTraits((prev) => ({
             ...prev,
             [type]: prev[type] + 1,
         }));
 
-        // Enregistrer le choix de l'utilisateur pour le jour actuel
         setUserChoices((prev) => ({
             ...prev,
-            [currentDay]: type, // Associe le jour actuel au choix effectué
+            [currentDay]: type,
         }));
 
         const selectedConsequence = storyData[currentDay]?.consequences?.[type];
@@ -347,36 +355,43 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
     const handleNextDay = () => {
         setShowConsequence(false);
         setConsequence('');
-        setCurrentDay((prev) => prev + 1);
+        setShowTransition(true); // Affiche l'écran de transition
+    };
+
+    const handleManualContinue = () => {
+        setShowTransition(false);
+        if (currentDay < 7) {
+            setCurrentDay((prev) => prev + 1); // N'incrémente que si `currentDay` est inférieur à 7
+        } else {
+            handlePhaseEnd(); // Appeler directement la fin de phase
+        }
     };
 
     const handlePhaseEnd = () => {
         const dominantTrait = Object.entries(characterTraits).sort((a, b) => b[1] - a[1])[0][0];
 
-        // Récupère les compétences et filtre les valeurs nulles
         const acquiredSkills = Object.entries(userChoices)
             .map(([day, choice]) => storyData[Number(day)]?.consequences?.[choice]?.skillTitle)
-            .filter((skill): skill is string => !!skill); // Filtre les valeurs nulles ou indéfinies
+            .filter((skill): skill is string => !!skill);
 
         navigation.replace('TransitionScreen', {
             name,
             gender,
+            title,
             dominantTrait,
-            skills: acquiredSkills, // Maintenant `skills` est un tableau de chaînes uniquement
+            skills: acquiredSkills,
         });
     };
 
-
-
-
-
     return (
         <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
+            <ScrollView ref={scrollViewRef}
+                contentContainerStyle={styles.scrollContainer}>
                 <View style={styles.hud}>
                     <Text style={styles.hudText}>Jour {currentDay} / 7</Text>
                     <Text style={styles.hudText}>Enfance de {name}</Text>
                 </View>
+                <Text style={styles.hudTitle}>{storyData[currentDay]?.title || 'Titre indisponible'}</Text>
                 {storyData[currentDay]?.image && (
                     <Image source={storyData[currentDay].image} style={styles.adventureImage} />
                 )}
@@ -400,7 +415,7 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
                         <Text style={styles.consequenceTitle}>💫 {name} gagne une compétence du niveau "Enfance" :</Text>
                         <Text style={styles.consequenceText}>{consequence || 'Aucune conséquence définie pour ce choix.'}</Text>
                         {skillTitle ? (
-                            <Text style={styles.skillTitle}>{'✅' + (skillTitle)}</Text>
+                            <Text style={styles.skillTitle}>{'✅' + skillTitle}</Text>
                         ) : (
                             <Text style={styles.skillTitle}>Aucune compétence acquise.</Text>
                         )}
@@ -410,6 +425,31 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
                     </>
                 )}
             </ScrollView>
+
+
+            {showTransition && (
+                currentDay <= 6 ? (
+                    <Modal visible={showTransition} animationType="fade">
+                        <ImageBackground
+                            source={storyData[currentDay + 1]?.image}
+                            style={styles.transitionContainer}
+                        >
+                            <Text style={styles.transitionText}>Jour {currentDay + 1}</Text>
+                            <Pressable
+                                style={styles.transitionButton}
+                                onPress={handleManualContinue}
+                            >
+                                <Text style={styles.transitionButtonText}>Continuer</Text>
+                            </Pressable>
+                        </ImageBackground>
+                    </Modal>
+                ) : (
+                    (() => {
+                        handlePhaseEnd(); // Appelle la fonction pour terminer la phase
+                        return null; // Retourne null pour que React ne rende rien
+                    })()
+                )
+            )}
         </View>
     );
 };

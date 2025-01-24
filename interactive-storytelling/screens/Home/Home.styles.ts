@@ -10,6 +10,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: colors.blackBackground,
   },
+  loadingContainer: {
+    flex: 1,
+    justifyContent: 'center', 
+    alignItems: 'center',
+    backgroundColor: '#f0f0f0',
+  },
   title: {
     fontSize: typography.fontSizeLarge,
     fontWeight: typography.fontWeightBold,
@@ -23,6 +29,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   buttonText: {
+    fontFamily: 'Merriweather-BoldItalic',
     fontSize: typography.fontSizeMedium,
     fontWeight: typography.fontWeightRegular,
     color: colors.white,

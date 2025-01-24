@@ -22,12 +22,12 @@ const Game: React.FC<GameProps> = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <Text style={styles.title}>Bienvenue dans ton aventure interactive !</Text>
+                <Text style={styles.title}> Bienvenue dans ton aventure interactive           🧟‍♀️📱</Text>
 
                 {/* Input pour le nom */}
                 <TextInput
                     style={styles.input}
-                    placeholder="Quel est ton nom ?"
+                    placeholder="Quel est ton nom ?   ⌨️"
                     value={name}
                     onChangeText={setName}
                 />
@@ -60,7 +60,7 @@ const Game: React.FC<GameProps> = ({ navigation }) => {
                     onPress={handleStartGame}
                     disabled={!name.trim() || !gender}
                 >
-                    <Text style={styles.buttonText}>Commencer l’aventure</Text>
+                    <Text style={styles.buttonText}>➡️ Commencer l’aventure ⬅️</Text>
                 </Pressable>
             </ScrollView>
         </View>

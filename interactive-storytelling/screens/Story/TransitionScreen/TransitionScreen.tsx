@@ -11,7 +11,8 @@ type TransitionScreenProps = NativeStackScreenProps<
 >;
 
 const TransitionScreen: React.FC<TransitionScreenProps> = ({ route, navigation }) => {
-    const { name, gender, dominantTrait, skills } = route.params;
+    const { name, gender, title = 'Résumé de l\'enfance', dominantTrait, skills } = route.params;
+
 
     // Traduction des noms des traits pour affichage
     const traitNames: Record<string, string> = {

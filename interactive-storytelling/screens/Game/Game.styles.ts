@@ -4,6 +4,7 @@ import spacing from '../../styles/spacing';
 import typography from '../../styles/typography';
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     backgroundColor: colors.blackBackground,
@@ -20,13 +21,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
+    fontFamily: 'Merriweather-Bold',
     fontSize: typography.fontSizeLarge,
-    fontWeight: typography.fontWeightBold,
     color: colors.whiteText,
     marginBottom: spacing.extraLarge,
     textAlign: 'center',
   },
   input: {
+    fontFamily: 'Merriweather-BoldItalic',
     width: '80%',
     padding: spacing.medium,
     borderWidth: 1,
@@ -36,6 +38,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.inputBackground,
     color: colors.text,
     fontSize: typography.fontSizeMedium,
+    textAlign: 'center',
   },
   button: {
     backgroundColor: colors.primary,
@@ -46,9 +49,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    color: colors.buttonText,
+    fontFamily: 'Merriweather-Bold',
+    color: colors.whiteText,
     fontSize: typography.fontSizeMedium,
-    fontWeight: typography.fontWeightBold,
   },
   choiceButton: {
     backgroundColor: colors.secondary,
@@ -58,6 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   choiceButtonText: {
+    fontFamily: 'Merriweather-BoldItalic',
     color: colors.buttonText,
     padding: spacing.medium,
     fontSize: typography.fontSizeMedium,
