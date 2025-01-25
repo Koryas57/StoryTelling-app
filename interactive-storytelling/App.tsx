@@ -8,12 +8,20 @@ import Childhood from './screens/Story/Childhood/Childhood';
 import TransitionScreen from './screens/Story/TransitionScreen/TransitionScreen';
 import { useFonts } from 'expo-font/build/FontHooks';
 import { ActivityIndicator, View, Text } from 'react-native';
+import TeenageAdventurous from './screens/Story/Teenage/TeenageAdventurous';
 
 // Définition des routes pour le typage
 export type RootStackParamList = {
   Home: undefined;
   Game: undefined;
   Childhood: {
+    name: string;
+    gender: string;
+    title?: string;
+    currentDay?: number;
+    userChoices?: Record<number, string>;
+  };
+  TeenageAdventurous: {
     name: string;
     gender: string;
     title?: string;
@@ -30,7 +38,6 @@ export type RootStackParamList = {
   TeenageAmbitious: { name: string; gender: string };
   TeenagePrudent: { name: string; gender: string };
   TeenageTimid: { name: string; gender: string };
-  TeenageAdventurous: { name: string; gender: string };
 };
 
 
@@ -72,6 +79,11 @@ const App: React.FC = () => {
         <Stack.Screen
           name="Childhood"
           component={Childhood}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TeenageAdventurous"
+          component={TeenageAdventurous}
           options={{ headerShown: false }}
         />
         <Stack.Screen
