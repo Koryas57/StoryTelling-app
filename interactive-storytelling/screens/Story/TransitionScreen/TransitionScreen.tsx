@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, ImageBackground, Pressable, Alert } from 'react-native';
 import styles from './TransitionScreen.styles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
+import useSound from '../../../hooks/useSound';
+import sounds from '../../../utils/sounds';
 
 
 type TransitionScreenProps = NativeStackScreenProps<
@@ -13,6 +15,14 @@ type TransitionScreenProps = NativeStackScreenProps<
 const TransitionScreen: React.FC<TransitionScreenProps> = ({ route, navigation }) => {
     const { name, gender, title = 'Résumé de l\'enfance', dominantTrait, skills } = route.params;
 
+    const introMusic = useSound(sounds.Intro);
+
+    useEffect(() => {
+        introMusic(); // Lance la musique
+        return () => {
+            introMusic.stop(); // Arrête la musique lorsque le composant est démonté
+        };
+    }, []);
 
     // Traduction des noms des traits pour affichage
     const traitNames: Record<string, string> = {

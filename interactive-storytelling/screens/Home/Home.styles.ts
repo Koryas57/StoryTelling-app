@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
     marginBottom: spacing.large,
   },
   button: {
-    backgroundColor: colors.primary,
+    backgroundColor: colors.secondary,
     paddingVertical: spacing.medium,
     paddingHorizontal: spacing.large,
     borderRadius: 8,
@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
     fontFamily: 'Merriweather-BoldItalic',
     fontSize: typography.fontSizeMedium,
     fontWeight: typography.fontWeightRegular,
-    color: colors.white,
+    color: colors.whiteText,
   },
 });
 

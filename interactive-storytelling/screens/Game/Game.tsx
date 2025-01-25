@@ -3,17 +3,23 @@ import { View, Text, Pressable, TextInput, Alert, ScrollView } from 'react-nativ
 import styles from './Game.styles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
+import useSound from '../../hooks/useSound';
+import sounds from '../../utils/sounds';
 
 type GameProps = NativeStackScreenProps<RootStackParamList, 'Game'>;
 
 const Game: React.FC<GameProps> = ({ navigation }) => {
+    const playPageFlip = useSound(sounds.pageFlip);
+    const choiceSound = useSound(sounds.choiceSound);
+    const choiceStart = useSound(sounds.startSound);
     const [name, setName] = useState<string>(''); // Nom du joueur
     const [gender, setGender] = useState<string>(''); // Genre sélectionné
 
     // Fonction de démarrage du jeu
     const handleStartGame = () => {
         if (name.trim() && gender) {
-            navigation.replace('Childhood', { name, gender });
+            choiceStart(),
+                navigation.replace('Childhood', { name, gender });
         } else {
             Alert.alert('Erreur', 'Veuillez entrer un nom et choisir un sexe pour continuer.');
         }
@@ -35,6 +41,7 @@ const Game: React.FC<GameProps> = ({ navigation }) => {
                 {/* Choix du sexe */}
                 <View style={styles.choiceContainer}>
                     <Pressable
+                        onTouchStart={choiceSound}
                         style={[
                             styles.choiceButton,
                             gender === 'féminin' && styles.selectedChoice,
@@ -44,6 +51,7 @@ const Game: React.FC<GameProps> = ({ navigation }) => {
                         <Text style={styles.choiceButtonText}>Féminin</Text>
                     </Pressable>
                     <Pressable
+                        onTouchStart={choiceSound}
                         style={[
                             styles.choiceButton,
                             gender === 'masculin' && styles.selectedChoice,

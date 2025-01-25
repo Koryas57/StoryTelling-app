@@ -10,6 +10,9 @@ import Childhood4 from '../../../assets/Childhood4.webp'
 import Childhood5 from '../../../assets/Childhood5.webp'
 import Childhood6 from '../../../assets/Childhood6.webp'
 import Childhood7 from '../../../assets/Childhood7.webp'
+import { Audio } from 'expo-av';
+import useSound from '../../../hooks/useSound';
+import sounds from '../../../utils/sounds';
 
 type ChildhoodProps = NativeStackScreenProps<RootStackParamList, 'Childhood'>;
 
@@ -34,7 +37,7 @@ type StoryDay = {
 
 const storyData: Record<
     number,
-    Omit<StoryDay, 'text'> & { title: string; text: (name: string, gender: string) => string }
+    Omit<StoryDay, 'text'> & { title: string; text: (name: string, gender: string) => string; sound: any }
 > = {
     1: {
         title: 'Une première découverte',
@@ -42,6 +45,7 @@ const storyData: Record<
             `Dans la douce lumière du matin, ${name} ouvre les yeux. Les rayons du soleil traversent les rideaux colorés de la chambre, créant des formes amusantes sur le mur. Un doux bruit de vaisselle vient de la cuisine, et ${gender === 'masculin' ? 'il' : 'elle'
             } sent l’odeur des tartines grillées. Ce matin, tout semble plus grand, plus intéressant. Peut-être est-ce une journée spéciale.`,
         image: Childhood1,
+        sound: require('../../../assets/sounds/kitchen.mp3'),
         choices: [
             { text: 'Sauter du lit et aller explorer dehors', type: 'aventureux' },
             { text: 'Appeler maman ou papa pour demander quoi faire', type: 'prudent' },
@@ -83,6 +87,7 @@ const storyData: Record<
         text: (name, gender) =>
             `Dans le jardin, une fleur différente attire l’attention de ${name}. Elle brille presque sous le soleil. Mais à côté, un vieil arrosoir semble avoir été abandonné, rempli d’eau verte. Chaque détail du jardin semble cacher un secret. ${name} hésite, mais son envie d’en savoir plus grandit.`,
         image: Childhood2,
+        sound: require('../../../assets/sounds/GardenBirds.mp3'),
         choices: [
             { text: 'Tenter de toucher la fleur brillante', type: 'aventureux' },
             { text: 'Aller chercher un adulte pour tout lui montrer', type: 'prudent' },
@@ -118,6 +123,7 @@ const storyData: Record<
             `Au parc, ${name} aperçoit un enfant assis seul sur un banc, tenant un cerf-volant cassé. ${gender === 'masculin' ? 'Il' : 'Elle'
             } regarde tristement le ciel. Quelque chose pousse ${name} à s’approcher, mais une pointe d’hésitation reste. Une opportunité pour une nouvelle amitié ou peut-être plus ?`,
         image: Childhood3,
+        sound: require('../../../assets/sounds/AloneTheme.mp3'),
         choices: [
             { text: 'Propose de réparer le cerf-volant', type: 'ambitieux' },
             { text: 'Observe en silence à distance', type: 'timide' },
@@ -155,6 +161,7 @@ const storyData: Record<
             `À table, les adultes parlent fort. ${name} entend des mots compliqués et se sent un peu perdu(e). Ce n’est pas habituel. L’assiette de ${name} reste intacte, car ${gender === 'masculin' ? 'il' : 'elle'
             } n’est pas sûr(e) de ce qu’${gender === 'masculin' ? 'il' : 'elle'} doit faire. Une étrange tension remplit la pièce, mais il y a peut-être un moyen d’aider.`,
         image: Childhood4,
+        sound: require('../../../assets/sounds/dispute.m4a'),
         choices: [
             { text: 'Proposer de raconter une histoire pour changer l’ambiance', type: 'ambitieux' },
             { text: 'Rester silencieux et regarder son assiette', type: 'timide' },
@@ -190,6 +197,7 @@ const storyData: Record<
             `Un orage violent éclate, secouant la maison avec fracas. ${name} se réveille en sursaut, le cœur battant à toute vitesse. Les éclairs illuminent la pièce, et un bruit étrange vient de la porte du jardin. Un mélange de peur et de courage surgit en ${gender === 'masculin' ? 'lui' : 'elle'}.
             `,
         image: Childhood5,
+        sound: require('../../../assets/sounds/nightStorm.mp3'),
         choices: [
             { text: 'Explore le jardin malgré l’orage', type: 'aventureux' },
             { text: 'Reste caché(e) sous tes couvertures', type: 'timide' },
@@ -226,6 +234,7 @@ const storyData: Record<
         text: (name, gender) =>
             `C’est le grand jour : la rentrée scolaire. ${name} tient son sac avec nervosité en observant les enfants qui rient et jouent déjà dans la cour. Quel sera sa première action dans ce nouvel univers ?`,
         image: Childhood6,
+        sound: require('../../../assets/sounds/schoolAmbience.mp3'),
         choices: [
             { text: 'Va saluer un groupe d’enfants', type: 'aventureux' },
             { text: 'Observe les autres de loin', type: 'timide' },
@@ -261,6 +270,7 @@ const storyData: Record<
             `C’est le jour du tournoi de ballon. ${name} est au centre de l’attention, avec une opportunité de briller. ${gender === 'masculin' ? 'Il' : 'Elle'
             } ressent la pression et l’excitation du moment. Le choix de l’action marquera les esprits.`,
         image: Childhood7,
+        sound: require('../../../assets/sounds/SuccessFootball.mp3'),
         choices: [
             { text: 'Tente un coup risqué', type: 'aventureux' },
             { text: 'Passe la balle à un coéquipier', type: 'timide' },
@@ -295,6 +305,11 @@ const storyData: Record<
 const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
     const { name, gender, title } = route.params;
 
+    const [sound, setSound] = useState<Audio.Sound | null>(null);
+    const playPageFlip = useSound(sounds.pageFlip);
+    const choiceSound = useSound(sounds.choiceSound);
+    const levelSound = useSound(sounds.levelSound);
+    const soundIntro = useSound(sounds.Intro)
     const scrollViewRef = useRef<ScrollView>(null);
     const [currentDay, setCurrentDay] = useState<number>(1);
     const [currentText, setCurrentText] = useState<string>('');
@@ -334,6 +349,7 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
 
 
     const handleChoiceSelection = (type: keyof typeof characterTraits) => {
+        choiceSound();
         setCharacterTraits((prev) => ({
             ...prev,
             [type]: prev[type] + 1,
@@ -353,12 +369,14 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
     };
 
     const handleNextDay = () => {
+        playPageFlip();
         setShowConsequence(false);
         setConsequence('');
         setShowTransition(true); // Affiche l'écran de transition
     };
 
     const handleManualContinue = () => {
+        playPageFlip();
         setShowTransition(false);
         if (currentDay < 7) {
             setCurrentDay((prev) => prev + 1); // N'incrémente que si `currentDay` est inférieur à 7
@@ -367,7 +385,18 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
         }
     };
 
-    const handlePhaseEnd = () => {
+    const handlePhaseEnd = async () => {
+        // Joue le son ponctuel
+        levelSound();
+
+        // Arrête et décharge la musique de fond actuelle
+        if (sound) {
+            await sound.stopAsync();
+            await sound.unloadAsync();
+            setSound(null); // Réinitialise l'état du son
+        }
+
+        // Logique de gestion des traits et navigation
         const dominantTrait = Object.entries(characterTraits).sort((a, b) => b[1] - a[1])[0][0];
 
         const acquiredSkills = Object.entries(userChoices)
@@ -381,7 +410,35 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
             dominantTrait,
             skills: acquiredSkills,
         });
+
+        // Facultatif : Jouer un son/musique d'intro pour TransitionScreen
+        const { sound: newSound } = await Audio.Sound.createAsync(sounds.Intro);
+        await newSound.playAsync();
     };
+
+    const playSoundForDay = async (day: number) => {
+        if (sound) {
+            await sound.unloadAsync(); // Décharge le son précédent
+            setSound(null);
+        }
+
+        const daySound = storyData[day]?.sound;
+        if (daySound) {
+            const { sound: newSound } = await Audio.Sound.createAsync(daySound);
+            setSound(newSound);
+            await newSound.playAsync(); // Joue le son
+        }
+    };
+
+    useEffect(() => {
+        playSoundForDay(currentDay);
+        return () => {
+            if (sound) {
+                sound.unloadAsync(); // Nettoie l'ancien son pour éviter les conflits
+            }
+        };
+    }, [currentDay]);
+
 
     return (
         <View style={styles.container}>
@@ -413,12 +470,12 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
                 ) : (
                     <>
                         <Text style={styles.consequenceTitle}>💫 {name} gagne une compétence du niveau "Enfance" :</Text>
-                        <Text style={styles.consequenceText}>{consequence || 'Aucune conséquence définie pour ce choix.'}</Text>
                         {skillTitle ? (
                             <Text style={styles.skillTitle}>{'✅' + skillTitle}</Text>
                         ) : (
                             <Text style={styles.skillTitle}>Aucune compétence acquise.</Text>
                         )}
+                        <Text style={styles.consequenceText}>{consequence || 'Aucune conséquence définie pour ce choix.'}</Text>
                         <Pressable style={styles.nextButton} onPress={handleNextDay}>
                             <Text style={styles.nextButtonText}>Continuer</Text>
                         </Pressable>
