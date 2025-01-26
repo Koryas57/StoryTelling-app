@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: colors.blackBackground,
   },
   scrollContainer: {
     flexGrow: 1, // S'assurer que le ScrollView prend toute la hauteur

@@ -8,7 +8,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: colors.blackBackground,
   },
   loadingContainer: {
     flex: 1,
@@ -22,18 +21,21 @@ const styles = StyleSheet.create({
     color: colors.text,
     marginBottom: spacing.large,
   },
-  button: {
-    backgroundColor: colors.secondary,
-    paddingVertical: spacing.medium,
-    paddingHorizontal: spacing.large,
-    borderRadius: 8,
-  },
   buttonText: {
-    fontFamily: 'Merriweather-BoldItalic',
+    fontFamily: 'Merriweather-Bold',
     fontSize: typography.fontSizeMedium,
-    fontWeight: typography.fontWeightRegular,
-    color: colors.whiteText,
-  },
+    textShadowRadius: 5,
+    textShadowColor: colors.text,
+    color: colors.white,
+    textAlign: 'center',
+},
+  button: {
+    marginTop: 20,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    padding: 12,
+    borderRadius: 8,
+    boxShadow: '0 0 10px 0.25px white',
+},
 });
 
 export default styles;

@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text, Pressable, ImageBackground } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import styles from './Home.styles';
 import useSound from '../../hooks/useSound';
 import sounds from '../../utils/sounds';
+
 
 type HomeProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -26,14 +27,19 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Pressable
-                onTouchStart={choiceSound}
-                style={styles.button}
-                onPress={handleStartGame}>
-                <Text style={styles.buttonText}>Commencer</Text>
-            </Pressable>
-        </View>
+        <ImageBackground
+            source={require('../../assets/mainBackground.webp')} // Chemin vers votre image
+            style={styles.container} // Utilise le style existant
+        >
+            <View style={styles.container}>
+                <Pressable
+                    onTouchStart={choiceSound}
+                    style={styles.button}
+                    onPress={handleStartGame}>
+                    <Text style={styles.buttonText}>Commencer</Text>
+                </Pressable>
+            </View>
+        </ImageBackground>
     );
 };
 

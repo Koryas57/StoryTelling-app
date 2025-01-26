@@ -1,6 +1,6 @@
 const colors = {
-  primary: '#f9c23c', // Couleur principale (bleu)
-  secondary: '#6c757d30', // Couleur secondaire (gris)
+  primary:'rgba(25, 24, 39, 0.83)', // Couleur principale (bleu)
+  secondary: '#6c757d50', // Couleur secondaire (gris)
   background: '#ffffff', // Couleur de fond (blanc)
   blackBackground: '#000000',
   text: '#000000', // Couleur du texte (noir)

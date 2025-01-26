@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, TextInput, Alert, ScrollView } from 'react-native';
+import { View, Text, Pressable, TextInput, Alert, ScrollView, ImageBackground } from 'react-native';
 import styles from './Game.styles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
@@ -26,52 +26,57 @@ const Game: React.FC<GameProps> = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <ScrollView contentContainerStyle={styles.scrollContainer}>
-                <Text style={styles.title}> Bienvenue dans ton aventure interactive           🧟‍♀️📱</Text>
+        <ImageBackground
+            source={require('../../assets/mainBackground.webp')}
+            style={styles.container}
+        >
+            <View style={styles.container}>
+                <ScrollView contentContainerStyle={styles.scrollContainer}>
+                    <Text style={styles.title}> Bienvenue dans ton aventure interactive           🧟‍♀️📱</Text>
 
-                {/* Input pour le nom */}
-                <TextInput
-                    style={styles.input}
-                    placeholder="Quel est ton nom ?   ⌨️"
-                    value={name}
-                    onChangeText={setName}
-                />
+                    {/* Input pour le nom */}
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Quel est ton nom ?   ⌨️"
+                        value={name}
+                        onChangeText={setName}
+                    />
 
-                {/* Choix du sexe */}
-                <View style={styles.choiceContainer}>
+                    {/* Choix du sexe */}
+                    <View style={styles.choiceContainer}>
+                        <Pressable
+                            onTouchStart={choiceSound}
+                            style={[
+                                styles.choiceButton,
+                                gender === 'féminin' && styles.selectedChoice,
+                            ]}
+                            onPress={() => setGender('féminin')}
+                        >
+                            <Text style={styles.choiceButtonText}>Féminin</Text>
+                        </Pressable>
+                        <Pressable
+                            onTouchStart={choiceSound}
+                            style={[
+                                styles.choiceButton,
+                                gender === 'masculin' && styles.selectedChoice,
+                            ]}
+                            onPress={() => setGender('masculin')}
+                        >
+                            <Text style={styles.choiceButtonText}>Masculin</Text>
+                        </Pressable>
+                    </View>
+
+                    {/* Bouton pour commencer */}
                     <Pressable
-                        onTouchStart={choiceSound}
-                        style={[
-                            styles.choiceButton,
-                            gender === 'féminin' && styles.selectedChoice,
-                        ]}
-                        onPress={() => setGender('féminin')}
+                        style={styles.startButton}
+                        onPress={handleStartGame}
+                        disabled={!name.trim() || !gender}
                     >
-                        <Text style={styles.choiceButtonText}>Féminin</Text>
+                        <Text style={styles.buttonText}>➡️ Commencer l’aventure ⬅️</Text>
                     </Pressable>
-                    <Pressable
-                        onTouchStart={choiceSound}
-                        style={[
-                            styles.choiceButton,
-                            gender === 'masculin' && styles.selectedChoice,
-                        ]}
-                        onPress={() => setGender('masculin')}
-                    >
-                        <Text style={styles.choiceButtonText}>Masculin</Text>
-                    </Pressable>
-                </View>
-
-                {/* Bouton pour commencer */}
-                <Pressable
-                    style={styles.startButton}
-                    onPress={handleStartGame}
-                    disabled={!name.trim() || !gender}
-                >
-                    <Text style={styles.buttonText}>➡️ Commencer l’aventure ⬅️</Text>
-                </Pressable>
-            </ScrollView>
-        </View>
+                </ScrollView>
+            </View>
+        </ImageBackground>
     );
 };
 

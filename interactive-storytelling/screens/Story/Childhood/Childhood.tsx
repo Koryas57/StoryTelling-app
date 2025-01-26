@@ -433,73 +433,78 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
 
 
     return (
-        <View style={styles.container}>
-            <ScrollView ref={scrollViewRef}
-                contentContainerStyle={styles.scrollContainer}>
-                <View style={styles.hud}>
-                    <Text style={styles.hudText}>Jour {currentDay} / 7</Text>
-                    <Text style={styles.hudText}>Enfance de {name}</Text>
-                </View>
-                <Text style={styles.hudTitle}>{storyData[currentDay]?.title || 'Titre indisponible'}</Text>
-                {storyData[currentDay]?.image && (
-                    <Image source={storyData[currentDay].image} style={styles.adventureImage} />
-                )}
-                {!showConsequence ? (
-                    <>
-                        <Text style={styles.adventureText}>{currentText}</Text>
-                        <View style={styles.choicesContainer}>
-                            {choices.map((choice, index) => (
-                                <Pressable
-                                    key={index}
-                                    style={styles.choiceButton}
-                                    onPress={() => handleChoiceSelection(choice.type)}
-                                >
-                                    <Text style={styles.choiceButtonText}>{choice.text}</Text>
-                                </Pressable>
-                            ))}
-                        </View>
-                    </>
-                ) : (
-                    <>
-                        <Text style={styles.consequenceTitle}>💫 {name} gagne une compétence du niveau "Enfance" :</Text>
-                        {skillTitle ? (
-                            <Text style={styles.skillTitle}>{skillTitle}</Text>
-                        ) : (
-                            <Text style={styles.skillTitle}>Aucune compétence acquise.</Text>
-                        )}
-                        <Text style={styles.consequenceText}>{consequence || 'Aucune conséquence définie pour ce choix.'}</Text>
-                        <Pressable style={styles.nextButton} onPress={handleNextDay}>
-                            <Text style={styles.nextButtonText}>Continuer</Text>
-                        </Pressable>
-                    </>
-                )}
-            </ScrollView>
-
-
-            {showTransition && (
-                currentDay <= 6 ? (
-                    <Modal visible={showTransition} animationType="fade">
-                        <ImageBackground
-                            source={storyData[currentDay + 1]?.image}
-                            style={styles.transitionContainer}
-                        >
-                            <Text style={styles.transitionText}>Jour {currentDay + 1}</Text>
-                            <Pressable
-                                style={styles.transitionButton}
-                                onPress={handleManualContinue}
-                            >
-                                <Text style={styles.transitionButtonText}>Continuer</Text>
+        <ImageBackground
+            source={require('../../../assets/ChildhoodBackground.webp')}
+            style={styles.container}
+        >
+            <View style={styles.container}>
+                <ScrollView ref={scrollViewRef}
+                    contentContainerStyle={styles.scrollContainer}>
+                    <View style={styles.hud}>
+                        <Text style={styles.hudText}>Jour {currentDay} / 7</Text>
+                        <Text style={styles.hudText}>Enfance de {name}</Text>
+                    </View>
+                    <Text style={styles.hudTitle}>{storyData[currentDay]?.title || 'Titre indisponible'}</Text>
+                    {storyData[currentDay]?.image && (
+                        <Image source={storyData[currentDay].image} style={styles.adventureImage} />
+                    )}
+                    {!showConsequence ? (
+                        <>
+                            <Text style={styles.adventureText}>{currentText}</Text>
+                            <View style={styles.choicesContainer}>
+                                {choices.map((choice, index) => (
+                                    <Pressable
+                                        key={index}
+                                        style={styles.choiceButton}
+                                        onPress={() => handleChoiceSelection(choice.type)}
+                                    >
+                                        <Text style={styles.choiceButtonText}>{choice.text}</Text>
+                                    </Pressable>
+                                ))}
+                            </View>
+                        </>
+                    ) : (
+                        <>
+                            <Text style={styles.consequenceTitle}>💫 {name} gagne une compétence du niveau "Enfance" :</Text>
+                            {skillTitle ? (
+                                <Text style={styles.skillTitle}>{skillTitle}</Text>
+                            ) : (
+                                <Text style={styles.skillTitle}>Aucune compétence acquise.</Text>
+                            )}
+                            <Text style={styles.consequenceText}>{consequence || 'Aucune conséquence définie pour ce choix.'}</Text>
+                            <Pressable style={styles.nextButton} onPress={handleNextDay}>
+                                <Text style={styles.nextButtonText}>Continuer</Text>
                             </Pressable>
-                        </ImageBackground>
-                    </Modal>
-                ) : (
-                    (() => {
-                        handlePhaseEnd(); // Appelle la fonction pour terminer la phase
-                        return null; // Retourne null pour que React ne rende rien
-                    })()
-                )
-            )}
-        </View>
+                        </>
+                    )}
+                </ScrollView>
+
+
+                {showTransition && (
+                    currentDay <= 6 ? (
+                        <Modal visible={showTransition} animationType="fade">
+                            <ImageBackground
+                                source={storyData[currentDay + 1]?.image}
+                                style={styles.transitionContainer}
+                            >
+                                <Text style={styles.transitionText}>Jour {currentDay + 1}</Text>
+                                <Pressable
+                                    style={styles.transitionButton}
+                                    onPress={handleManualContinue}
+                                >
+                                    <Text style={styles.transitionButtonText}>Commencer</Text>
+                                </Pressable>
+                            </ImageBackground>
+                        </Modal>
+                    ) : (
+                        (() => {
+                            handlePhaseEnd(); // Appelle la fonction pour terminer la phase
+                            return null; // Retourne null pour que React ne rende rien
+                        })()
+                    )
+                )}
+            </View>
+        </ImageBackground>
     );
 };
 

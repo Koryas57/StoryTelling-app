@@ -6,12 +6,11 @@ import typography from '../../../styles/typography';
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.background,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
   },
   scrollContainer: {
     alignItems: 'center',
     paddingBottom: spacing.large,
-    backgroundColor: colors.text
   },
   hud: {
     flexDirection: 'row',
@@ -50,8 +49,10 @@ const styles = StyleSheet.create({
   adventureText: {
     width: '100%',
     overflow: 'scroll',
-    fontFamily: 'Merriweather-LightItalic',
+    fontFamily: 'Merriweather-BoldItalic',
     fontSize: typography.fontSizeSuperMedium,
+    textShadowRadius: 5,
+    textShadowColor: colors.text,
     color: colors.whiteText,
     textAlign: 'center',
     marginVertical: spacing.small,
@@ -72,6 +73,8 @@ const styles = StyleSheet.create({
   choiceButtonText: {
     fontFamily: 'Merriweather-Bold',
     fontSize: typography.fontSizeSuperMedium,
+    textShadowRadius: 10,
+    textShadowColor: colors.text,
     color: colors.buttonText,
     textAlign: 'center',
   },
@@ -79,6 +82,8 @@ const styles = StyleSheet.create({
     width: '100%',
     fontSize: typography.fontSizeLarge,
     fontFamily: 'Merriweather-Bold',
+    textShadowRadius: 5,
+    textShadowColor: colors.text,
     color: colors.whiteText,
     padding: spacing.medium,
     textAlign: 'center',
@@ -87,6 +92,8 @@ consequenceText: {
     width: '100%',
     fontSize: typography.fontSizeSuperMedium,
     fontFamily: 'Merriweather-BoldItalic',
+    textShadowRadius: 15,
+    textShadowColor: colors.text,
     color: colors.whiteText,
     marginBottom: spacing.large,
     padding: spacing.medium,
@@ -108,15 +115,15 @@ skillTitle: {
   transform: 'rotate',
 },
 nextButton: {
-    backgroundColor: colors.primary,
+  backgroundColor: colors.primary,
     paddingVertical: spacing.medium,
     paddingHorizontal: spacing.extraLarge,
     borderRadius: spacing.small,
     boxShadow: '0 0 10px 0.25px rgba(255, 255, 255, 0.5)',
-},
-nextButtonText: {
+  },
+  nextButtonText: {
+    fontFamily: 'Merriweather-Bold',
     fontSize: typography.fontSizeMedium,
-    fontWeight: typography.fontWeightBold,
     textShadowRadius: 5,
     textShadowColor: colors.text,
     color: colors.white,
@@ -143,15 +150,18 @@ transitionText: {
 },
 transitionButton: {
     marginTop: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
+    backgroundColor: 'rgba(0, 0, 0, 0.8)',
     padding: 12,
     borderRadius: 8,
     boxShadow: '0 0 10px 0.25px white',
 },
 transitionButtonText: {
-    color: '#fff',
-    fontSize: spacing.large,
-    textAlign: 'center',
+  fontFamily: 'Merriweather-Bold',
+  fontSize: typography.fontSizeMedium,
+  textShadowRadius: 5,
+  textShadowColor: colors.text,
+  color: colors.white,
+  textAlign: 'center',
 },
 });
 

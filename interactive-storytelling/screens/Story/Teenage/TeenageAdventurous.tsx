@@ -221,83 +221,88 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
     };
 
     return (
-        <View style={styles.container}>
-            <ScrollView ref={scrollViewRef} contentContainerStyle={styles.scrollContainer}>
-                <View style={styles.hud}>
-                    <Text style={styles.hudText}>Jour {currentDay} / 7</Text>
-                    <Text style={styles.hudText}>Adolescence de {name}</Text>
-                </View>
-                <Text style={styles.hudTitle}>{teenageAdventurousData[currentDay]?.title}</Text>
-                {teenageAdventurousData[currentDay]?.image && (
-                    <Image
-                        source={teenageAdventurousData[currentDay].image}
-                        style={styles.adventureImage}
+        <ImageBackground
+            source={require('../../../assets/TeenageBackground.webp')}
+            style={styles.container}
+        >
+            <View style={styles.container}>
+                <ScrollView ref={scrollViewRef} contentContainerStyle={styles.scrollContainer}>
+                    <View style={styles.hud}>
+                        <Text style={styles.hudText}>Jour {currentDay} / 7</Text>
+                        <Text style={styles.hudText}>Adolescence de {name}</Text>
+                    </View>
+                    <Text style={styles.hudTitle}>{teenageAdventurousData[currentDay]?.title}</Text>
+                    {teenageAdventurousData[currentDay]?.image && (
+                        <Image
+                            source={teenageAdventurousData[currentDay].image}
+                            style={styles.adventureImage}
+                        />
+                    )}
+                    {!showConsequence ? (
+                        <>
+                            <Text style={styles.adventureText}>{currentText}</Text>
+                            <View style={styles.choicesContainer}>
+                                {choices.map((choice, index) => (
+                                    <Pressable
+                                        key={index}
+                                        style={styles.choiceButton}
+                                        onPress={() => handleChoiceSelection(choice.type, choice.isError, index)}
+                                    >
+                                        <Text style={styles.choiceButtonText}>{choice.text}</Text>
+                                    </Pressable>
+                                ))}
+                            </View>
+                        </>
+                    ) : (
+                        <>
+                            <Text style={styles.consequenceTitle}>💫 {name} gagne une compétence du niveau "Adolescence" :</Text>
+                            <Text style={styles.skillTitle}>{skillTitle}</Text>
+                            <Text style={styles.consequenceText}>{consequence}</Text>
+                            <Pressable style={styles.nextButton} onPress={handleNextDay}>
+                                <Text style={styles.nextButtonText}>Continuer</Text>
+                            </Pressable>
+                        </>
+                    )}
+                </ScrollView>
+                {showMiniGame && (
+                    <MiniGame
+                        visible={showMiniGame}
+                        onClose={() => setShowMiniGame(false)}
+                        onSuccess={() => {
+                            setShowMiniGame(false); // Ferme la modal du mini-jeu
+                            Alert.alert('Félicitations', 'Compétence débloquée 🎉');
+                            setShowConsequence(true); // Affiche les conséquences après le mini-jeu
+                        }}
+                        onFailure={() => {
+                            setShowMiniGame(false); // Ferme la modal du mini-jeu
+                            setErrorCount((prev) => prev + 1);
+                            Alert.alert('Échec', 'Vous avez échoué au mini-jeu.');
+                            setShowConsequence(true); // Affiche les conséquences même après l'échec
+                        }}
                     />
                 )}
-                {!showConsequence ? (
-                    <>
-                        <Text style={styles.adventureText}>{currentText}</Text>
-                        <View style={styles.choicesContainer}>
-                            {choices.map((choice, index) => (
-                                <Pressable
-                                    key={index}
-                                    style={styles.choiceButton}
-                                    onPress={() => handleChoiceSelection(choice.type, choice.isError, index)}
-                                >
-                                    <Text style={styles.choiceButtonText}>{choice.text}</Text>
+                {showTransition && (
+                    currentDay <= 6 ? (
+                        <Modal visible={showTransition} animationType="fade">
+                            <ImageBackground
+                                source={teenageAdventurousData[currentDay + 1]?.image}
+                                style={styles.transitionContainer}
+                            >
+                                <Text style={styles.transitionText}>Jour {currentDay + 1}</Text>
+                                <Pressable style={styles.transitionButton} onPress={handleManualContinue}>
+                                    <Text style={styles.transitionButtonText}>Continuer</Text>
                                 </Pressable>
-                            ))}
-                        </View>
-                    </>
-                ) : (
-                    <>
-                        <Text style={styles.consequenceTitle}>💫 {name} gagne une compétence du niveau "Adolescence" :</Text>
-                        <Text style={styles.skillTitle}>{skillTitle}</Text>
-                        <Text style={styles.consequenceText}>{consequence}</Text>
-                        <Pressable style={styles.nextButton} onPress={handleNextDay}>
-                            <Text style={styles.nextButtonText}>Continuer</Text>
-                        </Pressable>
-                    </>
+                            </ImageBackground>
+                        </Modal>
+                    ) : (
+                        (() => {
+                            handlePhaseEnd();
+                            return null;
+                        })()
+                    )
                 )}
-            </ScrollView>
-            {showMiniGame && (
-                <MiniGame
-                    visible={showMiniGame}
-                    onClose={() => setShowMiniGame(false)}
-                    onSuccess={() => {
-                        setShowMiniGame(false); // Ferme la modal du mini-jeu
-                        Alert.alert('Félicitations', 'Compétence débloquée 🎉');
-                        setShowConsequence(true); // Affiche les conséquences après le mini-jeu
-                    }}
-                    onFailure={() => {
-                        setShowMiniGame(false); // Ferme la modal du mini-jeu
-                        setErrorCount((prev) => prev + 1);
-                        Alert.alert('Échec', 'Vous avez échoué au mini-jeu.');
-                        setShowConsequence(true); // Affiche les conséquences même après l'échec
-                    }}
-                />
-            )}
-            {showTransition && (
-                currentDay <= 6 ? (
-                    <Modal visible={showTransition} animationType="fade">
-                        <ImageBackground
-                            source={teenageAdventurousData[currentDay + 1]?.image}
-                            style={styles.transitionContainer}
-                        >
-                            <Text style={styles.transitionText}>Jour {currentDay + 1}</Text>
-                            <Pressable style={styles.transitionButton} onPress={handleManualContinue}>
-                                <Text style={styles.transitionButtonText}>Continuer</Text>
-                            </Pressable>
-                        </ImageBackground>
-                    </Modal>
-                ) : (
-                    (() => {
-                        handlePhaseEnd();
-                        return null;
-                    })()
-                )
-            )}
-        </View>
+            </View>
+        </ImageBackground>
     );
 };
 
