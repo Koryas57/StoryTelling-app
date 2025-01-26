@@ -13,6 +13,7 @@ import Childhood7 from '../../../assets/Childhood7.webp'
 import { Audio } from 'expo-av';
 import useSound from '../../../hooks/useSound';
 import sounds from '../../../utils/sounds';
+import GameButton2 from '../../../Components/GameButton2';
 
 type ChildhoodProps = NativeStackScreenProps<RootStackParamList, 'Childhood'>;
 
@@ -307,7 +308,7 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
 
     const [sound, setSound] = useState<Audio.Sound | null>(null);
     const playPageFlip = useSound(sounds.pageFlip);
-    const choiceSound = useSound(sounds.choiceSound);
+    const choiceSound2 = useSound(sounds.choiceSound2);
     const scrollViewRef = useRef<ScrollView>(null);
     const [currentDay, setCurrentDay] = useState<number>(1);
     const [currentText, setCurrentText] = useState<string>('');
@@ -347,11 +348,11 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
 
 
     const handleChoiceSelection = (type: keyof typeof characterTraits) => {
-        choiceSound();
-        setCharacterTraits((prev) => ({
-            ...prev,
-            [type]: prev[type] + 1,
-        }));
+        choiceSound2(),
+            setCharacterTraits((prev) => ({
+                ...prev,
+                [type]: prev[type] + 1,
+            }));
 
         setUserChoices((prev) => ({
             ...prev,
@@ -453,28 +454,30 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
                             <Text style={styles.adventureText}>{currentText}</Text>
                             <View style={styles.choicesContainer}>
                                 {choices.map((choice, index) => (
-                                    <Pressable
+                                    <GameButton2
                                         key={index}
-                                        style={styles.choiceButton}
+                                        text={choice.text}
                                         onPress={() => handleChoiceSelection(choice.type)}
-                                    >
-                                        <Text style={styles.choiceButtonText}>{choice.text}</Text>
-                                    </Pressable>
+                                        onTouchStart={function (): void {
+                                        }}
+                                    />
                                 ))}
                             </View>
                         </>
                     ) : (
                         <>
-                            <Text style={styles.consequenceTitle}>💫 {name} obtient une compétence du niveau "Enfance" :</Text>
+                            <Text style={styles.consequenceTitle}>💫 {name} obtient une compétence du niveau Enfance :</Text>
                             {skillTitle ? (
                                 <Text style={styles.skillTitle}>{skillTitle}</Text>
                             ) : (
                                 <Text style={styles.skillTitle}>Aucune compétence acquise.</Text>
                             )}
                             <Text style={styles.consequenceText}>{consequence || 'Aucune conséquence définie pour ce choix.'}</Text>
-                            <Pressable style={styles.nextButton} onPress={handleNextDay}>
-                                <Text style={styles.nextButtonText}>Continuer</Text>
-                            </Pressable>
+                            <GameButton2
+                                onPress={handleNextDay}
+                                text={'Continuer'}
+                                textStyle={styles.nextButtonText}
+                            />
                         </>
                     )}
                 </ScrollView>
@@ -488,12 +491,11 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
                                 style={styles.transitionContainer}
                             >
                                 <Text style={styles.transitionText}>Jour {currentDay + 1}</Text>
-                                <Pressable
-                                    style={styles.transitionButton}
+                                <GameButton2
                                     onPress={handleManualContinue}
-                                >
-                                    <Text style={styles.transitionButtonText}>Commencer</Text>
-                                </Pressable>
+                                    buttonStyle={styles.transitionButton}
+                                    text={'Commencer'}
+                                />
                             </ImageBackground>
                         </Modal>
                     ) : (

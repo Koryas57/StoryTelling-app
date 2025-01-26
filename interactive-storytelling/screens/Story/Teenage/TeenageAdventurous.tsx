@@ -18,6 +18,7 @@ import { Audio } from 'expo-av';
 import styles from '../Childhood/Childhood.styles';
 import stylesT from './Teenage.styles';
 import MiniGame from './MiniGame'; // Mini-jeu externe
+import GameButton2 from '../../../Components/GameButton2';
 
 type TeenageAdventurousProps = NativeStackScreenProps<
     RootStackParamList,
@@ -279,13 +280,13 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
                             <Text style={styles.adventureText}>{currentText}</Text>
                             <View style={styles.choicesContainer}>
                                 {choices.map((choice, index) => (
-                                    <Pressable
+                                    <GameButton2
                                         key={index}
-                                        style={styles.choiceButton}
+                                        text={choice.text}
                                         onPress={() => handleChoiceSelection(choice.type, choice.isError, index)}
-                                    >
-                                        <Text style={styles.choiceButtonText}>{choice.text}</Text>
-                                    </Pressable>
+                                        onTouchStart={function (): void {
+                                        }}
+                                    />
                                 ))}
                             </View>
                         </>
@@ -294,9 +295,11 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
                             <Text style={styles.consequenceTitle}>💫 {name} obtient une compétence du niveau "Adolescence" :</Text>
                             <Text style={styles.skillTitle}>{skillTitle}</Text>
                             <Text style={styles.consequenceText}>{consequence}</Text>
-                            <Pressable style={styles.nextButton} onPress={handleNextDay}>
-                                <Text style={styles.nextButtonText}>Continuer</Text>
-                            </Pressable>
+                            <GameButton2
+                                onPress={handleNextDay}
+                                text={'Continuer'}
+                                textStyle={styles.nextButtonText}
+                            />
                         </>
                     )}
                 </ScrollView>
@@ -320,9 +323,11 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
                                 style={styles.transitionContainer}
                             >
                                 <Text style={styles.transitionText}>Jour {currentDay + 1}</Text>
-                                <Pressable style={styles.transitionButton} onPress={handleManualContinue}>
-                                    <Text style={styles.transitionButtonText}>Continuer</Text>
-                                </Pressable>
+                                <GameButton2
+                                    onPress={handleManualContinue}
+                                    buttonStyle={styles.transitionButton}
+                                    text={'Commencer'}
+                                />
                             </ImageBackground>
                         </Modal>
                     ) : (

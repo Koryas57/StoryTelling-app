@@ -5,6 +5,7 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
 import useSound from '../../../hooks/useSound';
 import sounds from '../../../utils/sounds';
+import GameButton2 from '../../../Components/GameButton2';
 
 
 type TransitionScreenProps = NativeStackScreenProps<
@@ -17,6 +18,7 @@ const TransitionScreen: React.FC<TransitionScreenProps> = ({ route, navigation }
 
     const introMusic = useSound(sounds.Intro);
     const levelSound = useSound(sounds.levelSound)
+    const choiceSound = useSound(sounds.choiceSound2)
 
     useEffect(() => {
         const playMusic = async () => {
@@ -61,7 +63,7 @@ const TransitionScreen: React.FC<TransitionScreenProps> = ({ route, navigation }
             style={styles.background}
         >
             <View style={styles.container}>
-                <Text style={styles.title}>Félicitations {name}, vous avez terminé votre enfance</Text>
+                <Text style={styles.title}>Félicitations {name}, vous avez terminé le chapitre de l'enfance</Text>
                 <Text style={styles.subtitle}>Résumé des compétences acquises</Text>
                 <View style={styles.skillsContainer}>
                     {skills.length > 0 ? (
@@ -76,8 +78,10 @@ const TransitionScreen: React.FC<TransitionScreenProps> = ({ route, navigation }
                 </View>
 
                 <Text style={styles.unlockedMessage}>{unlockedMessage}</Text>
-                <Pressable
-                    style={styles.continueButton}
+                <GameButton2
+                    text='Continuer'
+                    textStyle={styles.continueButtonText}
+                    buttonStyle={styles.continueButton}
                     onPress={() => {
                         if (dominantTrait in screenMapping) {
                             const mappedScreen = screenMapping[dominantTrait as keyof typeof screenMapping];
@@ -86,9 +90,8 @@ const TransitionScreen: React.FC<TransitionScreenProps> = ({ route, navigation }
                             Alert.alert('Erreur', 'Aucun écran défini pour ce trait dominant.');
                         }
                     }}
-                >
-                    <Text style={styles.continueButtonText}>Continuer</Text>
-                </Pressable>
+                    onTouchStart={choiceSound}
+                />
             </View>
         </ImageBackground>
     );

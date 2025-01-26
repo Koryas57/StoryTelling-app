@@ -100,7 +100,7 @@ consequenceText: {
     textAlign: 'center',
 },
 skillTitle: {
-  width: '94%',
+  width: '90%',
   fontSize: typography.fontSizeLarge,
   fontFamily: 'Merriweather-BoldItalic',
   color: colors.whiteText,
@@ -110,14 +110,12 @@ skillTitle: {
   marginVertical: spacing.extraLarge,
   backgroundColor: colors.secondary,
   borderRadius: spacing.small,
-  boxShadow: '0 0 10px 0.25px rgb(9, 255, 0)',
+  boxShadow: '0 0 10px 0.25px rgba(9, 255, 0, 0.84)',
   padding: spacing.small,
   transform: 'rotate',
 },
 nextButton: {
-  backgroundColor: colors.primary,
-    paddingVertical: spacing.medium,
-    paddingHorizontal: spacing.extraLarge,
+    backgroundColor: colors.primary,
     borderRadius: spacing.small,
     boxShadow: '0 0 10px 0.25px rgba(255, 255, 255, 0.5)',
   },
@@ -149,11 +147,10 @@ transitionText: {
     textShadowRadius: 4,
 },
 transitionButton: {
-    marginTop: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.8)',
-    padding: 12,
+    backgroundColor: 'rgba(0, 0, 0, 0.6)',
     borderRadius: 8,
     boxShadow: '0 0 10px 0.25px white',
+    marginBottom: 0
 },
 transitionButtonText: {
   fontFamily: 'Merriweather-Bold',
