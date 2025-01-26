@@ -7,6 +7,7 @@ import {
     Image,
     ImageBackground,
     Modal,
+    Alert,
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
@@ -15,6 +16,8 @@ import useSound from '../../../hooks/useSound';
 import sounds from '../../../utils/sounds';
 import { Audio } from 'expo-av';
 import styles from '../Childhood/Childhood.styles';
+import stylesT from './Teenage.styles';
+import MiniGame from './MiniGame'; // Mini-jeu externe
 
 type TeenageAdventurousProps = NativeStackScreenProps<
     RootStackParamList,
@@ -24,6 +27,7 @@ type TeenageAdventurousProps = NativeStackScreenProps<
 type Choice = {
     text: string;
     type: 'aventureux';
+    isError?: boolean; // Indique si le choix est une erreur
 };
 
 const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
@@ -45,6 +49,8 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
     const [consequence, setConsequence] = useState<string>('');
     const [showConsequence, setShowConsequence] = useState<boolean>(false);
     const [showTransition, setShowTransition] = useState<boolean>(false);
+    const [showMiniGame, setShowMiniGame] = useState<boolean>(false); // Mini-jeu
+    const [errorCount, setErrorCount] = useState<number>(0);
     const [skillTitle, setSkillTitle] = useState<string>('');
     const [characterTraits, setCharacterTraits] = useState<{
         aventureux: number;
@@ -52,7 +58,7 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
         aventureux: 0,
     });
 
-    // Mise à jour des données à chaque changement de jour
+    // Effet pour charger les données d'un jour
     useEffect(() => {
         if (currentDay <= 7) {
             const dayData = teenageAdventurousData[currentDay];
@@ -63,14 +69,14 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
         }
     }, [currentDay]);
 
-    // Scroll automatique en haut à chaque changement de jour ou modal
+    // Scroll automatique vers le haut à chaque changement de jour
     useEffect(() => {
         if (showConsequence || scrollViewRef.current) {
             scrollViewRef.current?.scrollTo({ y: 0, animated: false });
         }
     }, [currentDay, showConsequence]);
 
-    // Fonction pour jouer un son associé à chaque jour
+    // Fonction pour jouer un son spécifique à chaque jour
     const playSoundForDay = async (day: number) => {
         if (sound) {
             await sound.unloadAsync();
@@ -85,7 +91,6 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
         }
     };
 
-    // Mise à jour des sons à chaque changement de jour
     useEffect(() => {
         playSoundForDay(currentDay);
         return () => {
@@ -95,29 +100,81 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
         };
     }, [currentDay]);
 
-    // Gestion de la sélection d'un choix
-    const handleChoiceSelection = (type: keyof typeof characterTraits) => {
+    // Gestion de la sélection de choix
+    const handleChoiceSelection = (
+        type: keyof typeof characterTraits,
+        isError?: boolean,
+        choiceIndex?: number // Peut être indéfini
+    ) => {
         choiceSound();
 
-        setCharacterTraits((prev) => ({
-            ...prev,
-            [type]: prev[type] + 1, // Correctement typé
-        }));
+        // Vérifie si le choix est une erreur
+        if (isError) {
+            setErrorCount((prev) => prev + 1);
+            if (errorCount + 1 >= 3) {
+                Alert.alert(
+                    'Échec',
+                    'Trop d’erreurs ont été commises. Votre aventure se termine ici.',
+                    [
+                        {
+                            text: 'Recommencer',
+                            onPress: () => navigation.replace('Home'),
+                        },
+                    ]
+                );
+                return;
+            }
+        } else {
+            // Si le choix n'est pas une erreur, on augmente les traits
+            setCharacterTraits((prev) => ({
+                ...prev,
+                [type]: prev[type] + 1,
+            }));
+        }
 
         setUserChoices((prev) => ({
             ...prev,
-            [currentDay]: type, // Typé également
+            [currentDay]: type,
         }));
 
-        const selectedConsequence = teenageAdventurousData[currentDay]?.consequences?.[type];
+        // Vérifie si choiceIndex est défini
+        if (choiceIndex === undefined) {
+            setConsequence("Aucune conséquence trouvée (index non défini).");
+            setSkillTitle("");
+            return;
+        }
+
+        // Mappe le choix vers une conséquence
+        const consequenceKey = `${type}_${choiceIndex + 1}`; // Forme : aventureux_1, aventureux_2, ...
+        const selectedConsequence = teenageAdventurousData[currentDay]?.consequences?.[consequenceKey];
+
+        // Si une conséquence est trouvée
         if (selectedConsequence) {
             setConsequence(selectedConsequence.text(name));
-            setSkillTitle(selectedConsequence.skillTitle);
+            setSkillTitle(selectedConsequence.skillTitle || 'Aucune compétence acquise.');
+
+            // Empêche explicitement le mini-jeu si le choix est une erreur
+            if (isError) {
+                setShowConsequence(true);
+                return; // Stoppe ici si le choix est une erreur
+            }
+
+            // Lance le mini-jeu si ce n'est pas une erreur et si une conséquence a un impact
+            if (selectedConsequence.miniGameImpact) {
+                setShowMiniGame(true); // Lance le mini-jeu
+                return; // Ne montre pas directement le résultat, attend le mini-jeu
+            }
+        } else {
+            setConsequence("Aucune conséquence trouvée.");
+            setSkillTitle("");
         }
+
+        // Affiche le résultat si aucune autre condition n'est remplie
         setShowConsequence(true);
     };
 
-    // Fonction pour passer au jour suivant
+
+    // Passer au jour suivant
     const handleNextDay = () => {
         playPageFlip();
         setShowConsequence(false);
@@ -125,7 +182,7 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
         setShowTransition(true);
     };
 
-    // Fonction pour passer manuellement au jour suivant depuis la transition
+    // Continuer manuellement depuis l'écran de transition
     const handleManualContinue = () => {
         playPageFlip();
         setShowTransition(false);
@@ -140,7 +197,6 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
     const handlePhaseEnd = async () => {
         levelSound();
 
-        // Nettoyer le son en cours
         if (sound) {
             await sound.stopAsync();
             await sound.unloadAsync();
@@ -169,7 +225,7 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
             <ScrollView ref={scrollViewRef} contentContainerStyle={styles.scrollContainer}>
                 <View style={styles.hud}>
                     <Text style={styles.hudText}>Jour {currentDay} / 7</Text>
-                    <Text style={styles.hudText}>Aventure de {name}</Text>
+                    <Text style={styles.hudText}>Adolescence de {name}</Text>
                 </View>
                 <Text style={styles.hudTitle}>{teenageAdventurousData[currentDay]?.title}</Text>
                 {teenageAdventurousData[currentDay]?.image && (
@@ -186,7 +242,7 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
                                 <Pressable
                                     key={index}
                                     style={styles.choiceButton}
-                                    onPress={() => handleChoiceSelection(choice.type)}
+                                    onPress={() => handleChoiceSelection(choice.type, choice.isError, index)}
                                 >
                                     <Text style={styles.choiceButtonText}>{choice.text}</Text>
                                 </Pressable>
@@ -195,7 +251,7 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
                     </>
                 ) : (
                     <>
-                        <Text style={styles.consequenceTitle}>💫 Résultat :</Text>
+                        <Text style={styles.consequenceTitle}>💫 {name} gagne une compétence du niveau "Adolescence" :</Text>
                         <Text style={styles.skillTitle}>{skillTitle}</Text>
                         <Text style={styles.consequenceText}>{consequence}</Text>
                         <Pressable style={styles.nextButton} onPress={handleNextDay}>
@@ -204,7 +260,23 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
                     </>
                 )}
             </ScrollView>
-
+            {showMiniGame && (
+                <MiniGame
+                    visible={showMiniGame}
+                    onClose={() => setShowMiniGame(false)}
+                    onSuccess={() => {
+                        setShowMiniGame(false); // Ferme la modal du mini-jeu
+                        Alert.alert('Félicitations', 'Compétence débloquée 🎉');
+                        setShowConsequence(true); // Affiche les conséquences après le mini-jeu
+                    }}
+                    onFailure={() => {
+                        setShowMiniGame(false); // Ferme la modal du mini-jeu
+                        setErrorCount((prev) => prev + 1);
+                        Alert.alert('Échec', 'Vous avez échoué au mini-jeu.');
+                        setShowConsequence(true); // Affiche les conséquences même après l'échec
+                    }}
+                />
+            )}
             {showTransition && (
                 currentDay <= 6 ? (
                     <Modal visible={showTransition} animationType="fade">

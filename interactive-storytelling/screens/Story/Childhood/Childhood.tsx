@@ -308,8 +308,6 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
     const [sound, setSound] = useState<Audio.Sound | null>(null);
     const playPageFlip = useSound(sounds.pageFlip);
     const choiceSound = useSound(sounds.choiceSound);
-    const levelSound = useSound(sounds.levelSound);
-    const soundIntro = useSound(sounds.Intro)
     const scrollViewRef = useRef<ScrollView>(null);
     const [currentDay, setCurrentDay] = useState<number>(1);
     const [currentText, setCurrentText] = useState<string>('');
@@ -386,8 +384,6 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
     };
 
     const handlePhaseEnd = async () => {
-        // Joue le son ponctuel
-        levelSound();
 
         // Arrête et décharge la musique de fond actuelle
         if (sound) {
@@ -471,7 +467,7 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
                     <>
                         <Text style={styles.consequenceTitle}>💫 {name} gagne une compétence du niveau "Enfance" :</Text>
                         {skillTitle ? (
-                            <Text style={styles.skillTitle}>{'✅' + skillTitle}</Text>
+                            <Text style={styles.skillTitle}>{skillTitle}</Text>
                         ) : (
                             <Text style={styles.skillTitle}>Aucune compétence acquise.</Text>
                         )}

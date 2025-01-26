@@ -3,7 +3,7 @@ import colors from '../../../styles/colors';
 import spacing from '../../../styles/spacing';
 import typography from '../../../styles/typography';
 
-export default StyleSheet.create({
+const stylesT = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.primary,
@@ -53,6 +53,7 @@ export default StyleSheet.create({
   consequenceText: {
     fontSize: 16,
     marginVertical: spacing.medium,
+    color: colors.whiteText,
   },
   skillTitle: {
     fontSize: 18,
@@ -64,8 +65,59 @@ export default StyleSheet.create({
     padding: spacing.medium,
     borderRadius: 8,
   },
-  nextButtonText: {
-    color: colors.whiteText,
-    fontWeight: 'bold',
-  },
+miniGameText: {
+    color: "#fff",
+    fontSize: 18,
+    fontFamily: 'Merriweather-Bold',
+    marginVertical: 20,
+    textAlign: 'center'
+},
+miniGameBackground: {
+  flex: 1,
+  resizeMode: 'cover', // Assure que l'image couvre tout l'écran
+  justifyContent: 'center', // Centrage vertical des éléments
+  alignItems: 'center', // Centrage horizontal des éléments
+},
+miniGameContainer: {
+  padding: spacing.medium,
+  backgroundColor: 'rgba(0, 0, 0, 0.5)', // Fond semi-transparent pour contraster avec l'image
+  borderRadius: 8,
+},
+grid: {
+  marginTop: 16,
+  flexDirection: 'row',
+  flexWrap: 'wrap',
+  justifyContent: 'flex-start',
+  alignSelf: 'center',
+  width: '100%',
+},
+gridCell: {
+  width: 60,
+  height: 60,
+  margin: 5,
+  justifyContent: 'center',
+  alignItems: 'center',
+  backgroundColor: '#ccc',
+  borderRadius: 8,
+},
+cellRevealed: {
+  backgroundColor: '#4CAF50', // Couleur pour les cases révélées
+},
+cellText: {
+  fontSize: 16,
+  color: '#fff',
+},
+successButton: {
+  marginTop: 16,
+  padding: 10,
+  backgroundColor: '#4CAF50',
+  borderRadius: 8,
+},
+successButtonText: {
+  textAlign: 'center',
+  fontSize: 18,
+  color: '#fff',
+},
 });
+
+export default stylesT;
