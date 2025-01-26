@@ -406,10 +406,6 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
             dominantTrait,
             skills: acquiredSkills,
         });
-
-        // Facultatif : Jouer un son/musique d'intro pour TransitionScreen
-        const { sound: newSound } = await Audio.Sound.createAsync(sounds.Intro);
-        await newSound.playAsync();
     };
 
     const playSoundForDay = async (day: number) => {
