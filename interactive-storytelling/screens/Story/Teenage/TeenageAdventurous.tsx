@@ -220,6 +220,42 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
         });
     };
 
+    const handleMiniGameFailure = () => {
+        setErrorCount((prev) => prev + 1); // Incrémente le compteur d'erreurs
+
+        if (errorCount + 1 >= 3) { // Vérifie si c'est la troisième erreur
+            Alert.alert(
+                'Échec',
+                'Trop d’erreurs ont été commises. Votre aventure se termine ici.',
+                [
+                    {
+                        text: 'Recommencer',
+                        onPress: () => navigation.replace('Home'),
+                    },
+                ]
+            );
+            return;
+        }
+
+        setShowMiniGame(false); // Ferme le mini-jeu
+
+        // Applique la conséquence du choix 3
+        const consequenceKey = `aventureux_3`; // Correspond au choix 3
+        const selectedConsequence = teenageAdventurousData[currentDay]?.consequences?.[consequenceKey];
+
+        if (selectedConsequence) {
+            setConsequence(selectedConsequence.text(name));
+            setSkillTitle(selectedConsequence.skillTitle || 'Aucune compétence acquise.');
+        } else {
+            setConsequence("Aucune conséquence trouvée.");
+            setSkillTitle("");
+        }
+
+        Alert.alert('Échec', 'Vous avez échoué au mini-jeu.');
+        setShowConsequence(true); // Affiche les conséquences après l'échec
+    };
+
+
     return (
         <ImageBackground
             source={require('../../../assets/TeenageBackground.webp')}
@@ -255,7 +291,7 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
                         </>
                     ) : (
                         <>
-                            <Text style={styles.consequenceTitle}>💫 {name} gagne une compétence du niveau "Adolescence" :</Text>
+                            <Text style={styles.consequenceTitle}>💫 {name} obtient une compétence du niveau "Adolescence" :</Text>
                             <Text style={styles.skillTitle}>{skillTitle}</Text>
                             <Text style={styles.consequenceText}>{consequence}</Text>
                             <Pressable style={styles.nextButton} onPress={handleNextDay}>
@@ -273,12 +309,7 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
                             Alert.alert('Félicitations', 'Compétence débloquée 🎉');
                             setShowConsequence(true); // Affiche les conséquences après le mini-jeu
                         }}
-                        onFailure={() => {
-                            setShowMiniGame(false); // Ferme la modal du mini-jeu
-                            setErrorCount((prev) => prev + 1);
-                            Alert.alert('Échec', 'Vous avez échoué au mini-jeu.');
-                            setShowConsequence(true); // Affiche les conséquences même après l'échec
-                        }}
+                        onFailure={handleMiniGameFailure} // Appelle la fonction en cas d'échec
                     />
                 )}
                 {showTransition && (

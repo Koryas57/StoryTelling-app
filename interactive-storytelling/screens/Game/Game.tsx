@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, TextInput, Alert, ScrollView, ImageBackground } from 'react-native';
+import { View, Text, Pressable, TextInput, Alert, ScrollView, ImageBackground, ViewStyle } from 'react-native';
 import styles from './Game.styles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import useSound from '../../hooks/useSound';
 import sounds from '../../utils/sounds';
+import GameButton from '../../Components/GameButton';
 
 type GameProps = NativeStackScreenProps<RootStackParamList, 'Game'>;
 
@@ -21,7 +22,7 @@ const Game: React.FC<GameProps> = ({ navigation }) => {
             choiceStart(),
                 navigation.replace('Childhood', { name, gender });
         } else {
-            Alert.alert('Erreur', 'Veuillez entrer un nom et choisir un sexe pour continuer.');
+            Alert.alert('Pas si vite Courgette', 'Renseigne ton prénom et choisis un genre pour continuer.');
         }
     };
 
@@ -44,36 +45,35 @@ const Game: React.FC<GameProps> = ({ navigation }) => {
 
                     {/* Choix du sexe */}
                     <View style={styles.choiceContainer}>
-                        <Pressable
-                            onTouchStart={choiceSound}
-                            style={[
-                                styles.choiceButton,
-                                gender === 'féminin' && styles.selectedChoice,
-                            ]}
+                        <GameButton
+                            text="Féminin"
                             onPress={() => setGender('féminin')}
-                        >
-                            <Text style={styles.choiceButtonText}>Féminin</Text>
-                        </Pressable>
-                        <Pressable
                             onTouchStart={choiceSound}
-                            style={[
+                            buttonStyle={[
                                 styles.choiceButton,
-                                gender === 'masculin' && styles.selectedChoice,
-                            ]}
+                                gender === 'féminin' ? styles.selectedChoice : undefined,
+                            ].filter(Boolean) as ViewStyle[]}
+                            textStyle={styles.choiceButtonText}
+                        />
+                        <GameButton
+                            text="Masculin"
                             onPress={() => setGender('masculin')}
-                        >
-                            <Text style={styles.choiceButtonText}>Masculin</Text>
-                        </Pressable>
+                            onTouchStart={choiceSound}
+                            buttonStyle={[
+                                styles.choiceButton,
+                                gender === 'masculin' ? styles.selectedChoice : undefined,
+                            ].filter(Boolean) as ViewStyle[]}
+                            textStyle={styles.choiceButtonText}
+                        />
                     </View>
-
                     {/* Bouton pour commencer */}
-                    <Pressable
-                        style={styles.startButton}
+                    <GameButton
+                        text="START"
                         onPress={handleStartGame}
-                        disabled={!name.trim() || !gender}
-                    >
-                        <Text style={styles.buttonText}>➡️ Commencer l’aventure ⬅️</Text>
-                    </Pressable>
+                        buttonStyle={styles.startButton}
+                        textStyle={styles.buttonText}
+                        onTouchStart={function (): void {
+                        }} />
                 </ScrollView>
             </View>
         </ImageBackground>

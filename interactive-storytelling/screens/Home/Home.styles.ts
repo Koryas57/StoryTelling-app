@@ -8,7 +8,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#00000030',
+    width: '100%',
   },
+  animatedContainer: {
+    borderRadius: 10,
+    overflow: 'hidden',
+    boxShadow: '0 0 25px 10px rgba(255, 255, 255, 0.8)',
+},
   loadingContainer: {
     flex: 1,
     justifyContent: 'center', 
@@ -21,20 +28,25 @@ const styles = StyleSheet.create({
     color: colors.text,
     marginBottom: spacing.large,
   },
-  buttonText: {
-    fontFamily: 'Merriweather-Bold',
-    fontSize: typography.fontSizeMedium,
-    textShadowRadius: 5,
-    textShadowColor: colors.text,
-    color: colors.white,
-    textAlign: 'center',
+  pressable: {
+    alignItems: 'center',
+    justifyContent: 'center',
 },
   button: {
-    marginTop: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.6)',
-    padding: 12,
-    borderRadius: 8,
-    boxShadow: '0 0 10px 0.25px white',
+    backgroundColor: colors.primary, // Couleur normale
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+},
+buttonPressed: {
+    backgroundColor: '#4626a6', // Couleur lorsqu'il est pressé
+},
+buttonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontFamily: 'Merriweather-Bold',
 },
 });
 

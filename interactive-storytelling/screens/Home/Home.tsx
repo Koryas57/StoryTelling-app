@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import { View, Text, Pressable, ImageBackground } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import styles from './Home.styles';
 import useSound from '../../hooks/useSound';
 import sounds from '../../utils/sounds';
-
+import GameButton from '../../Components/GameButton'; // Import du nouveau composant
 
 type HomeProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -13,7 +13,6 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     const introMusic = useSound(sounds.Intro);
     const choiceSound = useSound(sounds.choiceSound);
 
-    // Joue la musique à l'arrivée sur la page et arrête-la en quittant
     useEffect(() => {
         introMusic(); // Lance la musique
         return () => {
@@ -22,22 +21,21 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
     }, []);
 
     const handleStartGame = () => {
-        introMusic.stop(); // Arrête la musique
-        navigation.navigate('Game'); // Navigue vers Game
+        introMusic.stop();
+        navigation.navigate('Game');
     };
 
     return (
         <ImageBackground
-            source={require('../../assets/mainBackground.webp')} // Chemin vers votre image
-            style={styles.container} // Utilise le style existant
+            source={require('../../assets/mainBackground.webp')}
+            style={styles.container}
         >
             <View style={styles.container}>
-                <Pressable
+                <GameButton
+                    text="Commencer"
+                    onPress={handleStartGame}
                     onTouchStart={choiceSound}
-                    style={styles.button}
-                    onPress={handleStartGame}>
-                    <Text style={styles.buttonText}>Commencer</Text>
-                </Pressable>
+                />
             </View>
         </ImageBackground>
     );
