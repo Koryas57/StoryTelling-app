@@ -19,6 +19,7 @@ import styles from '../Childhood/Childhood.styles';
 import stylesT from './Teenage.styles';
 import MiniGame from './MiniGame'; // Mini-jeu externe
 import GameButton2 from '../../../Components/GameButton2';
+import MiniGameTournament from './MiniGameTournament';
 
 type TeenageAdventurousProps = NativeStackScreenProps<
     RootStackParamList,
@@ -43,6 +44,10 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
     const levelSound = useSound(sounds.levelSound);
     const scrollViewRef = useRef<ScrollView>(null);
 
+    const [miniGameChoiceIndex, setMiniGameChoiceIndex] = useState<number | null>(null);
+    const [miniGameChoiceType, setMiniGameChoiceType] = useState<keyof typeof characterTraits | null>(null);
+
+
     const [currentDay, setCurrentDay] = useState<number>(1);
     const [currentText, setCurrentText] = useState<string>('');
     const [choices, setChoices] = useState<Choice[]>([]);
@@ -55,15 +60,24 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
     const [skillTitle, setSkillTitle] = useState<string>('');
     const [characterTraits, setCharacterTraits] = useState<{
         aventureux: number;
+        prudent: number;
+        timide: number;
+        ambitieux: number;
     }>({
         aventureux: 0,
+        prudent: 0,
+        timide: 0,
+        ambitieux: 0,
     });
+
+    type ChoiceType = keyof typeof characterTraits;
+
 
     // Effet pour charger les données d'un jour
     useEffect(() => {
         if (currentDay <= 7) {
             const dayData = teenageAdventurousData[currentDay];
-            setCurrentText(dayData.text(name));
+            setCurrentText(dayData.text(name, gender));
             setChoices(dayData.choices);
         } else {
             handlePhaseEnd();
@@ -105,72 +119,62 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
     const handleChoiceSelection = (
         type: keyof typeof characterTraits,
         isError?: boolean,
-        choiceIndex?: number // Peut être indéfini
+        choiceIndex?: number // Peut être undefined
     ) => {
         choiceSound();
 
-        // Vérifie si le choix est une erreur
-        if (isError) {
-            setErrorCount((prev) => prev + 1);
-            if (errorCount + 1 >= 3) {
-                Alert.alert(
-                    'Échec',
-                    'Trop d’erreurs ont été commises. Votre aventure se termine ici.',
-                    [
-                        {
-                            text: 'Recommencer',
-                            onPress: () => navigation.replace('Home'),
-                        },
-                    ]
-                );
-                return;
-            }
-        } else {
-            // Si le choix n'est pas une erreur, on augmente les traits
-            setCharacterTraits((prev) => ({
-                ...prev,
-                [type]: prev[type] + 1,
-            }));
-        }
-
-        setUserChoices((prev) => ({
-            ...prev,
-            [currentDay]: type,
-        }));
-
-        // Vérifie si choiceIndex est défini
+        // Vérifie si choiceIndex est undefined
         if (choiceIndex === undefined) {
-            setConsequence("Aucune conséquence trouvée (index non défini).");
+            console.warn(`L'index du choix est indéfini pour le type ${type}`);
+            setConsequence("Pas de conséquence trouvée (index indéfini).");
             setSkillTitle("");
             return;
         }
 
-        // Mappe le choix vers une conséquence
-        const consequenceKey = `${type}_${choiceIndex + 1}`; // Forme : aventureux_1, aventureux_2, ...
-        const selectedConsequence = teenageAdventurousData[currentDay]?.consequences?.[consequenceKey];
-
-        // Si une conséquence est trouvée
-        if (selectedConsequence) {
-            setConsequence(selectedConsequence.text(name));
-            setSkillTitle(selectedConsequence.skillTitle || 'Aucune compétence acquise.');
-
-            // Empêche explicitement le mini-jeu si le choix est une erreur
-            if (isError) {
-                setShowConsequence(true);
-                return; // Stoppe ici si le choix est une erreur
+        // Gestion des erreurs (choix 3)
+        if (isError) {
+            setErrorCount((prev) => prev + 1);
+            if (errorCount + 1 >= 3) {
+                Alert.alert(
+                    'Destin tragique ❌',
+                    `En prenant des décisions erronées, ${name} s'est égaré(e).`,
+                    [
+                        { text: 'Recommencer', onPress: () => navigation.replace('Home') },
+                    ]
+                );
+                return;
             }
-
-            // Lance le mini-jeu si ce n'est pas une erreur et si une conséquence a un impact
-            if (selectedConsequence.miniGameImpact) {
-                setShowMiniGame(true); // Lance le mini-jeu
-                return; // Ne montre pas directement le résultat, attend le mini-jeu
+            // Applique directement la conséquence du choix 3
+            const consequenceKey = `${type}_${choiceIndex + 1}`;
+            const selectedConsequence = teenageAdventurousData[currentDay]?.consequences?.[consequenceKey];
+            if (selectedConsequence) {
+                setConsequence(selectedConsequence.text(name, gender));
+                setSkillTitle(selectedConsequence.skillTitle || 'Aucune compétence acquise.');
             }
-        } else {
-            setConsequence("Aucune conséquence trouvée.");
-            setSkillTitle("");
+            setShowConsequence(true);
+            return;
         }
 
-        // Affiche le résultat si aucune autre condition n'est remplie
+        // Vérifie s'il y a un mini-jeu pour le jour actuel
+        if (currentDay === 1 || currentDay === 4) {
+            setMiniGameChoiceIndex(choiceIndex);
+            setMiniGameChoiceType(type);
+            setShowMiniGame(true);
+            return;
+        }
+
+        // Applique immédiatement les conséquences pour les jours sans mini-jeux
+        const consequenceKey = `${type}_${choiceIndex + 1}`;
+        const selectedConsequence = teenageAdventurousData[currentDay]?.consequences?.[consequenceKey];
+        if (selectedConsequence) {
+            setConsequence(selectedConsequence.text(name, gender));
+            setSkillTitle(selectedConsequence.skillTitle || 'Aucune compétence acquise.');
+        } else {
+            console.warn(`Aucune conséquence trouvée pour la clé ${consequenceKey}`);
+            setConsequence('Pas de conséquence trouvée.');
+            setSkillTitle('');
+        }
+
         setShowConsequence(true);
     };
 
@@ -198,20 +202,30 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
     const handlePhaseEnd = async () => {
         levelSound();
 
+        // Arrêter et décharger les sons
         if (sound) {
             await sound.stopAsync();
             await sound.unloadAsync();
             setSound(null);
         }
 
-        const dominantTrait = 'aventureux';
+        // Déterminer le trait dominant
+        const dominantTrait = Object.entries(characterTraits).sort((a, b) => b[1] - a[1])[0][0];
 
+        // Extraire les compétences acquises
         const acquiredSkills = Object.entries(userChoices)
-            .map(([day, choice]) =>
-                teenageAdventurousData[Number(day)]?.consequences?.[choice]?.skillTitle
-            )
-            .filter((skill): skill is string => !!skill);
+            .map(([day, choiceKey]) => {
+                const dayNumber = Number(day);
+                const dayData = teenageAdventurousData[dayNumber];
 
+                // Récupère la conséquence correspondant à `choiceKey`
+                return dayData?.consequences?.[choiceKey]?.skillTitle || null;
+            })
+            .filter((skill): skill is string => !!skill); // Élimine les valeurs nulles ou undefined
+
+        console.log('Compétences acquises transmises à TransitionScreen:', acquiredSkills);
+
+        // Navigation vers TransitionScreen avec les données
         navigation.replace('TransitionScreen', {
             name,
             gender,
@@ -221,13 +235,73 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
         });
     };
 
-    const handleMiniGameFailure = () => {
-        setErrorCount((prev) => prev + 1); // Incrémente le compteur d'erreurs
 
-        if (errorCount + 1 >= 3) { // Vérifie si c'est la troisième erreur
+    const getMiniGameForDay = (day: number) => {
+        switch (day) {
+            case 1:
+                return (
+                    <MiniGame
+                        visible={showMiniGame}
+                        onClose={() => setShowMiniGame(false)}
+                        onSuccess={() => {
+                            setShowMiniGame(false);
+
+                            if (miniGameChoiceIndex !== null && miniGameChoiceType) {
+                                const consequenceKey = `${miniGameChoiceType}_${miniGameChoiceIndex + 1}`;
+                                const successConsequence =
+                                    teenageAdventurousData[currentDay]?.consequences?.[consequenceKey];
+                                if (successConsequence) {
+                                    setConsequence(successConsequence.text(name, gender));
+                                    setSkillTitle(successConsequence.skillTitle || 'Aucune compétence acquise.');
+                                }
+                            } else {
+                                console.warn("miniGameChoiceIndex ou miniGameChoiceType non défini.");
+                            }
+                            Alert.alert('Félicitations', 'Vous avez trouvé la clé dans la tour 🎉');
+                            setShowConsequence(true);
+                        }}
+                        onFailure={handleMiniGameFailure}
+                    />
+                );
+            case 4:
+                return (
+                    <MiniGameTournament
+                        visible={showMiniGame}
+                        onClose={() => setShowMiniGame(false)}
+                        onSuccess={() => {
+                            setShowMiniGame(false);
+
+                            if (miniGameChoiceIndex !== null && miniGameChoiceType) {
+                                const consequenceKey = `${miniGameChoiceType}_${miniGameChoiceIndex + 1}`;
+                                const successConsequence =
+                                    teenageAdventurousData[currentDay]?.consequences?.[consequenceKey];
+                                if (successConsequence) {
+                                    setConsequence(successConsequence.text(name, gender));
+                                    setSkillTitle(successConsequence.skillTitle || 'Aucune compétence acquise.');
+                                }
+                            } else {
+                                console.warn("miniGameChoiceIndex ou miniGameChoiceType non défini.");
+                            }
+                            Alert.alert('Félicitations', 'Votre passe décisive permet à votre équipe de remporter le tournoi 🎉');
+                            setShowConsequence(true);
+                        }}
+                        onFailure={handleMiniGameFailure}
+                    />
+                );
+            default:
+                return null;
+        }
+    };
+
+
+
+    const handleMiniGameFailure = () => {
+        setErrorCount((prev) => prev + 1);
+
+        if (errorCount + 1 >= 3) {
             Alert.alert(
-                'Échec',
-                'Trop d’erreurs ont été commises. Votre aventure se termine ici.',
+                'Destin tragique ❌',
+                `En prenant des décisions erronées, ${name} s'est égaré(e).`,
                 [
                     {
                         text: 'Recommencer',
@@ -238,23 +312,24 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
             return;
         }
 
-        setShowMiniGame(false); // Ferme le mini-jeu
+        setShowMiniGame(false);
 
-        // Applique la conséquence du choix 3
-        const consequenceKey = `aventureux_3`; // Correspond au choix 3
+        // Applique la conséquence d'échec
+        const consequenceKey = `aventureux_3`; // Toujours applique le choix 3 en cas d'échec
         const selectedConsequence = teenageAdventurousData[currentDay]?.consequences?.[consequenceKey];
 
         if (selectedConsequence) {
-            setConsequence(selectedConsequence.text(name));
+            setConsequence(selectedConsequence.text(name, gender));
             setSkillTitle(selectedConsequence.skillTitle || 'Aucune compétence acquise.');
         } else {
-            setConsequence("Aucune conséquence trouvée.");
-            setSkillTitle("");
+            setConsequence('Pas de conséquence trouvée.');
+            setSkillTitle('');
         }
 
         Alert.alert('Échec', 'Vous avez échoué au mini-jeu.');
-        setShowConsequence(true); // Affiche les conséquences après l'échec
+        setShowConsequence(true);
     };
+
 
 
     return (
@@ -303,18 +378,7 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
                         </>
                     )}
                 </ScrollView>
-                {showMiniGame && (
-                    <MiniGame
-                        visible={showMiniGame}
-                        onClose={() => setShowMiniGame(false)}
-                        onSuccess={() => {
-                            setShowMiniGame(false); // Ferme la modal du mini-jeu
-                            Alert.alert('Félicitations', 'Compétence débloquée 🎉');
-                            setShowConsequence(true); // Affiche les conséquences après le mini-jeu
-                        }}
-                        onFailure={handleMiniGameFailure} // Appelle la fonction en cas d'échec
-                    />
-                )}
+                {showMiniGame && getMiniGameForDay(currentDay)}
                 {showTransition && (
                     currentDay <= 6 ? (
                         <Modal visible={showTransition} animationType="fade">

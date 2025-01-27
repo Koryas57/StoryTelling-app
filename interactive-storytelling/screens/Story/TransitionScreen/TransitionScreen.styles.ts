@@ -18,6 +18,7 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'Merriweather-Bold',
     textShadowRadius: 10,
+    textShadowColor: colors.text,
     fontSize: typography.fontSizeLarge * 1.05,
     padding: spacing.small,
     color: colors.whiteText,
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
     borderLeftWidth: 1,
     borderRightWidth: 1,
     borderBottomColor: colors.text,
-    backgroundColor:'rgba(19, 211, 83, 0.4)',
+    backgroundColor:'rgba(219, 180, 6, 0.67)',
   },
   unlockedMessage: {
     fontWeight: typography.fontWeightBold,
@@ -66,7 +67,8 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     color: colors.white,
-    marginVertical: 10,
+    marginTop: spacing.large,
+    marginBottom: spacing.extraLarge,
     textAlign: 'center',
   },
   continueButton: {
