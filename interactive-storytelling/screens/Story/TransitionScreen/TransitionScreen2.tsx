@@ -120,7 +120,7 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
                 style={styles.background}
             >
                 <View style={styles.container}>
-                    <Text style={styles.title}>Félicitations {name} !</Text>
+                    <Text style={styles.title}>Félicitations {name}, vous avez terminé le chapitre de l'adolescence</Text>
                     <Text style={styles.subtitle}>Résumé des compétences acquises</Text>
                     <View style={styles.skillsContainer}>
                         {skills.map((skill, index) => (
@@ -136,13 +136,13 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
                         </Text>
                     )}
 
-                    <Pressable
-                        style={styles.continueButton}
+                    <GameButton2
+                        text={selectedCareer ? `Changer de métier` : "Choisir un métier"}
+                        buttonStyle={styles.continueButton}
                         onPress={() => setModalVisible(true)}
                         onTouchStart={choiceSound}
                     >
-                        <Text style={styles.continueButtonText}>Choisir un métier</Text>
-                    </Pressable>
+                    </GameButton2>
                     <GameButton2
                         text={selectedCareer ? `Continuer vers ${selectedCareer}` : "Sélectionner un métier"}
                         textStyle={styles.continueButtonText}

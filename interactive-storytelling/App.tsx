@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import styles from './screens/Home/Home.styles';
-import Home from './screens/Home/Home';
-import Game from './screens/Game/Game';
-import Childhood from './screens/Story/Childhood/Childhood';
-import TransitionScreen from './screens/Story/TransitionScreen/TransitionScreen';
 import { useFonts } from 'expo-font/build/FontHooks';
 import { ActivityIndicator, View, Text } from 'react-native';
+import * as NavigationBar from "expo-navigation-bar";
+import styles from './screens/Home/Home.styles';
+
+import Home from './screens/Home/Home';
+import Game from './screens/Game/Game';
+
+import Childhood from './screens/Story/Childhood/Childhood';
+import TransitionScreen from './screens/Story/TransitionScreen/TransitionScreen';
+
 import TeenageAdventurous from './screens/Story/Teenage/TeenageAdventurous';
 import TransitionScreen2 from './screens/Story/TransitionScreen/TransitionScreen2';
 
@@ -105,6 +109,27 @@ const App: React.FC = () => {
     'Merriweather-Bold': require('./assets/fonts/Merriweather-Bold.ttf'),
     'Merriweather-BoldItalic': require('./assets/fonts/Merriweather-BoldItalic.ttf'),
   });
+
+  useEffect(() => {
+    const configureNavBar = async () => {
+      await NavigationBar.setBackgroundColorAsync("rgb(0, 0, 0)");
+      await NavigationBar.setBehaviorAsync("overlay-swipe"); // Swipe pour afficher temporairement
+      await NavigationBar.setVisibilityAsync("hidden"); //
+
+      // Écoute les changements de visibilité pour cacher la barre après 2 sec
+      const subscription = NavigationBar.addVisibilityListener(({ visibility }) => {
+        if (visibility === "visible") {
+          setTimeout(() => {
+            NavigationBar.setVisibilityAsync("hidden"); // Cache la barre après 2 sec
+          }, 2500);
+        }
+      });
+
+      return () => subscription.remove(); // Nettoie l'événement à la destruction du composant
+    };
+
+    configureNavBar();
+  }, []);
 
   // Affiche un écran de chargement tant que les polices ne sont pas prêtes
   if (!fontsLoaded) {

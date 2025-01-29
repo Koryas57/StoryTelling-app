@@ -23,7 +23,7 @@ const GameButton2: React.FC<GameButton2Props> = ({
 
     const handlePressIn = () => {
         Animated.spring(scaleValue, {
-            toValue: 0.9, // Léger rétrécissement
+            toValue: 0.8, // Léger rétrécissement
             useNativeDriver: true,
         }).start();
     };

@@ -64,9 +64,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: spacing.medium
   },
   choiceButton: {
-    backgroundColor: colors.secondary,
+    textShadowRadius: 10,
+    textShadowColor: colors.text,
+    backgroundColor: 'rgba(19, 211, 83, 0.25)',
+    boxShadow: '0 0 10px 0.25px rgba(255, 255, 255, 0.64)',
     borderRadius: 8,
-    padding: spacing.medium,
+    padding: spacing.medium - 5,
     marginBottom: spacing.large,
     alignItems: 'center',
   },

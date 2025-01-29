@@ -1,5 +1,14 @@
 import React, { useState } from "react";
-import { View, Text, Modal, Pressable, FlatList, ImageBackground, Alert } from "react-native";
+import {
+    View,
+    Text,
+    Modal,
+    Pressable,
+    FlatList,
+    ImageBackground,
+    Animated,
+    Easing,
+} from "react-native";
 import styles from "./TransitionScreen2.styles";
 import { RootStackParamList } from "../../../App";
 
@@ -42,6 +51,7 @@ const CareerModal: React.FC<CareerModalProps> = ({
     skills,
 }) => {
     const [selectedCareer, setSelectedCareer] = useState<string | null>(null);
+    const [animatedOpacity] = useState(new Animated.Value(1));
 
     // Génération des métiers basés sur les compétences
     const careers = skills
@@ -51,15 +61,30 @@ const CareerModal: React.FC<CareerModalProps> = ({
         }))
         .filter((item) => item.career !== null);
 
-    console.log("Compétences transmises :", skills);
-    console.log("Métiers disponibles :", careers);
+    const handlePress = (career: string, skill: string) => {
+        setSelectedCareer(career);
+
+        // Animation de la transition
+        Animated.sequence([
+            Animated.timing(animatedOpacity, {
+                toValue: 0,
+                duration: 200,
+                easing: Easing.ease,
+                useNativeDriver: true,
+            }),
+            Animated.timing(animatedOpacity, {
+                toValue: 1,
+                duration: 200,
+                easing: Easing.ease,
+                useNativeDriver: true,
+            }),
+        ]).start();
+    };
 
     const handleConfirm = () => {
         if (selectedCareer) {
             onCareerSelect(selectedCareer);
             onClose();
-        } else {
-            Alert.alert("Erreur", "Veuillez sélectionner un métier.");
         }
     };
 
@@ -82,9 +107,19 @@ const CareerModal: React.FC<CareerModalProps> = ({
                                     styles.careerButton,
                                     selectedCareer === item.career && styles.selectedCareerButton,
                                 ]}
-                                onPress={() => setSelectedCareer(item.career as string)}
+                                onPress={() => handlePress(item.career as string, item.skill)}
                             >
-                                <Text style={styles.careerText}>{item.skill}</Text>
+                                {/* Texte animé */}
+                                <Animated.Text
+                                    style={[
+                                        styles.skillText,
+                                        { opacity: animatedOpacity },
+                                    ]}
+                                >
+                                    {selectedCareer === item.career
+                                        ? item.career
+                                        : item.skill}
+                                </Animated.Text>
                             </Pressable>
                         )}
                         ListEmptyComponent={

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Modal, Pressable, Alert, ImageBackground } from 'react-native';
+import * as NavigationBar from "expo-navigation-bar";
 import stylesT from './Teenage.styles';
 
 type MiniGameProps = {
@@ -60,8 +61,21 @@ const MiniGame: React.FC<MiniGameProps> = ({ visible, onClose, onSuccess, onFail
         }
     };
 
+    useEffect(() => {
+        if (visible) {
+            const hideNavBar = async () => {
+                await NavigationBar.setBackgroundColorAsync("rgba(0,0,0,0)");
+                await NavigationBar.setBehaviorAsync("overlay-swipe");
+                await NavigationBar.setVisibilityAsync("hidden");
+            };
+
+            hideNavBar();
+        }
+    }, [visible]);
+
+
     return (
-        <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
+        <Modal visible={visible} animationType="slide" onRequestClose={onClose} statusBarTranslucent={true}>
             <ImageBackground
                 source={require('../../../assets/miniGameBackground.webp')} // Image d'arrière-plan
                 style={stylesT.miniGameBackground}

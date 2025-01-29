@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
+import * as NavigationBar from "expo-navigation-bar";
 import teenageAdventurousData from '../../../data/TeenageAdventurousData';
 import useSound from '../../../hooks/useSound';
 import sounds from '../../../utils/sounds';
@@ -304,8 +305,6 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
     };
 
 
-
-
     const handleMiniGameFailure = () => {
         setErrorCount((prev) => prev + 1);
 
@@ -352,6 +351,29 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
         setShowConsequence(true);
     };
 
+    useEffect(() => {
+        if (showTransition) {
+            const hideNavBar = async () => {
+                await NavigationBar.setBackgroundColorAsync("rgba(0,0,0)");
+                await NavigationBar.setBehaviorAsync("overlay-swipe");
+                await NavigationBar.setVisibilityAsync("hidden");
+            };
+
+            hideNavBar();
+        }
+    }, [showTransition]);
+
+    useEffect(() => {
+        if (showMiniGame) {
+            const hideNavBar = async () => {
+                await NavigationBar.setBackgroundColorAsync("rgba(0,0,0)");
+                await NavigationBar.setBehaviorAsync("overlay-swipe");
+                await NavigationBar.setVisibilityAsync("hidden");
+            };
+
+            hideNavBar();
+        }
+    }, [showMiniGame]);
 
 
 
@@ -404,7 +426,7 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
                 {showMiniGame && getMiniGameForDay(currentDay)}
                 {showTransition && (
                     currentDay <= 6 ? (
-                        <Modal visible={showTransition} animationType="fade">
+                        <Modal visible={showTransition} animationType="fade" statusBarTranslucent={true}>
                             <ImageBackground
                                 source={teenageAdventurousData[currentDay + 1]?.image}
                                 style={styles.transitionContainer}
