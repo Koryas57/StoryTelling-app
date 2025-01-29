@@ -41,11 +41,11 @@ const MiniGame: React.FC<MiniGameProps> = ({ visible, onClose, onSuccess, onFail
 
         if (index === keyIndex) {
             // Si c'est la clé
-            Alert.alert('Clé trouvée 🔑', 'Vous avez trouvé la clé !');
+            Alert.alert('Clé trouvée 🔑', 'Vous vous empressez d\'ouvrir le coffre !');
             setHasKey(true);
         } else if (randomOutcome < 0.2) {
             // 20% de chances de trouver un indice
-            Alert.alert('Indice', 'Vous trouvez un gros indice ! Il ne reste que deux pièces à fouiller.');
+            Alert.alert('Vous trouvez un gros indice !', 'Il ne reste plus que deux pièces à fouiller.');
 
             // Réduire les cases visibles à la clé et une autre case aléatoire
             const randomOtherIndex = remainingCells.filter((i) => i !== keyIndex)[
@@ -55,7 +55,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ visible, onClose, onSuccess, onFail
             setRemainingCells([keyIndex, randomOtherIndex]);
         } else {
             // Autres résultats (pièges)
-            Alert.alert('Pièce vide !', 'La pièce est vide, vous perdez 5 secondes.');
+            Alert.alert('Pièce vide !', 'Mierda, la pièce est vide, vous perdez genre 5 secondes.');
             setTimeRemaining((prev) => Math.max(prev - 5, 0));
         }
     };

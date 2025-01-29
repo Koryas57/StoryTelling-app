@@ -4,28 +4,26 @@ import typography from '../../../styles/typography';
 import spacing from '../../../styles/spacing';
 
 const styles = StyleSheet.create({
-  background: {
-    flex: 1,
-    resizeMode: 'cover',
-    justifyContent: 'center',
-  },
   container: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    padding: spacing.medium,
-    marginBottom: spacing.large,
+},
+background: {
+    flex: 1,
+    width: '100%',
+    resizeMode: 'cover',
+    justifyContent: 'center',
   },
   title: {
     fontFamily: 'Merriweather-Bold',
     textShadowRadius: 10,
     textShadowColor: colors.text,
     fontSize: typography.fontSizeLarge * 1.05,
-    padding: spacing.small,
+    padding: spacing.large,
     color: colors.whiteText,
     borderRadius: 5,
-    marginTop: spacing.extraLarge,
-    marginBottom: spacing.large,
+    marginBottom: spacing.medium,
     textAlign: 'center',
   },
   subtitle: {
@@ -68,8 +66,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
     color: colors.white,
-    marginTop: spacing.large,
-    marginBottom: spacing.extraLarge,
+    margin: spacing.large,
     textAlign: 'center',
   },
   continueButton: {
@@ -84,6 +81,44 @@ const styles = StyleSheet.create({
     textShadowColor: colors.text,
     textShadowRadius: 7,
   },
+  careerButton: {
+    padding: 15,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 10,
+    marginBottom: 10,
+},
+selectedCareerButton: {
+    backgroundColor: "#007BFF",
+    borderColor: "#0056b3",
+},
+careerText: {
+    fontSize: 18,
+    textAlign: "center",
+},
+confirmButton: {
+    backgroundColor: "#007BFF",
+    padding: 15,
+    borderRadius: 10,
+    marginTop: 20,
+    alignItems: "center",
+},
+disabledButton: {
+    backgroundColor: "#ccc",
+},
+confirmButtonText: {
+    color: "#fff",
+    fontSize: 18,
+},
+cancelButton: {
+    marginTop: 10,
+    padding: 15,
+    alignItems: "center",
+},
+cancelButtonText: {
+    color: "#007BFF",
+    fontSize: 18,
+},
 });
 
 export default styles;

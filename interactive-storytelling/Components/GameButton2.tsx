@@ -8,6 +8,7 @@ type GameButton2Props = {
     onTouchStart?: () => void; // Son ou effet au début de l'appui
     buttonStyle?: StyleProp<ViewStyle>; // Style supplémentaire pour le bouton
     textStyle?: StyleProp<TextStyle>; // Style supplémentaire pour le texte
+    disabled?: boolean;
 };
 
 const GameButton2: React.FC<GameButton2Props> = ({
@@ -16,6 +17,7 @@ const GameButton2: React.FC<GameButton2Props> = ({
     onTouchStart,
     buttonStyle,
     textStyle,
+    disabled,
 }) => {
     const scaleValue = useRef(new Animated.Value(1)).current;
 

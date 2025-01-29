@@ -6,6 +6,7 @@ import { RootStackParamList } from '../../../App';
 import useSound from '../../../hooks/useSound';
 import sounds from '../../../utils/sounds';
 import GameButton2 from '../../../Components/GameButton2';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 type TransitionScreenProps = NativeStackScreenProps<
@@ -76,7 +77,6 @@ const TransitionScreen: React.FC<TransitionScreenProps> = ({ route, navigation }
                         <Text style={styles.skillText}>Aucune compétence acquise</Text>
                     )}
                 </View>
-
                 <Text style={styles.unlockedMessage}>{unlockedMessage}</Text>
                 <GameButton2
                     text='Continuer'

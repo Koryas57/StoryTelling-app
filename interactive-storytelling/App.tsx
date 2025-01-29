@@ -9,6 +9,30 @@ import TransitionScreen from './screens/Story/TransitionScreen/TransitionScreen'
 import { useFonts } from 'expo-font/build/FontHooks';
 import { ActivityIndicator, View, Text } from 'react-native';
 import TeenageAdventurous from './screens/Story/Teenage/TeenageAdventurous';
+import TransitionScreen2 from './screens/Story/TransitionScreen/TransitionScreen2';
+
+import FamilyMediatorStory from './screens/Story/Adulthood/FamilyMediatorStory';
+import CreativeDirectorStory from './screens/Story/Adulthood/CreativeDirectorStory';
+import StrategicPlannerStory from './screens/Story/Adulthood/StrategicPlannerStory';
+import PoliceInvestigatorStory from './screens/Story/Adulthood/PoliceInvestigatorStory';
+import AdministrativeAssistantStory from './screens/Story/Adulthood/AdministrativeAssistantStory';
+import EventManagerStory from './screens/Story/Adulthood/EventManagerStory';
+import SportsManagerStory from './screens/Story/Adulthood/SportsManagerStory';
+import RiskAnalystStory from './screens/Story/Adulthood/RiskAnalystStory';
+import TherapistStory from './screens/Story/Adulthood/TherapistStory';
+import RelationshipConsultantStory from './screens/Story/Adulthood/RelationshipConsultantStory';
+import ArchivistStory from './screens/Story/Adulthood/ArchivistStory';
+import InnovativeProjectManagerStory from './screens/Story/Adulthood/InnovativeProjectManagerStory';
+import HumanitarianCoordinatorStory from './screens/Story/Adulthood/HumanitarianCoordinatorStory';
+import GeneralSecretaryStory from './screens/Story/Adulthood/GeneralSecretaryStory';
+import AmbassadorStory from './screens/Story/Adulthood/AmbassadorStory';
+import RightsDefenderStory from './screens/Story/Adulthood/RightsDefenderStory';
+import NeutralObserverStory from './screens/Story/Adulthood/NeutralObserverStory';
+import InnovativeEntrepreneurStory from './screens/Story/Adulthood/InnovativeEntrepreneurStory';
+import EfficiencyConsultantStory from './screens/Story/Adulthood/EfficiencyConsultantStory';
+import CommunityMentorStory from './screens/Story/Adulthood/CommunityMentorStory';
+import UniversityProfessorStory from './screens/Story/Adulthood/UniversityProfessorStory';
+
 
 // Définition des routes pour le typage
 export type RootStackParamList = {
@@ -35,10 +59,39 @@ export type RootStackParamList = {
     dominantTrait: string;
     skills: string[];
   };
+  TransitionScreen2: {
+    name: string;
+    gender: string;
+    title?: string;
+    dominantTrait: string;
+    skills: string[];
+  };
   TeenageAmbitious: { name: string; gender: string };
   TeenagePrudent: { name: string; gender: string };
   TeenageTimid: { name: string; gender: string };
+  StrategicPlannerStory: { name: string; gender: string; title?: string };
+  PoliceInvestigatorStory: { name: string; gender: string; title?: string };
+  AdministrativeAssistantStory: { name: string; gender: string; title?: string };
+  EventManagerStory: { name: string; gender: string; title?: string };
+  SportsManagerStory: { name: string; gender: string; title?: string };
+  RiskAnalystStory: { name: string; gender: string; title?: string };
+  TherapistStory: { name: string; gender: string; title?: string };
+  RelationshipConsultantStory: { name: string; gender: string; title?: string };
+  ArchivistStory: { name: string; gender: string; title?: string };
+  InnovativeProjectManagerStory: { name: string; gender: string; title?: string };
+  HumanitarianCoordinatorStory: { name: string; gender: string; title?: string };
+  GeneralSecretaryStory: { name: string; gender: string; title?: string };
+  AmbassadorStory: { name: string; gender: string; title?: string };
+  RightsDefenderStory: { name: string; gender: string; title?: string };
+  NeutralObserverStory: { name: string; gender: string; title?: string };
+  InnovativeEntrepreneurStory: { name: string; gender: string; title?: string };
+  EfficiencyConsultantStory: { name: string; gender: string; title?: string };
+  CommunityMentorStory: { name: string; gender: string; title?: string };
+  UniversityProfessorStory: { name: string; gender: string; };
+  CreativeDirectorStory: { name: string; gender: string; title?: string };
+  FamilyMediatorStory: { name: string; gender: string; title?: string };
 };
+
 
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -91,9 +144,120 @@ const App: React.FC = () => {
           component={TransitionScreen}
           options={{ headerShown: false }}
         />
+        <Stack.Screen
+          name="TransitionScreen2"
+          component={TransitionScreen2}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="FamilyMediatorStory"
+          component={FamilyMediatorStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CreativeDirectorStory"
+          component={CreativeDirectorStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="StrategicPlannerStory"
+          component={StrategicPlannerStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="PoliceInvestigatorStory"
+          component={PoliceInvestigatorStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AdministrativeAssistantStory"
+          component={AdministrativeAssistantStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EventManagerStory"
+          component={EventManagerStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="SportsManagerStory"
+          component={SportsManagerStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RiskAnalystStory"
+          component={RiskAnalystStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TherapistStory"
+          component={TherapistStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RelationshipConsultantStory"
+          component={RelationshipConsultantStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="ArchivistStory"
+          component={ArchivistStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="InnovativeProjectManagerStory"
+          component={InnovativeProjectManagerStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="HumanitarianCoordinatorStory"
+          component={HumanitarianCoordinatorStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="GeneralSecretaryStory"
+          component={GeneralSecretaryStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="AmbassadorStory"
+          component={AmbassadorStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="RightsDefenderStory"
+          component={RightsDefenderStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="NeutralObserverStory"
+          component={NeutralObserverStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="InnovativeEntrepreneurStory"
+          component={InnovativeEntrepreneurStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="EfficiencyConsultantStory"
+          component={EfficiencyConsultantStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="CommunityMentorStory"
+          component={CommunityMentorStory}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="UniversityProfessorStory"
+          component={UniversityProfessorStory}
+          options={{ headerShown: false }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
+
 };
 
 export default App;
