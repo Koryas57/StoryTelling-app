@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { View, Text, ImageBackground, ScrollView, Pressable } from "react-native";
+import * as NavigationBar from "expo-navigation-bar";
 import styles from "./TransitionScreen2.styles";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../../../App";
+
 import useSound from "../../../hooks/useSound";
 import sounds from "../../../utils/sounds";
 import CareerModal from "./CareerModal";
@@ -22,6 +24,8 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
 
     const [isModalVisible, setModalVisible] = useState(false);
     const [selectedCareer, setSelectedCareer] = useState<string | null>(null);
+    const scrollViewRef = useRef<ScrollView>(null);
+
 
     useEffect(() => {
         const playMusic = async () => {
@@ -113,13 +117,35 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
         }
     };
 
+    useEffect(() => {
+        const configureNavBar = async () => {
+            await NavigationBar.setBackgroundColorAsync("rgb(0, 0, 0)");
+            await NavigationBar.setBehaviorAsync("overlay-swipe"); // Swipe pour afficher temporairement
+            await NavigationBar.setVisibilityAsync("hidden"); //
+
+            // Écoute les changements de visibilité pour cacher la barre après 2 sec
+            const subscription = NavigationBar.addVisibilityListener(({ visibility }) => {
+                if (visibility === "visible") {
+                    setTimeout(() => {
+                        NavigationBar.setVisibilityAsync("hidden"); // Cache la barre après 2 sec
+                    }, 2500);
+                }
+            });
+
+            return () => subscription.remove(); // Nettoie l'événement à la destruction du composant
+        };
+
+        configureNavBar();
+    }, []);
+
     return (
-        <ScrollView contentContainerStyle={styles.container}>
+        <ScrollView ref={scrollViewRef} contentContainerStyle={styles.container} overScrollMode="always"
+        >
             <ImageBackground
                 source={require("../../../assets/TeenageTransitionBackground.webp")}
                 style={styles.background}
             >
-                <View style={styles.container}>
+                <View style={styles.transitionContainer}>
                     <Text style={styles.title}>Félicitations {name}, vous avez terminé le chapitre de l'adolescence</Text>
                     <Text style={styles.subtitle}>Résumé des compétences acquises</Text>
                     <View style={styles.skillsContainer}>
@@ -131,28 +157,27 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
                     </View>
 
                     {selectedCareer && (
-                        <Text style={styles.careerText}>
-                            Métier choisi : {selectedCareer}
-                        </Text>
+                        <>
+                            <Text style={styles.careerText}>
+                                Vous avez choisi : {selectedCareer}
+                            </Text>
+                            <GameButton2
+                                text={`Continuer vers ${selectedCareer}`}
+                                textStyle={styles.continueButtonText}
+                                buttonStyle={styles.continueStoryButton}
+                                onPress={handleContinue}
+                                disabled={!selectedCareer}
+                            />
+                        </>
                     )}
-
                     <GameButton2
                         text={selectedCareer ? `Changer de métier` : "Choisir un métier"}
                         buttonStyle={styles.continueButton}
                         onPress={() => setModalVisible(true)}
                         onTouchStart={choiceSound}
-                    >
-                    </GameButton2>
-                    <GameButton2
-                        text={selectedCareer ? `Continuer vers ${selectedCareer}` : "Sélectionner un métier"}
-                        textStyle={styles.continueButtonText}
-                        buttonStyle={styles.continueButton}
-                        onPress={handleContinue}
-                        disabled={!selectedCareer}
                     />
                 </View>
             </ImageBackground>
-
             <CareerModal
                 visible={isModalVisible}
                 onClose={() => setModalVisible(false)}

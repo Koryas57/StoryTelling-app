@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -11,6 +11,8 @@ import {
 } from "react-native";
 import styles from "./TransitionScreen2.styles";
 import { RootStackParamList } from "../../../App";
+import * as NavigationBar from "expo-navigation-bar";
+
 
 // Map des compétences vers les métiers
 export const careerToScreenMap: Record<string, keyof RootStackParamList> = {
@@ -53,6 +55,7 @@ const CareerModal: React.FC<CareerModalProps> = ({
     const [selectedCareer, setSelectedCareer] = useState<string | null>(null);
     const [animatedOpacity] = useState(new Animated.Value(1));
 
+
     // Génération des métiers basés sur les compétences
     const careers = skills
         .map((skill) => ({
@@ -88,8 +91,29 @@ const CareerModal: React.FC<CareerModalProps> = ({
         }
     };
 
+    useEffect(() => {
+        const configureNavBar = async () => {
+            await NavigationBar.setBackgroundColorAsync("rgba(0, 0, 0, 0)");
+            await NavigationBar.setBehaviorAsync("overlay-swipe"); // Swipe pour afficher temporairement
+            await NavigationBar.setVisibilityAsync("hidden"); //
+
+            // Écoute les changements de visibilité pour cacher la barre après 2 sec
+            const subscription = NavigationBar.addVisibilityListener(({ visibility }) => {
+                if (visibility === "visible") {
+                    setTimeout(() => {
+                        NavigationBar.setVisibilityAsync("hidden"); // Cache la barre après 2 sec
+                    }, 2500);
+                }
+            });
+
+            return () => subscription.remove(); // Nettoie l'événement à la destruction du composant
+        };
+
+        configureNavBar();
+    }, []);
+
     return (
-        <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
+        <Modal visible={visible} animationType="slide" onRequestClose={onClose} statusBarTranslucent={true}>
             <ImageBackground
                 source={require("../../../assets/TeenageTransitionBackground.webp")}
                 style={styles.background}

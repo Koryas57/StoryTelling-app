@@ -112,7 +112,7 @@ const App: React.FC = () => {
 
   useEffect(() => {
     const configureNavBar = async () => {
-      await NavigationBar.setBackgroundColorAsync("rgb(0, 0, 0)");
+      await NavigationBar.setBackgroundColorAsync("rgba(0, 0, 0, 0)");
       await NavigationBar.setBehaviorAsync("overlay-swipe"); // Swipe pour afficher temporairement
       await NavigationBar.setVisibilityAsync("hidden"); //
 

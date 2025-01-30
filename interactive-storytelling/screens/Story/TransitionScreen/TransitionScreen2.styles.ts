@@ -5,15 +5,21 @@ import spacing from '../../../styles/spacing';
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: 'center',
     justifyContent: 'center',
-},
-background: {
+  },
+  transitionContainer: {
+    flexGrow: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  background: {
     flex: 1,
     width: '100%',
     resizeMode: 'cover',
     justifyContent: 'center',
+    paddingVertical: spacing.medium,
   },
   title: {
     fontFamily: 'Merriweather-Bold',
@@ -46,8 +52,8 @@ background: {
     textShadowColor: colors.text,
     color: colors.whiteText,
     textAlign: 'center',
-    marginVertical: 5,
     padding: 10,
+    margin: spacing.small,
     borderRadius: 5,
     borderTopWidth: 1,
     borderBottomWidth: 2,
@@ -71,7 +77,13 @@ background: {
   },
   continueButton: {
     borderRadius: 10,
-    marginBottom: spacing.small,
+    marginTop: spacing.small + 1,
+  },
+  continueStoryButton: {
+    borderRadius: 10,
+    marginBottom: 0,
+    marginHorizontal: 8,
+    backgroundColor: 'rgba(255, 255, 255, 0.35)',
   },
   continueButtonText: {
     fontFamily: 'Merriweather-Bold',
@@ -81,15 +93,16 @@ background: {
     textShadowRadius: 10,
   },
   careerButton: {
-    padding: spacing.small,
     borderRadius: 8,
 },
-selectedCareerButton: {
-  backgroundColor: colors.whiteText,
-  transform: 'translate(0)',
+  selectedCareerButton: {
+    backgroundColor: "rgba(245, 136, 12, 0.64)",
+    borderColor: "rgba(245, 136, 12, 0.34)",
+    borderStyle: "dashed",
+    borderWidth: 2,
   },
   careerText: {
-    fontFamily: 'Merriweather-Bold',
+    fontFamily: 'Merriweather-BoldItalic',
     textShadowRadius: 10,
     textShadowColor: colors.text,
     color: colors.whiteText,
@@ -104,28 +117,42 @@ selectedCareerButton: {
     textAlign: "center",
     marginVertical: spacing.small + 2,
 },
-confirmButton: {
-    backgroundColor: "#007BFF",
+  confirmButton: {
+    backgroundColor: 'rgba(19, 150, 211, 1)',
     padding: 15,
     borderRadius: 10,
-    marginTop: 20,
     alignItems: "center",
+    marginTop: 20,
 },
 disabledButton: {
-    backgroundColor: "#ccc",
+  borderRadius: 10,
+  marginBottom: 0,
+  backgroundColor: 'rgba(255, 255, 255, 0.35)',
 },
 confirmButtonText: {
-    color: "#fff",
-    fontSize: 18,
+  fontFamily: 'Merriweather-BoldItalic',
+  textShadowRadius: 10,
+  textShadowColor: colors.text,
+  color: colors.whiteText,
+  borderRadius: 8,
+  alignItems: 'center',
+  borderColor: "#0056b3",
+  fontSize: 18,
+  textAlign: "center",
 },
 cancelButton: {
-    marginTop: 10,
-    padding: 15,
-    alignItems: "center",
+  marginTop: spacing.large + 5,
+  padding: 10,
+  alignItems: "center",
+  backgroundColor: 'rgba(255, 255, 255, 0.35)',
+  borderRadius: 8,
 },
 cancelButtonText: {
-    color: "#007BFF",
-    fontSize: 18,
+  fontFamily: 'Merriweather-Bold',
+  textShadowRadius: 10,
+  textShadowColor: colors.text,
+  color: colors.whiteText,
+  fontSize: 18,
 },
 });
 
