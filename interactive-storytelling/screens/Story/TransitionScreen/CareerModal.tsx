@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
     View,
     Text,
@@ -39,11 +39,46 @@ export const careerToScreenMap: Record<string, keyof RootStackParamList> = {
     "Relations authentiques ❤️": "FamilyMediatorStory",
 };
 
+const careerTranslations: Record<keyof RootStackParamList, string> = {
+    StrategicPlannerStory: "Planificateur stratégique",
+    PoliceInvestigatorStory: "Enquêteur de police",
+    AdministrativeAssistantStory: "Assistant administratif",
+    EventManagerStory: "Organisateur d'événements",
+    SportsManagerStory: "Manager sportif",
+    RiskAnalystStory: "Analyste des risques",
+    TherapistStory: "Thérapeute",
+    RelationshipConsultantStory: "Consultant en relations",
+    ArchivistStory: "Archiviste",
+    InnovativeProjectManagerStory: "Chef de projet innovant",
+    HumanitarianCoordinatorStory: "Coordinateur humanitaire",
+    GeneralSecretaryStory: "Secrétaire général",
+    AmbassadorStory: "Ambassadeur",
+    RightsDefenderStory: "Défenseur des droits",
+    NeutralObserverStory: "Observateur neutre",
+    InnovativeEntrepreneurStory: "Entrepreneur innovant",
+    EfficiencyConsultantStory: "Consultant en efficacité",
+    CommunityMentorStory: "Mentor communautaire",
+    UniversityProfessorStory: "Professeur universitaire",
+    CreativeDirectorStory: "Directeur créatif",
+    FamilyMediatorStory: "Médiateur familial",
+    Home: "",
+    Game: "",
+    Childhood: "",
+    TeenageAdventurous: "",
+    TransitionScreen: "",
+    TransitionScreen2: "",
+    TeenageAmbitious: "",
+    TeenagePrudent: "",
+    TeenageTimid: ""
+};
+
+
 type CareerModalProps = {
     visible: boolean;
     onClose: () => void;
     onCareerSelect: (career: string) => void;
     skills: string[];
+    statusBarTranslucent?: boolean;
 };
 
 const CareerModal: React.FC<CareerModalProps> = ({
@@ -51,9 +86,12 @@ const CareerModal: React.FC<CareerModalProps> = ({
     onClose,
     onCareerSelect,
     skills,
+    statusBarTranslucent,
 }) => {
     const [selectedCareer, setSelectedCareer] = useState<string | null>(null);
     const [animatedOpacity] = useState(new Animated.Value(1));
+    const opacityRefs = useRef<{ [key: string]: Animated.Value }>({}).current;
+
 
 
     // Génération des métiers basés sur les compétences
@@ -65,23 +103,20 @@ const CareerModal: React.FC<CareerModalProps> = ({
         .filter((item) => item.career !== null);
 
     const handlePress = (career: string, skill: string) => {
-        setSelectedCareer(career);
+        if (selectedCareer !== career) {
+            if (!opacityRefs[career]) {
+                opacityRefs[career] = new Animated.Value(1);
+            }
 
-        // Animation de la transition
-        Animated.sequence([
-            Animated.timing(animatedOpacity, {
+            Animated.timing(opacityRefs[career], {
                 toValue: 0,
-                duration: 200,
-                easing: Easing.ease,
+                duration: 300,
                 useNativeDriver: true,
-            }),
-            Animated.timing(animatedOpacity, {
-                toValue: 1,
-                duration: 200,
-                easing: Easing.ease,
-                useNativeDriver: true,
-            }),
-        ]).start();
+            }).start(() => {
+                setSelectedCareer(career);
+                opacityRefs[career].setValue(1);
+            });
+        }
     };
 
     const handleConfirm = () => {
@@ -119,41 +154,48 @@ const CareerModal: React.FC<CareerModalProps> = ({
                 style={styles.background}
             >
                 <View style={styles.container}>
-                    <Text style={styles.title}>Choisissez votre métier</Text>
-
+                    <Text style={styles.titleModal}>Choisissez votre métier</Text>
+                    <Text style={styles.careerText}>
+                        Chaque compétence est associée à un métier et à une histoire unique.
+                    </Text>
                     {/* Liste des métiers */}
                     <FlatList
                         data={careers}
                         keyExtractor={(item) => item.career as string}
-                        renderItem={({ item }) => (
-                            <Pressable
-                                style={[
-                                    styles.careerButton,
-                                    selectedCareer === item.career && styles.selectedCareerButton,
-                                ]}
-                                onPress={() => handlePress(item.career as string, item.skill)}
-                            >
-                                {/* Texte animé */}
-                                <Animated.Text
+                        renderItem={({ item }) => {
+                            if (!opacityRefs[item.career]) {
+                                opacityRefs[item.career] = new Animated.Value(1);
+                            }
+
+                            const isSelected = selectedCareer === item.career;
+
+                            return (
+                                <Pressable
                                     style={[
-                                        styles.skillText,
-                                        { opacity: animatedOpacity },
+                                        styles.careerButton,
+                                        isSelected && styles.selectedCareerButton,
                                     ]}
+                                    onPress={() => handlePress(item.career as string, item.skill)}
                                 >
-                                    {selectedCareer === item.career
-                                        ? item.career
-                                        : item.skill}
-                                </Animated.Text>
-                            </Pressable>
-                        )}
+                                    <Animated.Text
+                                        style={[
+                                            styles.skillText,
+                                            { opacity: opacityRefs[item.career] },
+                                        ]}
+                                    >
+                                        {isSelected
+                                            ? careerTranslations[item.career as keyof RootStackParamList] || item.career
+                                            : item.skill}
+                                    </Animated.Text>
+                                </Pressable>
+                            );
+                        }}
                         ListEmptyComponent={
                             <Text style={styles.careerText}>
                                 Aucun métier disponible pour vos compétences.
                             </Text>
                         }
                     />
-
-                    {/* Bouton pour confirmer */}
                     <Pressable
                         style={[
                             styles.confirmButton,

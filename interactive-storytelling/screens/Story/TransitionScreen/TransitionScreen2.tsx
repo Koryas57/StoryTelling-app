@@ -15,6 +15,39 @@ type TransitionScreen2Props = NativeStackScreenProps<
     "TransitionScreen2"
 >;
 
+const careerTranslations: Record<string, string> = {
+    StrategicPlannerStory: "Planificateur stratégique",
+    PoliceInvestigatorStory: "Enquêteur de police",
+    AdministrativeAssistantStory: "Assistant administratif",
+    EventManagerStory: "Organisateur d'événements",
+    SportsManagerStory: "Manager sportif",
+    RiskAnalystStory: "Analyste des risques",
+    TherapistStory: "Thérapeute",
+    RelationshipConsultantStory: "Consultant en relations",
+    ArchivistStory: "Archiviste",
+    InnovativeProjectManagerStory: "Chef de projet innovant",
+    HumanitarianCoordinatorStory: "Coordinateur humanitaire",
+    GeneralSecretaryStory: "Secrétaire général",
+    AmbassadorStory: "Ambassadeur",
+    RightsDefenderStory: "Défenseur des droits",
+    NeutralObserverStory: "Observateur neutre",
+    InnovativeEntrepreneurStory: "Entrepreneur innovant",
+    EfficiencyConsultantStory: "Consultant en efficacité",
+    CommunityMentorStory: "Mentor communautaire",
+    UniversityProfessorStory: "Professeur universitaire",
+    CreativeDirectorStory: "Directeur créatif",
+    FamilyMediatorStory: "Médiateur familial",
+    Home: "",
+    Game: "",
+    Childhood: "",
+    TeenageAdventurous: "",
+    TransitionScreen: "",
+    TransitionScreen2: "",
+    TeenageAmbitious: "",
+    TeenagePrudent: "",
+    TeenageTimid: ""
+};
+
 const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation }) => {
     const { name, gender, skills } = route.params;
 
@@ -139,15 +172,16 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
     }, []);
 
     return (
-        <ScrollView ref={scrollViewRef} contentContainerStyle={styles.container} overScrollMode="always"
+        <ScrollView ref={scrollViewRef} contentContainerStyle={styles.container}
         >
             <ImageBackground
                 source={require("../../../assets/TeenageTransitionBackground.webp")}
                 style={styles.background}
             >
                 <View style={styles.transitionContainer}>
-                    <Text style={styles.title}>Félicitations {name}, vous avez terminé le chapitre de l'adolescence</Text>
-                    <Text style={styles.subtitle}>Résumé des compétences acquises</Text>
+                    <Text style={styles.title}>Félicitations {name}, vous avez terminé le chapitre</Text>
+                    <Text style={styles.title2}>Adolescence</Text>
+                    <Text style={styles.subtitle}>Résumé des compétences acquises : </Text>
                     <View style={styles.skillsContainer}>
                         {skills.map((skill, index) => (
                             <Text key={index} style={styles.skillText}>
@@ -159,15 +193,17 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
                     {selectedCareer && (
                         <>
                             <Text style={styles.careerText}>
-                                Vous avez choisi : {selectedCareer}
+                                Vous avez choisi : {selectedCareer ? careerTranslations[selectedCareer] || selectedCareer : "Aucun métier sélectionné"}
+
                             </Text>
                             <GameButton2
-                                text={`Continuer vers ${selectedCareer}`}
+                                text={`Continuer vers une vie de ${selectedCareer ? careerTranslations[selectedCareer] || selectedCareer : "Sélectionner un métier"}`}
                                 textStyle={styles.continueButtonText}
                                 buttonStyle={styles.continueStoryButton}
                                 onPress={handleContinue}
                                 disabled={!selectedCareer}
                             />
+                            <Text style={styles.separatorText}>Ou bien</Text>
                         </>
                     )}
                     <GameButton2
@@ -182,6 +218,7 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
                 visible={isModalVisible}
                 onClose={() => setModalVisible(false)}
                 onCareerSelect={(career) => setSelectedCareer(career)}
+                statusBarTranslucent={true}
                 skills={skills}
             />
         </ScrollView>
