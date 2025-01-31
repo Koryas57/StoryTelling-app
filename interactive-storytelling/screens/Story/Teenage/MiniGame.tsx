@@ -56,7 +56,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ visible, onClose, onSuccess, onFail
             setRemainingCells([keyIndex, randomOtherIndex]);
         } else {
             // Autres résultats (pièges)
-            Alert.alert('Pièce vide !', 'Mierda, la pièce est vide, vous perdez genre 5 secondes.');
+            Alert.alert('Pièce vide ! ❌', 'Mierda, la pièce est vide, vous perdez genre 5 secondes 🕓');
             setTimeRemaining((prev) => Math.max(prev - 5, 0));
         }
     };
@@ -82,7 +82,10 @@ const MiniGame: React.FC<MiniGameProps> = ({ visible, onClose, onSuccess, onFail
             >
                 <View style={stylesT.miniGameContainer}>
                     <Text style={stylesT.miniGameText}>
-                        Trouvez la clé cachée dans la tour ! Temps restant : {timeRemaining}s
+                        ⚱️ Vous trouvez un coffre ancien, pour l'ouvrir, vous devez retrouver sa clé en fouillant les pièces de la tour ! 🔑
+                    </Text>
+                    <Text style={stylesT.miniGameText}>
+                        Votre patience arrivera à ses limites dans {timeRemaining}s ⌛️
                     </Text>
                     <View style={stylesT.grid}>
                         {remainingCells.map((cellIndex) => (
@@ -96,7 +99,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ visible, onClose, onSuccess, onFail
                                 disabled={miniGameProgress.includes(cellIndex)}
                             >
                                 <Text style={stylesT.cellText}>
-                                    {miniGameProgress.includes(cellIndex) ? (cellIndex === keyIndex ? '🔑' : '✔️') : '❓'}
+                                    {miniGameProgress.includes(cellIndex) ? (cellIndex === keyIndex ? '🔑' : '🥕') : '❓'}
                                 </Text>
                             </Pressable>
                         ))}
@@ -106,7 +109,7 @@ const MiniGame: React.FC<MiniGameProps> = ({ visible, onClose, onSuccess, onFail
                         onPress={hasKey ? onSuccess : onFailure}
                     >
                         <Text style={stylesT.successButtonText}>
-                            {hasKey ? 'Ouvrir le coffre poussièreux' : 'Abandonner'}
+                            {hasKey ? 'Ouvrir le coffre poussièreux ⚱️' : 'Renoncer et rentrer à la maison 🥪'}
                         </Text>
                     </Pressable>
                 </View>

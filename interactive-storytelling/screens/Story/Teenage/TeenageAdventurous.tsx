@@ -137,10 +137,10 @@ const TeenageAdventurous: React.FC<TeenageAdventurousProps> = ({
             if (errorCount + 1 >= 3) {
                 Alert.alert(
                     'Destin tragique ❌',
-                    `En suivant un chemin semé d'incertitudes et de décisions contraires à votre véritable nature, ${name} s'est lentement perdu(e). 
+                    `En suivant un chemin semé d'incertitudes et de décisions contraires à sa véritable nature, ${name} s'est lentement perdu(e). 
 Ces choix, bien qu'humains, ont mené à une fin sombre : isolé(e), sans opportunités, et emprisonné(e) dans la peur de l'échec.
 
-Mais tout n'est pas fini. Chaque aventure est une leçon, et aujourd'hui peut marquer un nouveau départ. 
+Mais tout n'est pas fini ! Chaque aventure est une leçon, et aujourd'hui peut marquer un nouveau départ. 
 
 Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, une histoire qui VOUS ressemble. 🔮`,
                     [
@@ -300,7 +300,7 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
             console.warn("miniGameChoiceIndex ou miniGameChoiceType non défini.");
         }
 
-        Alert.alert('Félicitations', 'Vous avez réussi le mini-jeu 🎉');
+        Alert.alert('Félicitations ! 🎉', 'Vous avez réussi le mini-jeu, ce moment restera dans votre mémoire toute votre vie et influencera peut-être certains de vos choix... 🍃');
         setShowConsequence(true);
     };
 
@@ -311,10 +311,10 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
         if (errorCount + 1 >= 3) {
             Alert.alert(
                 'Destin tragique ❌',
-                `En suivant un chemin semé d'incertitudes et de décisions contraires à votre véritable nature, ${name} s'est lentement perdu(e). 
+                `En suivant un chemin semé d'incertitudes et de décisions contraires à sa véritable nature, ${name} s'est lentement perdu(e). 
 Ces choix, bien qu'humains, ont mené à une fin sombre : isolé(e), sans opportunités, et emprisonné(e) dans la peur de l'échec.
 
-Mais tout n'est pas fini. Chaque aventure est une leçon, et aujourd'hui peut marquer un nouveau départ. 
+Mais tout n'est pas fini ! Chaque aventure est une leçon, et aujourd'hui peut marquer un nouveau départ. 
 
 Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, une histoire qui VOUS ressemble. 🔮`,
                 [
@@ -347,7 +347,7 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
             setSkillTitle("");
         }
 
-        Alert.alert('Échec', 'Vous avez échoué au mini-jeu.');
+        Alert.alert('Échec 🥀', 'Chercher la clé à fini par vous saouler, vous rentrez seul chez vous 🦃');
         setShowConsequence(true);
     };
 
@@ -412,7 +412,7 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
                         </>
                     ) : (
                         <>
-                            <Text style={styles.consequenceTitle}>💫 {name} obtient une compétence du niveau "Adolescence" :</Text>
+                            <Text style={styles.consequenceTitle}>{name} obtient une compétence du niveau Adolescence :</Text>
                             <Text style={styles.skillTitle}>{skillTitle}</Text>
                             <Text style={styles.consequenceText}>{consequence}</Text>
                             <GameButton2

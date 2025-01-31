@@ -466,7 +466,7 @@ const Childhood: React.FC<ChildhoodProps> = ({ route, navigation }) => {
                         </>
                     ) : (
                         <>
-                            <Text style={styles.consequenceTitle}>💫 {name} obtient une compétence du niveau Enfance :</Text>
+                            <Text style={styles.consequenceTitle}>{name} obtient une compétence du niveau Enfance :</Text>
                             {skillTitle ? (
                                 <Text style={styles.skillTitle}>{skillTitle}</Text>
                             ) : (

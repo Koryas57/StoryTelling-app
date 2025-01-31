@@ -12,6 +12,8 @@ import {
 import styles from "./TransitionScreen2.styles";
 import { RootStackParamList } from "../../../App";
 import * as NavigationBar from "expo-navigation-bar";
+import useSound from "../../../hooks/useSound";
+import sounds from "../../../utils/sounds";
 
 
 // Map des compétences vers les métiers
@@ -91,7 +93,8 @@ const CareerModal: React.FC<CareerModalProps> = ({
     const [selectedCareer, setSelectedCareer] = useState<string | null>(null);
     const [animatedOpacity] = useState(new Animated.Value(1));
     const opacityRefs = useRef<{ [key: string]: Animated.Value }>({}).current;
-
+    const choiceSound = useSound(sounds.choiceSound);
+    const levelSound = useSound(sounds.levelSound);
 
 
     // Génération des métiers basés sur les compétences
@@ -203,12 +206,13 @@ const CareerModal: React.FC<CareerModalProps> = ({
                         ]}
                         onPress={handleConfirm}
                         disabled={!selectedCareer}
+                        onTouchStart={levelSound}
                     >
                         <Text style={styles.confirmButtonText}>Confirmer</Text>
                     </Pressable>
 
                     {/* Bouton pour annuler */}
-                    <Pressable style={styles.cancelButton} onPress={onClose}>
+                    <Pressable style={styles.cancelButton} onPress={onClose} onTouchStart={choiceSound}>
                         <Text style={styles.cancelButtonText}>Retour</Text>
                     </Pressable>
                 </View>
