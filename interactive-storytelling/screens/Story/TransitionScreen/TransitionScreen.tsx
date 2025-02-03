@@ -50,7 +50,7 @@ const TransitionScreen: React.FC<TransitionScreenProps> = ({ route, navigation }
     };
 
     const unlockedMessage = `🔓 Chemin débloqué : ${traitNames[dominantTrait] || dominantTrait} ! ✨
-    Tes choix ont tracé cette voie... mais d'autres secrets t'attendent.`;
+    Tes choix ont tracés cette voie... mais d'autres secrets t'attendent 🕳`;
 
     return (
         <ImageBackground

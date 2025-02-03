@@ -13,6 +13,7 @@ import Childhood from './screens/Story/Childhood/Childhood';
 import TransitionScreen from './screens/Story/TransitionScreen/TransitionScreen';
 
 import TeenageAdventurous from './screens/Story/Teenage/TeenageAdventurous';
+import TeenagePrudent from './screens/Story/Teenage/TeenagePrudent';
 import TransitionScreen2 from './screens/Story/TransitionScreen/TransitionScreen2';
 
 import FamilyMediatorStory from './screens/Story/Adulthood/FamilyMediatorStory';
@@ -56,6 +57,13 @@ export type RootStackParamList = {
     currentDay?: number;
     userChoices?: Record<number, string>;
   };
+  TeenagePrudent: {
+    name: string;
+    gender: string;
+    title?: string;
+    currentDay?: number;
+    userChoices?: Record<number, string>;
+  };
   TransitionScreen: {
     name: string;
     gender: string;
@@ -71,7 +79,6 @@ export type RootStackParamList = {
     skills: string[];
   };
   TeenageAmbitious: { name: string; gender: string };
-  TeenagePrudent: { name: string; gender: string };
   TeenageTimid: { name: string; gender: string };
   StrategicPlannerStory: { name: string; gender: string; title?: string };
   PoliceInvestigatorStory: { name: string; gender: string; title?: string };
@@ -167,6 +174,11 @@ const App: React.FC = () => {
           options={{ headerShown: false }}
         />
         <Stack.Screen
+          name="TeenagePrudent"
+          component={TeenagePrudent}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
           name="TransitionScreen"
           component={TransitionScreen}
           options={{ headerShown: false }}
@@ -176,6 +188,7 @@ const App: React.FC = () => {
           component={TransitionScreen2}
           options={{ headerShown: false }}
         />
+        {/* Jobs Section */}
         <Stack.Screen
           name="FamilyMediatorStory"
           component={FamilyMediatorStory}
