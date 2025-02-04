@@ -18,6 +18,7 @@ import sounds from "../../../utils/sounds";
 
 // Map des compétences vers les métiers
 export const careerToScreenMap: Record<string, keyof RootStackParamList> = {
+    // From Adventurous Teenage
     "Préparation stratégique avancée 🎩": "StrategicPlannerStory",
     "Analyse situationnelle intermédiaire 🕵️": "PoliceInvestigatorStory",
     "Manque de progression ⏳": "AdministrativeAssistantStory",
@@ -39,9 +40,33 @@ export const careerToScreenMap: Record<string, keyof RootStackParamList> = {
     "Persévérance académique 📘": "UniversityProfessorStory",
     "Expression artistique 🎨": "CreativeDirectorStory",
     "Relations authentiques ❤️": "FamilyMediatorStory",
+    // From Prudent Teenage
+    "Maîtrise émotionnelle 🧘": "LifeCoachStory",
+    "Communication assertive 🗣️": "NegotiatorStory",
+    "Gestion de crise ratée ⏳": "CrisisMediatorStory",
+    "Empathie mesurée 🤲": "SocialWorkerStory",
+    "Soutien émotionnel 💬": "FamilyTherapistStory",
+    "Relation fragilisée ⏳": "HRConsultantStory",
+    "Planification efficace 📅": "ProjectManagerStory",
+    "Apprentissage collaboratif 🧑‍🏫": "EducatorStory",
+    "Mauvaise gestion du temps ⏳": "DisorganizedFreelancerStory",
+    "Analyse stratégique 📊": "EconomicAnalystStory",
+    "Collaboration efficace 🤝": "EventCoordinatorStory",
+    "Manque d'anticipation ⏳": "DataEntryClerkStory",
+    "Maîtrise des choix personnels 🛑": "SecurityOfficerStory",
+    "Prudence sociale 🔍": "PublicRelationsAnalystStory",
+    "Manque de discernement ⏳": "TelemarketerStory",
+    "Éthique et discrétion ⚖️": "JudgeStory",
+    "Communication diplomatique 💬": "DiplomatStory",
+    "Conscience pesante ⏳": "PhilosopherStory",
+    "Force émotionnelle 🛡️": "MilitaryPsychologistStory",
+    "Authenticité émotionnelle 💙": "DramaticActorStory",
+    "Regret indélébile ⏳": "WandererStory",
+
 };
 
 const careerTranslations: Record<keyof RootStackParamList, string> = {
+    // From Adventurous
     StrategicPlannerStory: "Conducteur de go-fast 🚘",
     PoliceInvestigatorStory: "Policier 👮‍♂️",
     AdministrativeAssistantStory: "Falsificateur de papiers 📜",
@@ -63,6 +88,28 @@ const careerTranslations: Record<keyof RootStackParamList, string> = {
     UniversityProfessorStory: "Professeur d'université 🗿",
     CreativeDirectorStory: "Livreur à moto 🏍️",
     FamilyMediatorStory: "Parent dévoué 👶",
+    // From Prudent
+    LifeCoachStory: "Coach de vie 🧘‍♂️",
+    NegotiatorStory: "Négociateur professionnel 🤝",
+    CrisisMediatorStory: "Médiateur de crise 🔥",
+    SocialWorkerStory: "Travailleur social 🏡",
+    FamilyTherapistStory: "Thérapeute familial 🏠",
+    HRConsultantStory: "Consultant RH 👔",
+    ProjectManagerStory: "Chef de projet 📊",
+    EducatorStory: "Enseignant 👨‍🏫",
+    DisorganizedFreelancerStory: "Freelance désorganisé 📆",
+    EconomicAnalystStory: "Analyste économique 💰",
+    EventCoordinatorStory: "Coordinateur d'événements 🎉",
+    DataEntryClerkStory: "Agent de saisie 📑",
+    SecurityOfficerStory: "Officier de sécurité 🚨",
+    PublicRelationsAnalystStory: "Analyste en relations publiques 📢",
+    TelemarketerStory: "Téléopérateur 📞",
+    JudgeStory: "Juge ⚖️",
+    DiplomatStory: "Ambassadeur 🌍",
+    PhilosopherStory: "Philosophe 📖",
+    MilitaryPsychologistStory: "Psychologue militaire 🪖",
+    DramaticActorStory: "Acteur dramatique 🎭",
+    WandererStory: "Vagabond 🚶",
     Home: "",
     Game: "",
     Childhood: "",

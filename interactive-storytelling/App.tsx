@@ -37,6 +37,27 @@ import InnovativeEntrepreneurStory from './screens/Story/Adulthood/InnovativeEnt
 import EfficiencyConsultantStory from './screens/Story/Adulthood/EfficiencyConsultantStory';
 import CommunityMentorStory from './screens/Story/Adulthood/CommunityMentorStory';
 import UniversityProfessorStory from './screens/Story/Adulthood/UniversityProfessorStory';
+import LifeCoachStory from './screens/Story/Adulthood/LifeCoachStory';
+import CrisisMediatorStory from './screens/Story/Adulthood/CrisisMediatorStory';
+import SocialWorkerStory from './screens/Story/Adulthood/SocialWorkerStory';
+import FamilyTherapistStory from './screens/Story/Adulthood/FamilyTherapistStory';
+import HRConsultantStory from './screens/Story/Adulthood/HRConsultantStory';
+import ProjectManagerStory from './screens/Story/Adulthood/ProjectManagerStory';
+import EducatorStory from './screens/Story/Adulthood/EducatorStory';
+import NegotiatorStory from './screens/Story/Adulthood/NegotiatorStory';
+import DisorganizedFreelancerStory from './screens/Story/Adulthood/DisorganizedFreelancerStory';
+import EconomicAnalystStory from './screens/Story/Adulthood/EconomicAnalystStory';
+import EventCoordinatorStory from './screens/Story/Adulthood/EventCoordinatorStory';
+import DataEntryClerkStory from './screens/Story/Adulthood/DataEntryClerkStory';
+import SecurityOfficerStory from './screens/Story/Adulthood/SecurityOfficerStory';
+import PublicRelationsAnalystStory from './screens/Story/Adulthood/PublicRelationsAnalystStory';
+import TelemarketerStory from './screens/Story/Adulthood/TelemarketerStory';
+import JudgeStory from './screens/Story/Adulthood/JudgeStory';
+import DiplomatStory from './screens/Story/Adulthood/DiplomatStory';
+import PhilosopherStory from './screens/Story/Adulthood/PhilosopherStory';
+import MilitaryPsychologistStory from './screens/Story/Adulthood/MilitaryPsychologistStory';
+import DramaticActorStory from './screens/Story/Adulthood/DramaticActorStory';
+import WandererStory from './screens/Story/Adulthood/WandererStory';
 
 
 // Définition des routes pour le typage
@@ -101,6 +122,29 @@ export type RootStackParamList = {
   UniversityProfessorStory: { name: string; gender: string; };
   CreativeDirectorStory: { name: string; gender: string; title?: string };
   FamilyMediatorStory: { name: string; gender: string; title?: string };
+  //Prudent
+  LifeCoachStory: { name: string; gender: string; title?: string };
+  NegotiatorStory: { name: string; gender: string; title?: string };
+  CrisisMediatorStory: { name: string; gender: string; title?: string };
+  SocialWorkerStory: { name: string; gender: string; title?: string };
+  FamilyTherapistStory: { name: string; gender: string; title?: string };
+  HRConsultantStory: { name: string; gender: string; title?: string };
+  ProjectManagerStory: { name: string; gender: string; title?: string };
+  EducatorStory: { name: string; gender: string; title?: string };
+  DisorganizedFreelancerStory: { name: string; gender: string; title?: string };
+  EconomicAnalystStory: { name: string; gender: string; title?: string };
+  EventCoordinatorStory: { name: string; gender: string; title?: string };
+  DataEntryClerkStory: { name: string; gender: string; title?: string };
+  SecurityOfficerStory: { name: string; gender: string; title?: string };
+  PublicRelationsAnalystStory: { name: string; gender: string; title?: string };
+  TelemarketerStory: { name: string; gender: string; title?: string };
+  JudgeStory: { name: string; gender: string; title?: string };
+  DiplomatStory: { name: string; gender: string; title?: string };
+  PhilosopherStory: { name: string; gender: string; title?: string };
+  MilitaryPsychologistStory: { name: string; gender: string; title?: string };
+  DramaticActorStory: { name: string; gender: string; title?: string };
+  WandererStory: { name: string; gender: string; title?: string };
+
 };
 
 
@@ -294,6 +338,28 @@ const App: React.FC = () => {
           component={UniversityProfessorStory}
           options={{ headerShown: false }}
         />
+        {/* Prudent */}
+        <Stack.Screen name="LifeCoachStory" component={LifeCoachStory} options={{ headerShown: false }} />
+        <Stack.Screen name="NegotiatorStory" component={NegotiatorStory} options={{ headerShown: false }} />
+        <Stack.Screen name="CrisisMediatorStory" component={CrisisMediatorStory} options={{ headerShown: false }} />
+        <Stack.Screen name="SocialWorkerStory" component={SocialWorkerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="FamilyTherapistStory" component={FamilyTherapistStory} options={{ headerShown: false }} />
+        <Stack.Screen name="HRConsultantStory" component={HRConsultantStory} options={{ headerShown: false }} />
+        <Stack.Screen name="ProjectManagerStory" component={ProjectManagerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="EducatorStory" component={EducatorStory} options={{ headerShown: false }} />
+        <Stack.Screen name="DisorganizedFreelancerStory" component={DisorganizedFreelancerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="EconomicAnalystStory" component={EconomicAnalystStory} options={{ headerShown: false }} />
+        <Stack.Screen name="EventCoordinatorStory" component={EventCoordinatorStory} options={{ headerShown: false }} />
+        <Stack.Screen name="DataEntryClerkStory" component={DataEntryClerkStory} options={{ headerShown: false }} />
+        <Stack.Screen name="SecurityOfficerStory" component={SecurityOfficerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="PublicRelationsAnalystStory" component={PublicRelationsAnalystStory} options={{ headerShown: false }} />
+        <Stack.Screen name="TelemarketerStory" component={TelemarketerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="JudgeStory" component={JudgeStory} options={{ headerShown: false }} />
+        <Stack.Screen name="DiplomatStory" component={DiplomatStory} options={{ headerShown: false }} />
+        <Stack.Screen name="PhilosopherStory" component={PhilosopherStory} options={{ headerShown: false }} />
+        <Stack.Screen name="MilitaryPsychologistStory" component={MilitaryPsychologistStory} options={{ headerShown: false }} />
+        <Stack.Screen name="DramaticActorStory" component={DramaticActorStory} options={{ headerShown: false }} />
+        <Stack.Screen name="WandererStory" component={WandererStory} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

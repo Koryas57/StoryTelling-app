@@ -16,6 +16,7 @@ type TransitionScreen2Props = NativeStackScreenProps<
 >;
 
 const careerTranslations: Record<string, string> = {
+    // Adventurous
     StrategicPlannerStory: "Conducteur de go-fast 🚘",
     PoliceInvestigatorStory: "Policier 👮‍♂️",
     AdministrativeAssistantStory: "Falsificateur de papiers 📜",
@@ -37,6 +38,29 @@ const careerTranslations: Record<string, string> = {
     UniversityProfessorStory: "Professeur d'université 🗿",
     CreativeDirectorStory: "Livreur à moto 🏍️",
     FamilyMediatorStory: "Parent dévoué 👶",
+    // Prudent
+    // From Prudent
+    LifeCoachStory: "Coach de vie 🧘‍♂️",
+    NegotiatorStory: "Négociateur professionnel 🤝",
+    CrisisMediatorStory: "Médiateur de crise 🔥",
+    SocialWorkerStory: "Travailleur social 🏡",
+    FamilyTherapistStory: "Thérapeute familial 🏠",
+    HRConsultantStory: "Consultant RH 👔",
+    ProjectManagerStory: "Chef de projet 📊",
+    EducatorStory: "Enseignant 👨‍🏫",
+    DisorganizedFreelancerStory: "Freelance désorganisé 📆",
+    EconomicAnalystStory: "Analyste économique 💰",
+    EventCoordinatorStory: "Coordinateur d'événements 🎉",
+    DataEntryClerkStory: "Agent de saisie 📑",
+    SecurityOfficerStory: "Officier de sécurité 🚨",
+    PublicRelationsAnalystStory: "Analyste en relations publiques 📢",
+    TelemarketerStory: "Téléopérateur 📞",
+    JudgeStory: "Juge ⚖️",
+    DiplomatStory: "Ambassadeur 🌍",
+    PhilosopherStory: "Philosophe 📖",
+    MilitaryPsychologistStory: "Psychologue militaire 🪖",
+    DramaticActorStory: "Acteur dramatique 🎭",
+    WandererStory: "Vagabond 🚶",
 };
 
 const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation }) => {
@@ -135,6 +159,70 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
             case "FamilyMediatorStory":
                 navigation.replace("FamilyMediatorStory", { name, gender });
                 break;
+            // Prudent
+            case "LifeCoachStory":
+                navigation.replace("LifeCoachStory", { name, gender });
+                break;
+            case "NegotiatorStory":
+                navigation.replace("NegotiatorStory", { name, gender });
+                break;
+            case "CrisisMediatorStory":
+                navigation.replace("CrisisMediatorStory", { name, gender });
+                break;
+            case "SocialWorkerStory":
+                navigation.replace("SocialWorkerStory", { name, gender });
+                break;
+            case "FamilyTherapistStory":
+                navigation.replace("FamilyTherapistStory", { name, gender });
+                break;
+            case "HRConsultantStory":
+                navigation.replace("HRConsultantStory", { name, gender });
+                break;
+            case "ProjectManagerStory":
+                navigation.replace("ProjectManagerStory", { name, gender });
+                break;
+            case "EducatorStory":
+                navigation.replace("EducatorStory", { name, gender });
+                break;
+            case "DisorganizedFreelancerStory":
+                navigation.replace("DisorganizedFreelancerStory", { name, gender });
+                break;
+            case "EconomicAnalystStory":
+                navigation.replace("EconomicAnalystStory", { name, gender });
+                break;
+            case "EventCoordinatorStory":
+                navigation.replace("EventCoordinatorStory", { name, gender });
+                break;
+            case "DataEntryClerkStory":
+                navigation.replace("DataEntryClerkStory", { name, gender });
+                break;
+            case "SecurityOfficerStory":
+                navigation.replace("SecurityOfficerStory", { name, gender });
+                break;
+            case "PublicRelationsAnalystStory":
+                navigation.replace("PublicRelationsAnalystStory", { name, gender });
+                break;
+            case "TelemarketerStory":
+                navigation.replace("TelemarketerStory", { name, gender });
+                break;
+            case "JudgeStory":
+                navigation.replace("JudgeStory", { name, gender });
+                break;
+            case "DiplomatStory":
+                navigation.replace("DiplomatStory", { name, gender });
+                break;
+            case "PhilosopherStory":
+                navigation.replace("PhilosopherStory", { name, gender });
+                break;
+            case "MilitaryPsychologistStory":
+                navigation.replace("MilitaryPsychologistStory", { name, gender });
+                break;
+            case "DramaticActorStory":
+                navigation.replace("DramaticActorStory", { name, gender });
+                break;
+            case "WandererStory":
+                navigation.replace("WandererStory", { name, gender });
+                break;
             default:
                 console.error("Métier non mappé :", selectedCareer);
                 break;
@@ -188,7 +276,7 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
 
                             </Text>
                             <GameButton2
-                                text={`Continuer vers une vie de ${selectedCareer ? careerTranslations[selectedCareer] || selectedCareer : "Sélectionner un métier"}`}
+                                text={`Continuer vers ${selectedCareer ? careerTranslations[selectedCareer] || selectedCareer : "Sélectionner un métier"}`}
                                 textStyle={styles.continueButtonText}
                                 buttonStyle={styles.continueStoryButton}
                                 onPress={handleContinue}

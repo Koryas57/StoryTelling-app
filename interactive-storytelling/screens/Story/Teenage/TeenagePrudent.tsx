@@ -186,7 +186,7 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
             // Enregistre le skillTitle pour ce choix
             setUserChoices((prev) => ({
                 ...prev,
-                [currentDay]: selectedConsequence.skillTitle || '',
+                [currentDay]: selectedConsequence?.skillTitle || '',
             }));
         } else {
             console.warn(`Aucune conséquence trouvée pour la clé ${consequenceKey}`);
@@ -233,9 +233,9 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
         const dominantTrait = Object.entries(characterTraits).sort((a, b) => b[1] - a[1])[0][0];
 
         // Extraire les compétences acquises
-        const acquiredSkills = Object.entries(userChoices)
-            .map(([day, skillTitle]) => skillTitle) // Récupère les skillTitles
-            .filter((skill): skill is string => !!skill); // Élimine les valeurs nulles ou undefined
+        const acquiredSkills = Object.values(userChoices)
+            .filter((skill) => skill && skill !== 'Aucune compétence acquise.');
+
 
         console.log('Compétences acquises transmises à TransitionScreen2:', acquiredSkills);
 
