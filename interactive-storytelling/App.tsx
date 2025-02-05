@@ -58,6 +58,28 @@ import PhilosopherStory from './screens/Story/Adulthood/PhilosopherStory';
 import MilitaryPsychologistStory from './screens/Story/Adulthood/MilitaryPsychologistStory';
 import DramaticActorStory from './screens/Story/Adulthood/DramaticActorStory';
 import WandererStory from './screens/Story/Adulthood/WandererStory';
+import ForensicScientistStory from './screens/Story/Adulthood/ForensicScientistStory';
+import PoetStory from './screens/Story/Adulthood/PoetStory';
+import BehavioralScientistStory from './screens/Story/Adulthood/BehavioralScientistStory';
+import BlackHatHackerStory from './screens/Story/Adulthood/BlackHatHackerStory';
+import CardCounterStory from './screens/Story/Adulthood/CardCounterStory';
+import ChessMasterStory from './screens/Story/Adulthood/ChessMasterStory';
+import ComposerStory from './screens/Story/Adulthood/ComposerStory';
+import ConflictResolutionSpecialistStory from './screens/Story/Adulthood/ConflictResolutionSpecialistStory';
+import CybersecurityAnalystStory from './screens/Story/Adulthood/CybersecurityAnalystStory';
+import DocumentForgerStory from './screens/Story/Adulthood/DocumentForgerStory';
+import GameNarrativeDesignerStory from './screens/Story/Adulthood/GameNarrativeDesignerStory';
+import LaboratoryResearcherStory from './screens/Story/Adulthood/LaboratoryResearcherStory';
+import NightCourierStory from './screens/Story/Adulthood/NightCourierStory';
+import NovelistStory from './screens/Story/Adulthood/NovelistStory';
+import PrivateInvestigatorStory from './screens/Story/Adulthood/PrivateInvestigatorStory';
+import PsychotherapistStory from './screens/Story/Adulthood/PsychotherapistStory';
+import RiskManagerStory from './screens/Story/Adulthood/RiskManagerStory';
+import SmugglerStory from './screens/Story/Adulthood/SmugglerStory';
+import StatisticianStory from './screens/Story/Adulthood/StatisticianStory';
+import UndergroundChemistStory from './screens/Story/Adulthood/UndergroundChemistStory';
+import WatchmakerStory from './screens/Story/Adulthood/WatchmakerStory';
+import TeenageTimid from './screens/Story/Teenage/TeenageTimid';
 
 
 // Définition des routes pour le typage
@@ -85,6 +107,13 @@ export type RootStackParamList = {
     currentDay?: number;
     userChoices?: Record<number, string>;
   };
+  TeenageTimid: {
+    name: string;
+    gender: string;
+    title?: string;
+    currentDay?: number;
+    userChoices?: Record<number, string>;
+  };
   TransitionScreen: {
     name: string;
     gender: string;
@@ -100,7 +129,6 @@ export type RootStackParamList = {
     skills: string[];
   };
   TeenageAmbitious: { name: string; gender: string };
-  TeenageTimid: { name: string; gender: string };
   StrategicPlannerStory: { name: string; gender: string; title?: string };
   PoliceInvestigatorStory: { name: string; gender: string; title?: string };
   AdministrativeAssistantStory: { name: string; gender: string; title?: string };
@@ -144,7 +172,29 @@ export type RootStackParamList = {
   MilitaryPsychologistStory: { name: string; gender: string; title?: string };
   DramaticActorStory: { name: string; gender: string; title?: string };
   WandererStory: { name: string; gender: string; title?: string };
-
+  // Timid
+  ForensicScientistStory: { name: string; gender: string; title?: string };
+  PoetStory: { name: string; gender: string; title?: string };
+  NovelistStory: { name: string; gender: string; title?: string };
+  ChessMasterStory: { name: string; gender: string; title?: string };
+  BehavioralScientistStory: { name: string; gender: string; title?: string };
+  StatisticianStory: { name: string; gender: string; title?: string };
+  WatchmakerStory: { name: string; gender: string; title?: string };
+  ComposerStory: { name: string; gender: string; title?: string };
+  RiskManagerStory: { name: string; gender: string; title?: string };
+  LaboratoryResearcherStory: { name: string; gender: string; title?: string };
+  PsychotherapistStory: { name: string; gender: string; title?: string };
+  CybersecurityAnalystStory: { name: string; gender: string; title?: string };
+  ConflictResolutionSpecialistStory: { name: string; gender: string; title?: string };
+  PrivateInvestigatorStory: { name: string; gender: string; title?: string };
+  GameNarrativeDesignerStory: { name: string; gender: string; title?: string };
+  BlackHatHackerStory: { name: string; gender: string; title?: string };
+  DocumentForgerStory: { name: string; gender: string; title?: string };
+  SmugglerStory: { name: string; gender: string; title?: string };
+  CardCounterStory: { name: string; gender: string; title?: string };
+  UndergroundChemistStory: { name: string; gender: string; title?: string };
+  NightCourierStory: { name: string; gender: string; title?: string };
+  // Ambitious
 };
 
 
@@ -220,6 +270,11 @@ const App: React.FC = () => {
         <Stack.Screen
           name="TeenagePrudent"
           component={TeenagePrudent}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TeenageTimid"
+          component={TeenageTimid}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -360,6 +415,28 @@ const App: React.FC = () => {
         <Stack.Screen name="MilitaryPsychologistStory" component={MilitaryPsychologistStory} options={{ headerShown: false }} />
         <Stack.Screen name="DramaticActorStory" component={DramaticActorStory} options={{ headerShown: false }} />
         <Stack.Screen name="WandererStory" component={WandererStory} options={{ headerShown: false }} />
+        {/* Timid */}
+        <Stack.Screen name="ForensicScientistStory" component={ForensicScientistStory} options={{ headerShown: false }} />
+        <Stack.Screen name="PoetStory" component={PoetStory} options={{ headerShown: false }} />
+        <Stack.Screen name="NovelistStory" component={NovelistStory} options={{ headerShown: false }} />
+        <Stack.Screen name="ChessMasterStory" component={ChessMasterStory} options={{ headerShown: false }} />
+        <Stack.Screen name="BehavioralScientistStory" component={BehavioralScientistStory} options={{ headerShown: false }} />
+        <Stack.Screen name="StatisticianStory" component={StatisticianStory} options={{ headerShown: false }} />
+        <Stack.Screen name="WatchmakerStory" component={WatchmakerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="ComposerStory" component={ComposerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="RiskManagerStory" component={RiskManagerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="LaboratoryResearcherStory" component={LaboratoryResearcherStory} options={{ headerShown: false }} />
+        <Stack.Screen name="PsychotherapistStory" component={PsychotherapistStory} options={{ headerShown: false }} />
+        <Stack.Screen name="CybersecurityAnalystStory" component={CybersecurityAnalystStory} options={{ headerShown: false }} />
+        <Stack.Screen name="ConflictResolutionSpecialistStory" component={ConflictResolutionSpecialistStory} options={{ headerShown: false }} />
+        <Stack.Screen name="PrivateInvestigatorStory" component={PrivateInvestigatorStory} options={{ headerShown: false }} />
+        <Stack.Screen name="GameNarrativeDesignerStory" component={GameNarrativeDesignerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="BlackHatHackerStory" component={BlackHatHackerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="DocumentForgerStory" component={DocumentForgerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="SmugglerStory" component={SmugglerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="CardCounterStory" component={CardCounterStory} options={{ headerShown: false }} />
+        <Stack.Screen name="UndergroundChemistStory" component={UndergroundChemistStory} options={{ headerShown: false }} />
+        <Stack.Screen name="NightCourierStory" component={NightCourierStory} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

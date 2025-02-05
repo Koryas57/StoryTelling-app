@@ -39,7 +39,6 @@ const careerTranslations: Record<string, string> = {
     CreativeDirectorStory: "Livreur à moto 🏍️",
     FamilyMediatorStory: "Parent dévoué 👶",
     // Prudent
-    // From Prudent
     LifeCoachStory: "Coach de vie 🧘‍♂️",
     NegotiatorStory: "Négociateur professionnel 🤝",
     CrisisMediatorStory: "Médiateur de crise 🔥",
@@ -61,6 +60,28 @@ const careerTranslations: Record<string, string> = {
     MilitaryPsychologistStory: "Psychologue militaire 🪖",
     DramaticActorStory: "Acteur dramatique 🎭",
     WandererStory: "Vagabond 🚶",
+    //Timid
+    ForensicScientistStory: "Scientifique médico-légal 🔬",
+    PoetStory: "Poète rêveur ✍️",
+    NovelistStory: "Écrivain solitaire 📖",
+    ChessMasterStory: "Grand maître d'échecs ♟️",
+    BehavioralScientistStory: "Chercheur en comportement humain 🧐",
+    StatisticianStory: "Statisticien analytique 📊",
+    WatchmakerStory: "Horloger minutieux ⏱️",
+    ComposerStory: "Compositeur mélancolique 🎼",
+    RiskManagerStory: "Gestionnaire de risques financiers 💰",
+    LaboratoryResearcherStory: "Chercheur en laboratoire 🧪",
+    PsychotherapistStory: "Psychothérapeute discret 🛋️",
+    CybersecurityAnalystStory: "Analyste en cybersécurité 🖥️",
+    ConflictResolutionSpecialistStory: "Spécialiste en résolution de conflits 🤝",
+    PrivateInvestigatorStory: "Détective privé silencieux 🕵️",
+    GameNarrativeDesignerStory: "Concepteur narratif de jeux vidéo 🎮",
+    BlackHatHackerStory: "Hacker clandestin 💻",
+    DocumentForgerStory: "Faussaire de documents 📝",
+    SmugglerStory: "Passeur discret 🚢",
+    CardCounterStory: "Tricheur de casinos 🎰",
+    UndergroundChemistStory: "Chimiste du marché noir ⚗️",
+    NightCourierStory: "Coursier pour transactions douteuses 📦",
 };
 
 const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation }) => {
@@ -222,6 +243,70 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
                 break;
             case "WandererStory":
                 navigation.replace("WandererStory", { name, gender });
+                break;
+            // Timid
+            case "ForensicScientistStory":
+                navigation.replace("ForensicScientistStory", { name, gender });
+                break;
+            case "PoetStory":
+                navigation.replace("PoetStory", { name, gender });
+                break;
+            case "NovelistStory":
+                navigation.replace("NovelistStory", { name, gender });
+                break;
+            case "ChessMasterStory":
+                navigation.replace("ChessMasterStory", { name, gender });
+                break;
+            case "BehavioralScientistStory":
+                navigation.replace("BehavioralScientistStory", { name, gender });
+                break;
+            case "StatisticianStory":
+                navigation.replace("StatisticianStory", { name, gender });
+                break;
+            case "WatchmakerStory":
+                navigation.replace("WatchmakerStory", { name, gender });
+                break;
+            case "ComposerStory":
+                navigation.replace("ComposerStory", { name, gender });
+                break;
+            case "RiskManagerStory":
+                navigation.replace("RiskManagerStory", { name, gender });
+                break;
+            case "LaboratoryResearcherStory":
+                navigation.replace("LaboratoryResearcherStory", { name, gender });
+                break;
+            case "PsychotherapistStory":
+                navigation.replace("PsychotherapistStory", { name, gender });
+                break;
+            case "CybersecurityAnalystStory":
+                navigation.replace("CybersecurityAnalystStory", { name, gender });
+                break;
+            case "ConflictResolutionSpecialistStory":
+                navigation.replace("ConflictResolutionSpecialistStory", { name, gender });
+                break;
+            case "PrivateInvestigatorStory":
+                navigation.replace("PrivateInvestigatorStory", { name, gender });
+                break;
+            case "GameNarrativeDesignerStory":
+                navigation.replace("GameNarrativeDesignerStory", { name, gender });
+                break;
+            case "BlackHatHackerStory":
+                navigation.replace("BlackHatHackerStory", { name, gender });
+                break;
+            case "DocumentForgerStory":
+                navigation.replace("DocumentForgerStory", { name, gender });
+                break;
+            case "SmugglerStory":
+                navigation.replace("SmugglerStory", { name, gender });
+                break;
+            case "CardCounterStory":
+                navigation.replace("CardCounterStory", { name, gender });
+                break;
+            case "UndergroundChemistStory":
+                navigation.replace("UndergroundChemistStory", { name, gender });
+                break;
+            case "NightCourierStory":
+                navigation.replace("NightCourierStory", { name, gender });
                 break;
             default:
                 console.error("Métier non mappé :", selectedCareer);

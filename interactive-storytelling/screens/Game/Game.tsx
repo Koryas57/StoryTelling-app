@@ -20,7 +20,7 @@ const Game: React.FC<GameProps> = ({ navigation }) => {
     const handleStartGame = () => {
         if (name.trim() && gender) {
             choiceStart(),
-                navigation.replace('TeenagePrudent', { name, gender });
+                navigation.replace('TeenageTimid', { name, gender });
         } else {
             Alert.alert('Pas si vite courgette 🥒', '➡️ Renseigne ton prénom ET choisis un genre pour continuer :');
         }
