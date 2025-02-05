@@ -330,7 +330,7 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
         setShowMiniGame(false);
 
         // Applique une conséquence spécifique en cas d'échec
-        const consequenceKey = `prudent_3`; // Toujours applique la conséquence du choix 3
+        const consequenceKey = `timide_3`; // Toujours applique la conséquence du choix 3
         const selectedConsequence = teenageTimidData[currentDay]?.consequences?.[consequenceKey];
 
         if (selectedConsequence) {

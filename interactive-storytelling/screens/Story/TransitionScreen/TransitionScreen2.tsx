@@ -82,6 +82,28 @@ const careerTranslations: Record<string, string> = {
     CardCounterStory: "Tricheur de casinos 🎰",
     UndergroundChemistStory: "Chimiste du marché noir ⚗️",
     NightCourierStory: "Coursier pour transactions douteuses 📦",
+    // Ambitious
+    HedgeFundManagerStory: "Gestionnaire de fonds 💰",
+    MediaMogulStory: "Magnat des médias 📺",
+    CorporateStrategistStory: "Stratège d’entreprise 🏢",
+    PoliticalAdvisorStory: "Conseiller politique 🎤",
+    CasinoOwnerStory: "Propriétaire de casino 🎲",
+    HighFrequencyTraderStory: "Trader haute fréquence 📈",
+    WallStreetTraderStory: "Trader à Wall Street 🔥",
+    IntelligenceConsultantStory: "Consultant en renseignement 🔎",
+    CrisisAdvisorStory: "Conseiller de crise 🕵️",
+    NobelScientistStory: "Scientifique primé 🎓",
+    TechFounderStory: "Fondateur de startup 🚀",
+    OffshoreBankerStory: "Banquier offshore 💰",
+    LuxuryDeveloperStory: "Promoteur immobilier 🏡",
+    FormulaOneDriverStory: "Pilote de F1 🏎️",
+    EliteTaxConsultantStory: "Consultant fiscaliste 🏦",
+    SelfMadeBillionaireStory: "Milliardaire autodidacte 💪",
+    CorporateSpyStory: "Espion industriel 🕵️",
+    HostageNegotiatorStory: "Négociateur d’otages 🎭",
+    ArmsDealerStory: "Marchand d’armes 🔥",
+    DiplomaticStrategistStory: "Stratège diplomatique 🌍",
+    AuctionBrokerStory: "Courtier en enchères 🏛️",
 };
 
 const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation }) => {
@@ -117,6 +139,7 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
 
         // Navigation explicite pour chaque métier
         switch (selectedCareer) {
+            // Adventurous
             case "StrategicPlannerStory":
                 navigation.replace("StrategicPlannerStory", { name, gender });
                 break;
@@ -307,6 +330,70 @@ const TransitionScreen2: React.FC<TransitionScreen2Props> = ({ route, navigation
                 break;
             case "NightCourierStory":
                 navigation.replace("NightCourierStory", { name, gender });
+                break;
+            // Ambitious
+            case "HedgeFundManagerStory":
+                navigation.replace("HedgeFundManagerStory", { name, gender });
+                break;
+            case "MediaMogulStory":
+                navigation.replace("MediaMogulStory", { name, gender });
+                break;
+            case "CorporateStrategistStory":
+                navigation.replace("CorporateStrategistStory", { name, gender });
+                break;
+            case "PoliticalAdvisorStory":
+                navigation.replace("PoliticalAdvisorStory", { name, gender });
+                break;
+            case "CasinoOwnerStory":
+                navigation.replace("CasinoOwnerStory", { name, gender });
+                break;
+            case "HighFrequencyTraderStory":
+                navigation.replace("HighFrequencyTraderStory", { name, gender });
+                break;
+            case "WallStreetTraderStory":
+                navigation.replace("WallStreetTraderStory", { name, gender });
+                break;
+            case "IntelligenceConsultantStory":
+                navigation.replace("IntelligenceConsultantStory", { name, gender });
+                break;
+            case "CrisisAdvisorStory":
+                navigation.replace("CrisisAdvisorStory", { name, gender });
+                break;
+            case "NobelScientistStory":
+                navigation.replace("NobelScientistStory", { name, gender });
+                break;
+            case "TechFounderStory":
+                navigation.replace("TechFounderStory", { name, gender });
+                break;
+            case "OffshoreBankerStory":
+                navigation.replace("OffshoreBankerStory", { name, gender });
+                break;
+            case "LuxuryDeveloperStory":
+                navigation.replace("LuxuryDeveloperStory", { name, gender });
+                break;
+            case "FormulaOneDriverStory":
+                navigation.replace("FormulaOneDriverStory", { name, gender });
+                break;
+            case "EliteTaxConsultantStory":
+                navigation.replace("EliteTaxConsultantStory", { name, gender });
+                break;
+            case "SelfMadeBillionaireStory":
+                navigation.replace("SelfMadeBillionaireStory", { name, gender });
+                break;
+            case "CorporateSpyStory":
+                navigation.replace("CorporateSpyStory", { name, gender });
+                break;
+            case "HostageNegotiatorStory":
+                navigation.replace("HostageNegotiatorStory", { name, gender });
+                break;
+            case "ArmsDealerStory":
+                navigation.replace("ArmsDealerStory", { name, gender });
+                break;
+            case "DiplomaticStrategistStory":
+                navigation.replace("DiplomaticStrategistStory", { name, gender });
+                break;
+            case "AuctionBrokerStory":
+                navigation.replace("AuctionBrokerStory", { name, gender });
                 break;
             default:
                 console.error("Métier non mappé :", selectedCareer);

@@ -80,6 +80,28 @@ import StatisticianStory from './screens/Story/Adulthood/StatisticianStory';
 import UndergroundChemistStory from './screens/Story/Adulthood/UndergroundChemistStory';
 import WatchmakerStory from './screens/Story/Adulthood/WatchmakerStory';
 import TeenageTimid from './screens/Story/Teenage/TeenageTimid';
+import HedgeFundManagerStory from './screens/Story/Adulthood/HedgeFundManagerStory';
+import ArmsDealerStory from './screens/Story/Adulthood/ArmsDealerStory';
+import AuctionBrokerStory from './screens/Story/Adulthood/AuctionBrokerStory';
+import CasinoOwnerStory from './screens/Story/Adulthood/CasinoOwnerStory';
+import CorporateSpyStory from './screens/Story/Adulthood/CorporateSpyStory';
+import CorporateStrategistStory from './screens/Story/Adulthood/CorporateStrategistStory';
+import CrisisAdvisorStory from './screens/Story/Adulthood/CrisisAdvisorStory';
+import DiplomaticStrategistStory from './screens/Story/Adulthood/DiplomaticStrategistStory';
+import EliteTaxConsultantStory from './screens/Story/Adulthood/EliteTaxConsultantStory';
+import FormulaOneDriverStory from './screens/Story/Adulthood/FormulaOneDriverStory';
+import HighFrequencyTraderStory from './screens/Story/Adulthood/HighFrequencyTraderStory';
+import HostageNegotiatorStory from './screens/Story/Adulthood/HostageNegotiatorStory';
+import IntelligenceConsultantStory from './screens/Story/Adulthood/IntelligenceConsultantStory';
+import LuxuryDeveloperStory from './screens/Story/Adulthood/LuxuryDeveloperStory';
+import MediaMogulStory from './screens/Story/Adulthood/MediaMogulStory';
+import NobelScientistStory from './screens/Story/Adulthood/NobelScientistStory';
+import OffshoreBankerStory from './screens/Story/Adulthood/OffshoreBankerStory';
+import PoliticalAdvisorStory from './screens/Story/Adulthood/PoliticalAdvisorStory';
+import SelfMadeBillionaireStory from './screens/Story/Adulthood/SelfMadeBillionaireStory';
+import TechFounderStory from './screens/Story/Adulthood/TechFounderStory';
+import WallStreetTraderStory from './screens/Story/Adulthood/WallStreetTraderStory';
+import TeenageAmbitious from './screens/Story/Teenage/TeenageAmbitious';
 
 
 // Définition des routes pour le typage
@@ -114,6 +136,13 @@ export type RootStackParamList = {
     currentDay?: number;
     userChoices?: Record<number, string>;
   };
+  TeenageAmbitious: {
+    name: string;
+    gender: string;
+    title?: string;
+    currentDay?: number;
+    userChoices?: Record<number, string>;
+  };
   TransitionScreen: {
     name: string;
     gender: string;
@@ -128,7 +157,7 @@ export type RootStackParamList = {
     dominantTrait: string;
     skills: string[];
   };
-  TeenageAmbitious: { name: string; gender: string };
+  // Jobs
   StrategicPlannerStory: { name: string; gender: string; title?: string };
   PoliceInvestigatorStory: { name: string; gender: string; title?: string };
   AdministrativeAssistantStory: { name: string; gender: string; title?: string };
@@ -195,6 +224,27 @@ export type RootStackParamList = {
   UndergroundChemistStory: { name: string; gender: string; title?: string };
   NightCourierStory: { name: string; gender: string; title?: string };
   // Ambitious
+  HedgeFundManagerStory: { name: string; gender: string; title?: string };
+  MediaMogulStory: { name: string; gender: string; title?: string };
+  CorporateStrategistStory: { name: string; gender: string; title?: string };
+  PoliticalAdvisorStory: { name: string; gender: string; title?: string };
+  CasinoOwnerStory: { name: string; gender: string; title?: string };
+  HighFrequencyTraderStory: { name: string; gender: string; title?: string };
+  WallStreetTraderStory: { name: string; gender: string; title?: string };
+  IntelligenceConsultantStory: { name: string; gender: string; title?: string };
+  CrisisAdvisorStory: { name: string; gender: string; title?: string };
+  NobelScientistStory: { name: string; gender: string; title?: string };
+  TechFounderStory: { name: string; gender: string; title?: string };
+  OffshoreBankerStory: { name: string; gender: string; title?: string };
+  LuxuryDeveloperStory: { name: string; gender: string; title?: string };
+  FormulaOneDriverStory: { name: string; gender: string; title?: string };
+  EliteTaxConsultantStory: { name: string; gender: string; title?: string };
+  SelfMadeBillionaireStory: { name: string; gender: string; title?: string };
+  CorporateSpyStory: { name: string; gender: string; title?: string };
+  HostageNegotiatorStory: { name: string; gender: string; title?: string };
+  ArmsDealerStory: { name: string; gender: string; title?: string };
+  DiplomaticStrategistStory: { name: string; gender: string; title?: string };
+  AuctionBrokerStory: { name: string; gender: string; title?: string };
 };
 
 
@@ -275,6 +325,11 @@ const App: React.FC = () => {
         <Stack.Screen
           name="TeenageTimid"
           component={TeenageTimid}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="TeenageAmbitious"
+          component={TeenageAmbitious}
           options={{ headerShown: false }}
         />
         <Stack.Screen
@@ -437,6 +492,28 @@ const App: React.FC = () => {
         <Stack.Screen name="CardCounterStory" component={CardCounterStory} options={{ headerShown: false }} />
         <Stack.Screen name="UndergroundChemistStory" component={UndergroundChemistStory} options={{ headerShown: false }} />
         <Stack.Screen name="NightCourierStory" component={NightCourierStory} options={{ headerShown: false }} />
+        {/* Ambitious */}
+        <Stack.Screen name="HedgeFundManagerStory" component={HedgeFundManagerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="MediaMogulStory" component={MediaMogulStory} options={{ headerShown: false }} />
+        <Stack.Screen name="CorporateStrategistStory" component={CorporateStrategistStory} options={{ headerShown: false }} />
+        <Stack.Screen name="PoliticalAdvisorStory" component={PoliticalAdvisorStory} options={{ headerShown: false }} />
+        <Stack.Screen name="CasinoOwnerStory" component={CasinoOwnerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="HighFrequencyTraderStory" component={HighFrequencyTraderStory} options={{ headerShown: false }} />
+        <Stack.Screen name="WallStreetTraderStory" component={WallStreetTraderStory} options={{ headerShown: false }} />
+        <Stack.Screen name="IntelligenceConsultantStory" component={IntelligenceConsultantStory} options={{ headerShown: false }} />
+        <Stack.Screen name="CrisisAdvisorStory" component={CrisisAdvisorStory} options={{ headerShown: false }} />
+        <Stack.Screen name="NobelScientistStory" component={NobelScientistStory} options={{ headerShown: false }} />
+        <Stack.Screen name="TechFounderStory" component={TechFounderStory} options={{ headerShown: false }} />
+        <Stack.Screen name="OffshoreBankerStory" component={OffshoreBankerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="LuxuryDeveloperStory" component={LuxuryDeveloperStory} options={{ headerShown: false }} />
+        <Stack.Screen name="FormulaOneDriverStory" component={FormulaOneDriverStory} options={{ headerShown: false }} />
+        <Stack.Screen name="EliteTaxConsultantStory" component={EliteTaxConsultantStory} options={{ headerShown: false }} />
+        <Stack.Screen name="SelfMadeBillionaireStory" component={SelfMadeBillionaireStory} options={{ headerShown: false }} />
+        <Stack.Screen name="CorporateSpyStory" component={CorporateSpyStory} options={{ headerShown: false }} />
+        <Stack.Screen name="HostageNegotiatorStory" component={HostageNegotiatorStory} options={{ headerShown: false }} />
+        <Stack.Screen name="ArmsDealerStory" component={ArmsDealerStory} options={{ headerShown: false }} />
+        <Stack.Screen name="DiplomaticStrategistStory" component={DiplomaticStrategistStory} options={{ headerShown: false }} />
+        <Stack.Screen name="AuctionBrokerStory" component={AuctionBrokerStory} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
