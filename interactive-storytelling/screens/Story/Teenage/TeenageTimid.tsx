@@ -17,7 +17,7 @@ import useSound from '../../../hooks/useSound';
 import sounds from '../../../utils/sounds';
 import { Audio } from 'expo-av';
 import styles from '../Childhood/Childhood.styles';
-import MiniGame from './MiniGame'; // Mini-jeu externe
+import MiniGameSocial from './MiniGameSocial'; // Mini-jeu externe
 import GameButton2 from '../../../Components/GameButton2';
 import MiniGameTournament from './MiniGameTournament';
 
@@ -255,7 +255,7 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
         switch (day) {
             case 1:
                 return (
-                    <MiniGame
+                    <MiniGameSocial
                         visible={showMiniGame}
                         onClose={() => setShowMiniGame(false)}
                         onSuccess={handleMiniGameSuccess} // Appel direct
@@ -311,7 +311,7 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
         if (errorCount + 1 >= 3) {
             Alert.alert(
                 'Destin tragique ❌',
-                `En suivant un chemin semé d'incertitudes et de décisions contraires à sa véritable nature, ${name} s'est lentement perdu(e). 
+                `En suivant une vie semée d'incertitudes et de décisions contraires à sa véritable nature, ${name} s'est lentement perdu(e). 
 Ces choix, bien qu'humains, ont mené à une fin sombre : isolé(e), sans opportunités, et emprisonné(e) dans la peur de l'échec.
 
 Mais tout n'est pas fini ! Chaque aventure est une leçon, et aujourd'hui peut marquer un nouveau départ. 
@@ -347,7 +347,7 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
             setSkillTitle("");
         }
 
-        Alert.alert('Échec 🥀', 'Chercher la clé à fini par vous saouler, vous rentrez seul chez vous 🦃');
+        Alert.alert('Échec 🥀', "L’interaction s’est mal passée et vous vous sentez encore plus isolé(e).");
         setShowConsequence(true);
     };
 

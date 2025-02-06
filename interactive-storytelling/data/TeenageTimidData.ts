@@ -62,8 +62,7 @@ const teenageTimidData: Record<number, TeenageDay> = {
             },
             timide_3: {
                 text: (name) =>
-                    `${name} invente une excuse maladroite pour éviter de travailler en groupe.  
-                    Camille acquiesce en silence, puis va chercher un autre partenaire. À la fin du cours, le professeur note l’isolement de ${name} et l’interroge sur son refus de collaborer. "Travailler seul(e) n’est pas toujours la meilleure solution," dit-il en rendant sa copie.`,
+                    `${name} invente une excuse maladroite pour éviter de travailler en groupe. Camille acquiesce en silence, puis va chercher un autre partenaire. À la fin du cours, le professeur note l’isolement de ${name} et l’interroge sur son refus de collaborer. "Travailler seul(e) n’est pas toujours la meilleure solution," dit-il en rendant sa copie.`,
                 skillTitle: "Patience et minutie ⏱️",
             },
         },
