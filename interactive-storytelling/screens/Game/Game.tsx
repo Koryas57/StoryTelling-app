@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Pressable, TextInput, Alert, ScrollView, ImageBackground, ViewStyle } from 'react-native';
 import styles from './Game.styles';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
@@ -15,16 +15,23 @@ const Game: React.FC<GameProps> = ({ navigation }) => {
     const choiceStart = useSound(sounds.startSound);
     const [name, setName] = useState<string>(''); // Nom du joueur
     const [gender, setGender] = useState<string>(''); // Genre sélectionné
+    const stopIntroMusic = useSound(sounds.Intro); // Récupère la musique du menu pour l'arrêter
+
+    useEffect(() => {
+        stopIntroMusic.stop(); // Arrête la musique du menu dès l'entrée dans la page de jeu
+    }, []);
 
     // Fonction de démarrage du jeu
     const handleStartGame = () => {
         if (name.trim() && gender) {
             choiceStart(),
-                navigation.replace('TeenageAmbitious', { name, gender });
+                navigation.replace('Childhood', { name, gender });
         } else {
             Alert.alert('Pas si vite courgette 🥒', '➡️ Renseigne ton prénom ET choisis un genre pour continuer :');
         }
+
     };
+
 
     return (
         <ImageBackground

@@ -26,9 +26,9 @@ type Choice = {
     1: {
         title: "L’Étincelle",
         text: (name) =>
-            `Dès les premières semaines de lycée, ${name} comprend une chose essentielle : personne ne viendra lui donner quoi que ce soit. Tout le monde est occupé par ses propres affaires, et ceux qui réussissent sont ceux qui prennent les devants. Assis(e) sur un banc, ${name} observe. Certains ont déjà des contacts, des projets, des idées, pendant que d’autres suivent le mouvement, acceptent sans poser de questions. ${name} sent une énergie bouillonner en lui/elle : il faut agir. Maintenant.`,
+            `Dès les premières semaines de lycée, ${name} comprend une chose essentielle : personne ne viendra lui donner quoi que ce soit. Tout le monde est occupé par ses propres affaires, et ceux qui réussissent sont ceux qui prennent les devants. Assis(e) sur un banc, ${name} observe. Certains ont déjà des contacts, des projets, des idées, pendant que d’autres suivent le mouvement, acceptent sans poser de questions. ${name} sent une énergie bouillonner en lui/elle : il faut agir... Maintenant !`,
         image: require('../assets/TeenageAmbitionAwakening.webp'),
-        sound: require('../assets/sounds/TensionRising.mp3'),
+        sound: require('../assets/sounds/InnerReflexion.mp3'),
         choices: [
             {
                 text: "Dresser un plan. Où est l’argent ? Qui a du pouvoir ?",
@@ -114,7 +114,7 @@ type Choice = {
     3: {
         title: "Seuls les Fous Avancent",
         text: (name) =>
-            `En fin de journée, ${name} reçoit un message. "Si tu veux percer, sois là à 22h, Allée Marcel Boulard, le hangar après le Batiment C." Pas de signature, pas d’explication. Seulement une adresse en périphérie de la ville. Tout dans ce message hurle "opportunité", mais aussi "risque énorme". Le cerveau dit non. L’ambition hurle oui.`,
+            `En fin de journée, ${name} reçoit un message. " Si tu veux vraiment croquer, sois là à 22h, Allée Marcel Boulard, le hangar après le Batiment C. " Pas de signature, pas d’explication. Seulement une adresse en périphérie de la ville. Tout dans ce message hurle "opportunité", mais aussi "risque énorme". Le cerveau dit non. L’ambition hurle oui.`,
         image: require('../assets/TeenageNightDecision.webp'),
         sound: require('../assets/sounds/SuspenseBuilds.mp3'),
         choices: [
@@ -184,8 +184,7 @@ type Choice = {
         consequences: {
             ambitieux_1: {
                 text: (name) =>
-                    `Quelques jours plus tard, ${name} reçoit un mail officiel : "Félicitations, vous êtes sélectionné(e) pour intégrer un programme de formation internationale."   
-                    Dans ses mains, un billet d’avion, une chance rare. Il/elle sait que ce sera exigeant, que ce chemin demandera plus qu’un simple talent. Il faudra se dépasser, être meilleur(e) que tous les autres. Mais c’est ainsi que l’élite se construit.`,
+                    `Quelques jours plus tard, ${name} reçoit un mail officiel : "Félicitations, vous êtes sélectionné(e) pour intégrer un programme de formation internationale." Dans ses mains, un billet d’avion, une chance rare. Il/elle sait que ce sera exigeant, que ce chemin demandera plus qu’un simple talent. Il faudra se dépasser, être meilleur(e) que tous les autres. Mais c’est ainsi que l’élite se construit.`,
                 skillTitle: "Excellence académique 🎓",
             },
             ambitieux_2: {
@@ -264,7 +263,7 @@ type Choice = {
                 consequence: "L’erreur n’est pas toujours la sienne. Il/elle trouve un coupable, mais à quel prix ?",
             },
             {
-                text: "Douter. Remettre en question toute cette ambition.",
+                text: "Douter et remettre en question toute cette ambition.",
                 type: "ambitieux",
                 isError: true,
                 consequence: "Le doute s’installe. L’ambition vacille. Une faiblesse impardonnable dans ce monde.",
@@ -293,7 +292,7 @@ type Choice = {
         text: (name) =>
             `L’aube se lève sur un monde qui ne sait rien de ce qui vient de se jouer. ${name}, lui/elle, sait. Il/elle regarde son reflet, les traits tendus, les yeux marqués par l’intensité des derniers mois. Plus rien n’est comme avant. L’adolescence touche à sa fin, et l’ambition a pris toute la place. Il/elle repense aux décisions, aux sacrifices, aux risques. Les erreurs ont coûté cher, les victoires encore plus. Il/elle a brûlé les étapes, forcé le destin, écrasé les doutes. Désormais, une seule chose compte : avancer encore. Le regard de ${name} se pose sur son téléphone. Un message, un appel manqué, une opportunité. Une dernière barrière avant la suite. Il/elle a déjà choisi. Il ne reste plus qu’à le prouver.`,
         image: require('../assets/TeenageTurningPoint.webp'),
-        sound: require('../assets/sounds/FinalDecision.mp3'),
+        sound: require('../assets/sounds/FinalDecisionAmbitious.mp3'),
         choices: [
             {
                 text: "Saisir cette dernière opportunité, quoi qu’il en coûte.",
@@ -308,7 +307,7 @@ type Choice = {
                 consequence: "Il/elle n’a plus rien à prouver, mais certains liens méritent d’être renoués.",
             },
             {
-                text: "Regarder tout ce qui a été accompli… et reculer au dernier moment.",
+                text: "Regarder tout ce qui a été accompli, regretter et reculer au dernier moment.",
                 type: "ambitieux",
                 isError: true,
                 consequence: "Le doute surgit là où il ne devrait pas. Une seconde de trop, et tout s’effondre.",

@@ -1,5 +1,7 @@
 const sounds = {
     Intro: require('../assets/sounds/Intro.mp3'),
+    Intro2: require('../assets/sounds/InnerReflexion.mp3'),
+    Intro3: require('../assets/sounds/Intro3.mp3'),
     pageFlip: require('../assets/sounds/PageTurn.mp3'),
     ambiance: require('../assets/sounds/kitchen.mp3'),
     gardenAmbiance : require('../assets/sounds/GardenBirds.mp3'),

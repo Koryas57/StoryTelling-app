@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, ImageBackground } from 'react-native';
+import { View, Text, ImageBackground } from 'react-native';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../App';
 import styles from './Home.styles';
@@ -10,7 +10,7 @@ import GameButton from '../../Components/GameButton'; // Import du nouveau compo
 type HomeProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 const Home: React.FC<HomeProps> = ({ navigation }) => {
-    const introMusic = useSound(sounds.Intro);
+    const introMusic = useSound(sounds.Intro2);
     const choiceSound = useSound(sounds.choiceSound);
 
     useEffect(() => {
@@ -27,10 +27,11 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
 
     return (
         <ImageBackground
-            source={require('../../assets/mainBackground.webp')}
+            source={require('../../assets/MainBackground2.webp')}
             style={styles.container}
         >
             <View style={styles.container}>
+                <Text style={styles.gameName}>Human Stories</Text>
                 <GameButton
                     text="Commencer"
                     onPress={handleStartGame}

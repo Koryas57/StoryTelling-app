@@ -261,6 +261,7 @@ const App: React.FC = () => {
     'Merriweather-BoldItalic': require('./assets/fonts/Merriweather-BoldItalic.ttf'),
     'LOKICOLA': require('./assets/fonts/LOKICOLA.ttf'),
     'Babyk': require('./assets/fonts/Babyk.ttf'),
+    'DarkSpartan': require('./assets/fonts/DarkSpartan.ttf'),
   });
 
   useEffect(() => {
