@@ -13,13 +13,13 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParamList } from '../../../App';
 import * as NavigationBar from "expo-navigation-bar";
 import teenageTimidData from '../../../data/TeenageTimidData';
+import MiniGameSocial from './MiniGameSocial'; // Mini-jeu externe
+import MiniGameEscapeParty from './MiniGameEscapeParty';
 import useSound from '../../../hooks/useSound';
 import sounds from '../../../utils/sounds';
 import { Audio } from 'expo-av';
 import styles from '../Childhood/Childhood.styles';
-import MiniGameSocial from './MiniGameSocial'; // Mini-jeu externe
 import GameButton2 from '../../../Components/GameButton2';
-import MiniGameTournament from './MiniGameTournament';
 
 type TeenageTimidProps = NativeStackScreenProps<
     RootStackParamList,
@@ -264,7 +264,7 @@ Recommencez, explorez vos vérités, et écrivez une histoire plus lumineuse, un
                 );
             case 4:
                 return (
-                    <MiniGameTournament
+                    <MiniGameEscapeParty
                         visible={showMiniGame}
                         onClose={() => setShowMiniGame(false)}
                         onSuccess={handleMiniGameSuccess} // Appel direct
