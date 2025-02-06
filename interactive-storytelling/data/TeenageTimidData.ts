@@ -140,8 +140,7 @@ const teenageTimidData: Record<number, TeenageDay> = {
         consequences: {
             timide_1: {
                 text: (name) =>
-                    `${name} passe des heures à s'entraîner devant le miroir, répétant chaque phrase jusqu'à ce qu'elles deviennent naturelles. Le jour venu, la peur est toujours là, mais ${name} arrive à surmonter la panique. Bien que sa voix tremble au début, les phrases s'enchaînent et une fois l’exposé terminé, 
-                    il/elle se rend compte que personne ne l’a jugé(e) autant qu’il/elle l’imaginait. C’est une victoire silencieuse.`,
+                    `${name} passe des heures à s'entraîner devant le miroir, répétant chaque phrase jusqu'à ce qu'elles deviennent naturelles. Le jour venu, la peur est toujours là, mais ${name} arrive à surmonter la panique. Bien que sa voix tremble au début, les phrases s'enchaînent et une fois l’exposé terminé, il/elle se rend compte que personne ne l’a jugé(e) autant qu’il/elle l’imaginait. C’est une victoire silencieuse.`,
                 skillTitle: "Création littéraire immersive 📖",
             },
             timide_2: {
@@ -170,7 +169,7 @@ const teenageTimidData: Record<number, TeenageDay> = {
                 consequence: "Vous profitez un peu de la soirée, puis partez discrètement avant d’être submergé(e).",
             },
             {
-                text: "Refuser poliment en expliquant que ce n’est pas votre truc.",
+                text: "Refuser poliment en expliquant que ce n’est pas votre truc.(Vous irez quand-même)",
                 type: "timide",
                 isError: false,
                 consequence: "Votre honnêteté est appréciée et votre camarade ne vous en veut pas.",

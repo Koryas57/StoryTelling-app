@@ -5,7 +5,8 @@ import { RootStackParamList } from '../../App';
 import styles from './Home.styles';
 import useSound from '../../hooks/useSound';
 import sounds from '../../utils/sounds';
-import GameButton from '../../Components/GameButton'; // Import du nouveau composant
+import GameButton from '../../Components/GameButton';
+import Animated, { FadeInUp, FadeOutUp } from 'react-native-reanimated';
 
 type HomeProps = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -31,7 +32,13 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
             style={styles.container}
         >
             <View style={styles.container}>
-                <Text style={styles.gameName}>Human Stories</Text>
+                <Animated.Text
+                    style={styles.gameName}
+                    entering={FadeInUp.duration(7500)}
+                    exiting={FadeOutUp.duration(5000)}
+                >
+                    Human Stories
+                </Animated.Text>
                 <GameButton
                     text="Commencer"
                     onPress={handleStartGame}
