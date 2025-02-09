@@ -160,7 +160,7 @@ const teenageTimidData: Record<number, TeenageDay> = {
         text: (name) =>
             `Pendant le déjeuner, alors que ${name} est assis(e) à sa table habituelle, un élève du nom de Lucas vient s’asseoir en face de lui/elle. "Hé, y'a une fête ce week-end chez Clément. Tout le monde vient, tu devrais passer aussi ! " La dernière fois que ${name} est allé(e) à une fête, c'était pour l'anniversaire d’un cousin et il/elle s'était senti(e) mal à l’aise toute la soirée. Cette invitation est une opportunité, mais aussi une source de stress.`,
         image: require('../assets/TeenagePartyInvite.webp'),
-        sound: require('../assets/sounds/PartyAmbiance.mp3'),
+        sound: require('../assets/sounds/PartyAmbianceTimid.mp3'),
         choices: [
             {
                 text: "Accepter mais prévoir un plan pour partir tôt en cas de malaise.",

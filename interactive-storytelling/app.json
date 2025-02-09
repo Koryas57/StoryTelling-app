@@ -16,6 +16,8 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.koryas.humanstories",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -27,8 +29,11 @@
     "plugins": [
       "expo-font"
     ],
-    "assets": [
-      "./assets/fonts/"
-  ]
+    "assetBundlePatterns": ["**/*"],
+    "extra": {
+      "eas": {
+        "projectId": "8108e644-6e28-4d35-921f-52d21cb4d6cd"
+      }
+    }
   }
 }
