@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font/build/FontHooks';
-import { ActivityIndicator, View, Text } from 'react-native';
+import { ActivityIndicator, View, Text, StatusBar } from 'react-native';
 import * as NavigationBar from "expo-navigation-bar";
 import styles from './screens/Home/Home.styles';
 
@@ -296,227 +296,200 @@ const App: React.FC = () => {
   }
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Home"
-          component={Home}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Game"
-          component={Game}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="Childhood"
-          component={Childhood}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="TeenageAdventurous"
-          component={TeenageAdventurous}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="TeenagePrudent"
-          component={TeenagePrudent}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="TeenageTimid"
-          component={TeenageTimid}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="TeenageAmbitious"
-          component={TeenageAmbitious}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="TransitionScreen"
-          component={TransitionScreen}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="TransitionScreen2"
-          component={TransitionScreen2}
-          options={{ headerShown: false }}
-        />
-        {/* Jobs Section */}
-        <Stack.Screen
-          name="FamilyMediatorStory"
-          component={FamilyMediatorStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="CreativeDirectorStory"
-          component={CreativeDirectorStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="StrategicPlannerStory"
-          component={StrategicPlannerStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="PoliceInvestigatorStory"
-          component={PoliceInvestigatorStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="AdministrativeAssistantStory"
-          component={AdministrativeAssistantStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="EventManagerStory"
-          component={EventManagerStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="SportsManagerStory"
-          component={SportsManagerStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="RiskAnalystStory"
-          component={RiskAnalystStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="TherapistStory"
-          component={TherapistStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="RelationshipConsultantStory"
-          component={RelationshipConsultantStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="ArchivistStory"
-          component={ArchivistStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="InnovativeProjectManagerStory"
-          component={InnovativeProjectManagerStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="HumanitarianCoordinatorStory"
-          component={HumanitarianCoordinatorStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="GeneralSecretaryStory"
-          component={GeneralSecretaryStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="AmbassadorStory"
-          component={AmbassadorStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="RightsDefenderStory"
-          component={RightsDefenderStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="NeutralObserverStory"
-          component={NeutralObserverStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="InnovativeEntrepreneurStory"
-          component={InnovativeEntrepreneurStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="EfficiencyConsultantStory"
-          component={EfficiencyConsultantStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="CommunityMentorStory"
-          component={CommunityMentorStory}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="UniversityProfessorStory"
-          component={UniversityProfessorStory}
-          options={{ headerShown: false }}
-        />
-        {/* Prudent */}
-        <Stack.Screen name="LifeCoachStory" component={LifeCoachStory} options={{ headerShown: false }} />
-        <Stack.Screen name="NegotiatorStory" component={NegotiatorStory} options={{ headerShown: false }} />
-        <Stack.Screen name="CrisisMediatorStory" component={CrisisMediatorStory} options={{ headerShown: false }} />
-        <Stack.Screen name="SocialWorkerStory" component={SocialWorkerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="FamilyTherapistStory" component={FamilyTherapistStory} options={{ headerShown: false }} />
-        <Stack.Screen name="HRConsultantStory" component={HRConsultantStory} options={{ headerShown: false }} />
-        <Stack.Screen name="ProjectManagerStory" component={ProjectManagerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="EducatorStory" component={EducatorStory} options={{ headerShown: false }} />
-        <Stack.Screen name="DisorganizedFreelancerStory" component={DisorganizedFreelancerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="EconomicAnalystStory" component={EconomicAnalystStory} options={{ headerShown: false }} />
-        <Stack.Screen name="EventCoordinatorStory" component={EventCoordinatorStory} options={{ headerShown: false }} />
-        <Stack.Screen name="DataEntryClerkStory" component={DataEntryClerkStory} options={{ headerShown: false }} />
-        <Stack.Screen name="SecurityOfficerStory" component={SecurityOfficerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="PublicRelationsAnalystStory" component={PublicRelationsAnalystStory} options={{ headerShown: false }} />
-        <Stack.Screen name="TelemarketerStory" component={TelemarketerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="JudgeStory" component={JudgeStory} options={{ headerShown: false }} />
-        <Stack.Screen name="DiplomatStory" component={DiplomatStory} options={{ headerShown: false }} />
-        <Stack.Screen name="PhilosopherStory" component={PhilosopherStory} options={{ headerShown: false }} />
-        <Stack.Screen name="MilitaryPsychologistStory" component={MilitaryPsychologistStory} options={{ headerShown: false }} />
-        <Stack.Screen name="DramaticActorStory" component={DramaticActorStory} options={{ headerShown: false }} />
-        <Stack.Screen name="WandererStory" component={WandererStory} options={{ headerShown: false }} />
-        {/* Timid */}
-        <Stack.Screen name="ForensicScientistStory" component={ForensicScientistStory} options={{ headerShown: false }} />
-        <Stack.Screen name="PoetStory" component={PoetStory} options={{ headerShown: false }} />
-        <Stack.Screen name="NovelistStory" component={NovelistStory} options={{ headerShown: false }} />
-        <Stack.Screen name="ChessMasterStory" component={ChessMasterStory} options={{ headerShown: false }} />
-        <Stack.Screen name="BehavioralScientistStory" component={BehavioralScientistStory} options={{ headerShown: false }} />
-        <Stack.Screen name="StatisticianStory" component={StatisticianStory} options={{ headerShown: false }} />
-        <Stack.Screen name="WatchmakerStory" component={WatchmakerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="ComposerStory" component={ComposerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="RiskManagerStory" component={RiskManagerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="LaboratoryResearcherStory" component={LaboratoryResearcherStory} options={{ headerShown: false }} />
-        <Stack.Screen name="PsychotherapistStory" component={PsychotherapistStory} options={{ headerShown: false }} />
-        <Stack.Screen name="CybersecurityAnalystStory" component={CybersecurityAnalystStory} options={{ headerShown: false }} />
-        <Stack.Screen name="ConflictResolutionSpecialistStory" component={ConflictResolutionSpecialistStory} options={{ headerShown: false }} />
-        <Stack.Screen name="PrivateInvestigatorStory" component={PrivateInvestigatorStory} options={{ headerShown: false }} />
-        <Stack.Screen name="GameNarrativeDesignerStory" component={GameNarrativeDesignerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="BlackHatHackerStory" component={BlackHatHackerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="DocumentForgerStory" component={DocumentForgerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="SmugglerStory" component={SmugglerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="CardCounterStory" component={CardCounterStory} options={{ headerShown: false }} />
-        <Stack.Screen name="UndergroundChemistStory" component={UndergroundChemistStory} options={{ headerShown: false }} />
-        <Stack.Screen name="NightCourierStory" component={NightCourierStory} options={{ headerShown: false }} />
-        {/* Ambitious */}
-        <Stack.Screen name="HedgeFundManagerStory" component={HedgeFundManagerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="MediaMogulStory" component={MediaMogulStory} options={{ headerShown: false }} />
-        <Stack.Screen name="CorporateStrategistStory" component={CorporateStrategistStory} options={{ headerShown: false }} />
-        <Stack.Screen name="PoliticalAdvisorStory" component={PoliticalAdvisorStory} options={{ headerShown: false }} />
-        <Stack.Screen name="CasinoOwnerStory" component={CasinoOwnerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="HighFrequencyTraderStory" component={HighFrequencyTraderStory} options={{ headerShown: false }} />
-        <Stack.Screen name="WallStreetTraderStory" component={WallStreetTraderStory} options={{ headerShown: false }} />
-        <Stack.Screen name="IntelligenceConsultantStory" component={IntelligenceConsultantStory} options={{ headerShown: false }} />
-        <Stack.Screen name="CrisisAdvisorStory" component={CrisisAdvisorStory} options={{ headerShown: false }} />
-        <Stack.Screen name="NobelScientistStory" component={NobelScientistStory} options={{ headerShown: false }} />
-        <Stack.Screen name="TechFounderStory" component={TechFounderStory} options={{ headerShown: false }} />
-        <Stack.Screen name="OffshoreBankerStory" component={OffshoreBankerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="LuxuryDeveloperStory" component={LuxuryDeveloperStory} options={{ headerShown: false }} />
-        <Stack.Screen name="FormulaOneDriverStory" component={FormulaOneDriverStory} options={{ headerShown: false }} />
-        <Stack.Screen name="EliteTaxConsultantStory" component={EliteTaxConsultantStory} options={{ headerShown: false }} />
-        <Stack.Screen name="SelfMadeBillionaireStory" component={SelfMadeBillionaireStory} options={{ headerShown: false }} />
-        <Stack.Screen name="CorporateSpyStory" component={CorporateSpyStory} options={{ headerShown: false }} />
-        <Stack.Screen name="HostageNegotiatorStory" component={HostageNegotiatorStory} options={{ headerShown: false }} />
-        <Stack.Screen name="ArmsDealerStory" component={ArmsDealerStory} options={{ headerShown: false }} />
-        <Stack.Screen name="DiplomaticStrategistStory" component={DiplomaticStrategistStory} options={{ headerShown: false }} />
-        <Stack.Screen name="AuctionBrokerStory" component={AuctionBrokerStory} options={{ headerShown: false }} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <StatusBar translucent backgroundColor="transparent" />
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Home">
+          <Stack.Screen
+            name="Home"
+            component={Home}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="Game"
+            component={Game}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="Childhood"
+            component={Childhood}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="TeenageAdventurous"
+            component={TeenageAdventurous}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="TeenagePrudent"
+            component={TeenagePrudent}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="TeenageTimid"
+            component={TeenageTimid}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="TeenageAmbitious"
+            component={TeenageAmbitious}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="TransitionScreen"
+            component={TransitionScreen}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="TransitionScreen2"
+            component={TransitionScreen2}
+            options={{ headerShown: false }} />
+          {/* Jobs Section */}
+          <Stack.Screen
+            name="FamilyMediatorStory"
+            component={FamilyMediatorStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="CreativeDirectorStory"
+            component={CreativeDirectorStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="StrategicPlannerStory"
+            component={StrategicPlannerStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="PoliceInvestigatorStory"
+            component={PoliceInvestigatorStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="AdministrativeAssistantStory"
+            component={AdministrativeAssistantStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="EventManagerStory"
+            component={EventManagerStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="SportsManagerStory"
+            component={SportsManagerStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="RiskAnalystStory"
+            component={RiskAnalystStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="TherapistStory"
+            component={TherapistStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="RelationshipConsultantStory"
+            component={RelationshipConsultantStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="ArchivistStory"
+            component={ArchivistStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="InnovativeProjectManagerStory"
+            component={InnovativeProjectManagerStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="HumanitarianCoordinatorStory"
+            component={HumanitarianCoordinatorStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="GeneralSecretaryStory"
+            component={GeneralSecretaryStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="AmbassadorStory"
+            component={AmbassadorStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="RightsDefenderStory"
+            component={RightsDefenderStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="NeutralObserverStory"
+            component={NeutralObserverStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="InnovativeEntrepreneurStory"
+            component={InnovativeEntrepreneurStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="EfficiencyConsultantStory"
+            component={EfficiencyConsultantStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="CommunityMentorStory"
+            component={CommunityMentorStory}
+            options={{ headerShown: false }} />
+          <Stack.Screen
+            name="UniversityProfessorStory"
+            component={UniversityProfessorStory}
+            options={{ headerShown: false }} />
+          {/* Prudent */}
+          <Stack.Screen name="LifeCoachStory" component={LifeCoachStory} options={{ headerShown: false }} />
+          <Stack.Screen name="NegotiatorStory" component={NegotiatorStory} options={{ headerShown: false }} />
+          <Stack.Screen name="CrisisMediatorStory" component={CrisisMediatorStory} options={{ headerShown: false }} />
+          <Stack.Screen name="SocialWorkerStory" component={SocialWorkerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="FamilyTherapistStory" component={FamilyTherapistStory} options={{ headerShown: false }} />
+          <Stack.Screen name="HRConsultantStory" component={HRConsultantStory} options={{ headerShown: false }} />
+          <Stack.Screen name="ProjectManagerStory" component={ProjectManagerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="EducatorStory" component={EducatorStory} options={{ headerShown: false }} />
+          <Stack.Screen name="DisorganizedFreelancerStory" component={DisorganizedFreelancerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="EconomicAnalystStory" component={EconomicAnalystStory} options={{ headerShown: false }} />
+          <Stack.Screen name="EventCoordinatorStory" component={EventCoordinatorStory} options={{ headerShown: false }} />
+          <Stack.Screen name="DataEntryClerkStory" component={DataEntryClerkStory} options={{ headerShown: false }} />
+          <Stack.Screen name="SecurityOfficerStory" component={SecurityOfficerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="PublicRelationsAnalystStory" component={PublicRelationsAnalystStory} options={{ headerShown: false }} />
+          <Stack.Screen name="TelemarketerStory" component={TelemarketerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="JudgeStory" component={JudgeStory} options={{ headerShown: false }} />
+          <Stack.Screen name="DiplomatStory" component={DiplomatStory} options={{ headerShown: false }} />
+          <Stack.Screen name="PhilosopherStory" component={PhilosopherStory} options={{ headerShown: false }} />
+          <Stack.Screen name="MilitaryPsychologistStory" component={MilitaryPsychologistStory} options={{ headerShown: false }} />
+          <Stack.Screen name="DramaticActorStory" component={DramaticActorStory} options={{ headerShown: false }} />
+          <Stack.Screen name="WandererStory" component={WandererStory} options={{ headerShown: false }} />
+          {/* Timid */}
+          <Stack.Screen name="ForensicScientistStory" component={ForensicScientistStory} options={{ headerShown: false }} />
+          <Stack.Screen name="PoetStory" component={PoetStory} options={{ headerShown: false }} />
+          <Stack.Screen name="NovelistStory" component={NovelistStory} options={{ headerShown: false }} />
+          <Stack.Screen name="ChessMasterStory" component={ChessMasterStory} options={{ headerShown: false }} />
+          <Stack.Screen name="BehavioralScientistStory" component={BehavioralScientistStory} options={{ headerShown: false }} />
+          <Stack.Screen name="StatisticianStory" component={StatisticianStory} options={{ headerShown: false }} />
+          <Stack.Screen name="WatchmakerStory" component={WatchmakerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="ComposerStory" component={ComposerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="RiskManagerStory" component={RiskManagerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="LaboratoryResearcherStory" component={LaboratoryResearcherStory} options={{ headerShown: false }} />
+          <Stack.Screen name="PsychotherapistStory" component={PsychotherapistStory} options={{ headerShown: false }} />
+          <Stack.Screen name="CybersecurityAnalystStory" component={CybersecurityAnalystStory} options={{ headerShown: false }} />
+          <Stack.Screen name="ConflictResolutionSpecialistStory" component={ConflictResolutionSpecialistStory} options={{ headerShown: false }} />
+          <Stack.Screen name="PrivateInvestigatorStory" component={PrivateInvestigatorStory} options={{ headerShown: false }} />
+          <Stack.Screen name="GameNarrativeDesignerStory" component={GameNarrativeDesignerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="BlackHatHackerStory" component={BlackHatHackerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="DocumentForgerStory" component={DocumentForgerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="SmugglerStory" component={SmugglerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="CardCounterStory" component={CardCounterStory} options={{ headerShown: false }} />
+          <Stack.Screen name="UndergroundChemistStory" component={UndergroundChemistStory} options={{ headerShown: false }} />
+          <Stack.Screen name="NightCourierStory" component={NightCourierStory} options={{ headerShown: false }} />
+          {/* Ambitious */}
+          <Stack.Screen name="HedgeFundManagerStory" component={HedgeFundManagerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="MediaMogulStory" component={MediaMogulStory} options={{ headerShown: false }} />
+          <Stack.Screen name="CorporateStrategistStory" component={CorporateStrategistStory} options={{ headerShown: false }} />
+          <Stack.Screen name="PoliticalAdvisorStory" component={PoliticalAdvisorStory} options={{ headerShown: false }} />
+          <Stack.Screen name="CasinoOwnerStory" component={CasinoOwnerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="HighFrequencyTraderStory" component={HighFrequencyTraderStory} options={{ headerShown: false }} />
+          <Stack.Screen name="WallStreetTraderStory" component={WallStreetTraderStory} options={{ headerShown: false }} />
+          <Stack.Screen name="IntelligenceConsultantStory" component={IntelligenceConsultantStory} options={{ headerShown: false }} />
+          <Stack.Screen name="CrisisAdvisorStory" component={CrisisAdvisorStory} options={{ headerShown: false }} />
+          <Stack.Screen name="NobelScientistStory" component={NobelScientistStory} options={{ headerShown: false }} />
+          <Stack.Screen name="TechFounderStory" component={TechFounderStory} options={{ headerShown: false }} />
+          <Stack.Screen name="OffshoreBankerStory" component={OffshoreBankerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="LuxuryDeveloperStory" component={LuxuryDeveloperStory} options={{ headerShown: false }} />
+          <Stack.Screen name="FormulaOneDriverStory" component={FormulaOneDriverStory} options={{ headerShown: false }} />
+          <Stack.Screen name="EliteTaxConsultantStory" component={EliteTaxConsultantStory} options={{ headerShown: false }} />
+          <Stack.Screen name="SelfMadeBillionaireStory" component={SelfMadeBillionaireStory} options={{ headerShown: false }} />
+          <Stack.Screen name="CorporateSpyStory" component={CorporateSpyStory} options={{ headerShown: false }} />
+          <Stack.Screen name="HostageNegotiatorStory" component={HostageNegotiatorStory} options={{ headerShown: false }} />
+          <Stack.Screen name="ArmsDealerStory" component={ArmsDealerStory} options={{ headerShown: false }} />
+          <Stack.Screen name="DiplomaticStrategistStory" component={DiplomaticStrategistStory} options={{ headerShown: false }} />
+          <Stack.Screen name="AuctionBrokerStory" component={AuctionBrokerStory} options={{ headerShown: false }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
 
 };
