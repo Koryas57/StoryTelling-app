@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "interactive-storytelling",
+    "name": "Human Stories",
     "slug": "interactive-storytelling",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,6 +14,11 @@
     },
     "ios": {
       "supportsTablet": true
+    },
+    "androidStatusBar": {
+      "backgroundColor": "transparent",
+      "translucent": true,
+      "barStyle": "dark-content"
     },
     "android": {
       "package": "com.koryas.humanstories",
