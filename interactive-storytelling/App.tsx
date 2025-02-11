@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useFonts } from 'expo-font/build/FontHooks';
 import { ActivityIndicator, View, Text, StatusBar } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
 import * as NavigationBar from "expo-navigation-bar";
 import styles from './screens/Home/Home.styles';
 
@@ -251,6 +252,9 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
+// Empêche le splash screen de se cacher automatiquement
+SplashScreen.preventAutoHideAsync();
+
 const App: React.FC = () => {
 
   const [fontsLoaded] = useFonts({
@@ -285,14 +289,26 @@ const App: React.FC = () => {
     configureNavBar();
   }, []);
 
-  // Affiche un écran de chargement tant que les polices ne sont pas prêtes
-  if (!fontsLoaded) {
-    return (
-      <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
-        <Text>Chargement des polices...</Text>
-      </View>
-    );
+  const [isSplashVisible, setIsSplashVisible] = useState(true);
+
+  useEffect(() => {
+    const prepareApp = async () => {
+      // Attend que les polices soient chargées ET que le timer soit écoulé
+      const timer = new Promise(resolve => setTimeout(resolve, 5000)); // Timer de 5 secondes
+
+      await Promise.all([timer, fontsLoaded ? Promise.resolve() : Promise.reject()]);
+
+      // Cache le splash screen après que les deux conditions soient remplies
+      await SplashScreen.hideAsync();
+      setIsSplashVisible(false);
+    };
+
+    prepareApp();
+  }, [fontsLoaded]);
+
+  // Tant que le splash screen doit rester visible, ne rend rien d'autre
+  if (isSplashVisible) {
+    return null;
   }
 
   return (

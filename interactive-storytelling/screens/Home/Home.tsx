@@ -23,7 +23,7 @@ const Home: React.FC<HomeProps> = ({ navigation }) => {
 
     const handleStartGame = () => {
         introMusic.stop();
-        navigation.navigate('Game');
+        navigation.replace('Game');
     };
 
     return (

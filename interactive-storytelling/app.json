@@ -8,15 +8,15 @@
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/splash-icon.png",
-      "resizeMode": "cover",
+      "image": "./assets/koryaslogo.png",
+      "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true
     },
     "androidStatusBar": {
-      "backgroundColor": "transparent",
+      "backgroundColor": "#000000",
       "translucent": true,
       "barStyle": "dark-content"
     },
@@ -32,7 +32,8 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font"
+      "expo-font",
+      "expo-splash-screen"
     ],
     "assetBundlePatterns": ["**/*"],
     "extra": {

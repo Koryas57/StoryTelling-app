@@ -166,7 +166,7 @@ const storyData: Record<
         choices: [
             { text: 'Proposer de raconter une histoire pour changer l’ambiance', type: 'ambitieux' },
             { text: 'Rester silencieux et regarder son assiette', type: 'timide' },
-            { text: 'Demander aux adultes pourquoi ils se disputent.', type: 'aventureux' },
+            { text: 'Demander aux adultes pourquoi ils se disputent', type: 'aventureux' },
             { text: 'Aller dans une autre pièce jusqu’à ce que ça s’arrête', type: 'prudent' },
         ],
         consequences: {
